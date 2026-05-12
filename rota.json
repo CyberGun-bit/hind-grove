@@ -1,0 +1,16 @@
+{
+  "members": [
+    { "name": "Apou",   "email": "" },
+    { "name": "Tanvir", "email": "" },
+    { "name": "Marup",  "email": "marup6172@gmail.com" },
+    { "name": "Nahid",  "email": "" },
+    { "name": "Fahad",  "email": "" },
+    { "name": "Shadat", "email": "" },
+    { "name": "Fagun",  "email": "shahriarfagun2005@gmail.com" },
+    { "name": "Rakib",  "email": "" },
+    { "name": "Sanim",  "email": "" }
+  ],
+  "startDate": "2026-05-11",
+  "gapDays": 2,
+  "tasks": ["Kitchen", "Bathroom", "Hoovering", "Bins", "Mopping"]
+}
