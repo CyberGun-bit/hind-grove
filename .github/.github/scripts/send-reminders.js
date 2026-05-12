@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const rotaData = JSON.parse(
-  fs.readFileSync(path.join(__dirname, '../../rota.json'), 'utf8')
+  fs.readFileSync(path.join(__dirname, '../../../rota.json'), 'utf8')
 );
 
 const { members, startDate, gapDays, tasks } = rotaData;
@@ -48,7 +48,7 @@ async function main() {
     return;
   }
 
-  const logFile = path.join(__dirname, '../../.sent-log.json');
+  const logFile = path.join(__dirname, '../../../.sent-log.json');
   let sentLog = {};
   try { sentLog = JSON.parse(fs.readFileSync(logFile, 'utf8')); } catch(e) {}
 
