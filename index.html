@@ -7,351 +7,154 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
-<!-- EmailJS — used for automatic cleaning day reminder emails -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
-/* ============================================================
-   57 HIND GROVE WEB
-   A free, self-hosted house management app.
-   Hosted on GitHub Pages | Data saved in localStorage
-   Emails via EmailJS (free tier — 200 emails/month)
-   ============================================================ */
-
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --sage:#4a7c59;--sage-light:#e8f0ea;--sage-mid:#8fb89a;
   --cream:#faf8f3;--warm:#f5f0e8;--ink:#1a1a1a;
   --muted:#6b7280;--border:#e2ddd6;
   --accent:#c17f3e;--accent-light:#fdf3e7;
-  --danger:#dc2626;--success:#16a34a;--info:#0369a1;
+  --danger:#dc2626;--success:#16a34a;
 }
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;font-size:16px}
-a{color:inherit;text-decoration:none}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
 
-/* ── PIN SCREEN ── */
-#pin-screen{
-  position:fixed;inset:0;background:#0f0f0f;
-  display:flex;align-items:center;justify-content:center;
-  z-index:9999;flex-direction:column;gap:1.75rem;
-}
-.pin-house-name{
-  color:white;font-family:'DM Serif Display',serif;
-  font-size:1.5rem;text-align:center;line-height:1.3;
-  max-width:300px;
-}
-.pin-house-name em{color:var(--accent);font-style:italic}
-.pin-house-sub{
-  font-size:0.75rem;color:#6b7280;
-  letter-spacing:0.12em;text-align:center;text-transform:uppercase;
-}
+/* PIN */
+#pin-screen{position:fixed;inset:0;background:#0f0f0f;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:1.75rem}
+.pin-title{color:white;font-family:'DM Serif Display',serif;font-size:1.5rem;text-align:center;line-height:1.3}
+.pin-title em{color:var(--accent);font-style:italic}
+.pin-sub{font-size:0.7rem;color:#4b5563;text-align:center;font-style:italic;margin-top:4px}
+.pin-label{font-size:0.72rem;color:#6b7280;letter-spacing:0.12em;text-transform:uppercase}
 .pin-dots{display:flex;gap:14px;margin:0.25rem 0}
-.pin-dot{
-  width:13px;height:13px;border-radius:50%;
-  border:2px solid #374151;transition:all 0.15s;
-}
+.pin-dot{width:13px;height:13px;border-radius:50%;border:2px solid #374151;transition:all 0.15s}
 .pin-dot.filled{background:var(--accent);border-color:var(--accent)}
-.pin-keypad{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:10px;width:210px;
-}
-.pin-btn{
-  background:#1c1c1c;color:white;border:1px solid #2a2a2a;
-  border-radius:12px;padding:17px;font-size:1.1rem;
-  font-weight:400;cursor:pointer;
-  font-family:'DM Sans',sans-serif;transition:all 0.15s;
-}
+.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:210px}
+.pin-btn{background:#1c1c1c;color:white;border:1px solid #2a2a2a;border-radius:12px;padding:17px;font-size:1.1rem;font-weight:400;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s}
 .pin-btn:hover{background:#2a2a2a}
 .pin-btn:active{background:var(--accent);transform:scale(0.96)}
-.pin-error{
-  color:#f87171;font-size:0.8rem;
-  opacity:0;transition:opacity 0.3s;letter-spacing:0.02em;
-}
+.pin-error{color:#f87171;font-size:0.8rem;opacity:0;transition:opacity 0.3s}
 .pin-error.show{opacity:1}
 
-/* ── APP SHELL ── */
+/* APP */
 #app{display:none;min-height:100vh}
-
-.top-bar{
-  background:#0f0f0f;padding:0 1.5rem;
-  display:flex;align-items:center;justify-content:space-between;
-  height:58px;position:sticky;top:0;z-index:200;
-  border-bottom:1px solid #1f1f1f;
-}
-.top-bar-logo{
-  font-family:'DM Serif Display',serif;
-  color:white;font-size:1rem;line-height:1.2;
-}
+.top-bar{background:#0f0f0f;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:200;border-bottom:1px solid #1f1f1f}
+.top-bar-logo{font-family:'DM Serif Display',serif;color:white;font-size:1rem;line-height:1.2}
 .top-bar-logo em{color:var(--accent);font-style:italic}
-.top-bar-logo small{
-  display:block;font-size:0.6rem;
-  color:#6b7280;font-family:'DM Sans',sans-serif;
-  letter-spacing:0.05em;font-style:normal;
-}
+.top-bar-logo small{display:block;font-size:0.6rem;color:#6b7280;font-family:'DM Sans',sans-serif;letter-spacing:0.05em;font-style:normal}
 .top-bar-right{display:flex;gap:8px;align-items:center}
 .search-wrap{position:relative;display:flex;align-items:center}
 .search-wrap .ti{position:absolute;left:9px;color:#6b7280;font-size:14px}
-.search-bar{
-  background:#1c1c1c;border:1px solid #2a2a2a;
-  border-radius:8px;padding:7px 12px 7px 30px;
-  color:white;font-size:0.82rem;width:210px;
-  font-family:'DM Sans',sans-serif;outline:none;
-  transition:border 0.2s;
-}
+.search-bar{background:#1c1c1c;border:1px solid #2a2a2a;border-radius:8px;padding:7px 12px 7px 30px;color:white;font-size:0.82rem;width:210px;font-family:'DM Sans',sans-serif;outline:none;transition:border 0.2s}
 .search-bar:focus{border-color:#4b5563}
 .search-bar::placeholder{color:#4b5563}
-.icon-btn{
-  background:none;border:none;color:#6b7280;
-  cursor:pointer;padding:7px;border-radius:8px;
-  font-size:1.1rem;transition:color 0.2s;
-}
+.icon-btn{background:none;border:none;color:#6b7280;cursor:pointer;padding:7px;border-radius:8px;font-size:1.1rem;transition:color 0.2s}
 .icon-btn:hover{color:white}
 
-/* ── NAV TABS ── */
-.nav-tabs{
-  display:flex;background:var(--warm);
-  border-bottom:1.5px solid var(--border);
-  padding:0 1rem;overflow-x:auto;
-  scrollbar-width:none;
-}
+.nav-tabs{display:flex;background:var(--warm);border-bottom:1.5px solid var(--border);padding:0 1rem;overflow-x:auto;scrollbar-width:none}
 .nav-tabs::-webkit-scrollbar{display:none}
-.nav-tab{
-  padding:13px 16px;font-size:0.82rem;font-weight:500;
-  color:var(--muted);cursor:pointer;
-  border-bottom:2.5px solid transparent;
-  border-top:none;border-left:none;border-right:none;
-  background:none;white-space:nowrap;
-  font-family:'DM Sans',sans-serif;transition:all 0.2s;
-  display:flex;align-items:center;gap:5px;
-}
+.nav-tab{padding:13px 16px;font-size:0.82rem;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;border-top:none;border-left:none;border-right:none;background:none;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:5px}
 .nav-tab.active{color:var(--sage);border-bottom-color:var(--sage)}
 .nav-tab:hover{color:var(--ink)}
 
-/* ── SEARCH RESULTS ── */
-#search-panel{
-  display:none;margin:1rem 1.5rem;
-  max-width:900px;margin-left:auto;margin-right:auto;
-  background:white;border:1px solid var(--border);
-  border-radius:12px;overflow:hidden;
-}
-.sr-item{
-  padding:11px 16px;border-bottom:1px solid var(--border);
-  cursor:pointer;font-size:0.875rem;transition:background 0.15s;
-}
+#search-panel{display:none;margin:1rem auto;max-width:900px;padding:0 1.5rem}
+#search-panel-inner{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.sr-item{padding:11px 16px;border-bottom:1px solid var(--border);cursor:pointer;font-size:0.875rem;transition:background 0.15s}
 .sr-item:last-child{border-bottom:none}
 .sr-item:hover{background:var(--warm)}
-.sr-tag{
-  font-size:0.68rem;background:var(--warm);
-  color:var(--muted);padding:1px 7px;
-  border-radius:4px;margin-right:6px;
-}
+.sr-tag{font-size:0.68rem;background:var(--warm);color:var(--muted);padding:1px 7px;border-radius:4px;margin-right:6px}
 
-/* ── PAGES ── */
 .page{display:none;padding:1.5rem;max-width:920px;margin:0 auto}
 .page.active{display:block}
-.page-title{
-  font-family:'DM Serif Display',serif;
-  font-size:1.65rem;margin-bottom:0.2rem;
-}
+.page-title{font-family:'DM Serif Display',serif;font-size:1.65rem;margin-bottom:0.2rem}
 .page-title em{color:var(--sage);font-style:italic}
 .page-sub{color:var(--muted);font-size:0.875rem;margin-bottom:1.5rem}
 
-/* ── CARDS ── */
-.card{
-  background:white;border:1px solid var(--border);
-  border-radius:14px;padding:1.25rem;
-}
+.card{background:white;border:1px solid var(--border);border-radius:14px;padding:1.25rem}
 .card+.card{margin-top:1rem}
-.section-head{
-  display:flex;align-items:center;
-  justify-content:space-between;margin-bottom:1rem;
-}
-.section-title{
-  font-size:0.75rem;font-weight:500;
-  text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);
-}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.section-title{font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted)}
 
-/* ── STATS ── */
-.stat-row{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-  gap:10px;margin-bottom:1.5rem;
-}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.5rem}
 .stat{background:var(--warm);border-radius:12px;padding:1rem}
-.stat-label{
-  font-size:0.72rem;color:var(--muted);
-  margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em;
-}
+.stat-label{font-size:0.72rem;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em}
 .stat-val{font-size:1.35rem;font-weight:500}
 .stat-val.green{color:var(--success)}
 .stat-val.amber{color:var(--accent)}
 .stat-val.red{color:var(--danger)}
 
-/* ── BUTTONS ── */
-.btn{
-  padding:8px 16px;border-radius:9px;font-size:0.85rem;
-  font-weight:500;cursor:pointer;
-  font-family:'DM Sans',sans-serif;
-  transition:all 0.15s;border:none;
-  display:inline-flex;align-items:center;gap:5px;
-}
+.btn{padding:8px 16px;border-radius:9px;font-size:0.85rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;border:none;display:inline-flex;align-items:center;gap:5px}
 .btn-primary{background:var(--sage);color:white}
 .btn-primary:hover{background:#3d6b4a}
 .btn-sm{padding:5px 12px;font-size:0.78rem}
-.btn-outline{
-  background:none;border:1px solid var(--border);color:var(--ink);
-}
+.btn-outline{background:none;border:1px solid var(--border);color:var(--ink)}
 .btn-outline:hover{background:var(--warm)}
-.btn-danger{
-  background:#fee2e2;color:var(--danger);
-  border:1px solid #fca5a5;
-}
-.btn-danger:hover{background:#fecaca}
-.btn-wa{
-  background:#25d366;color:white;
-  font-size:0.85rem;
-}
+.btn-danger{background:#fee2e2;color:var(--danger);border:1px solid #fca5a5}
+.btn-wa{background:#25d366;color:white}
 .btn-wa:hover{background:#1fba59}
 
-/* ── FORM ELEMENTS ── */
-.nb-input{
-  width:100%;border:none;
-  border-bottom:1.5px solid var(--border);
-  background:transparent;padding:7px 0;
-  font-size:0.92rem;font-family:'DM Sans',sans-serif;
-  color:var(--ink);outline:none;margin-bottom:10px;
-}
+.nb-input{width:100%;border:none;border-bottom:1.5px solid var(--border);background:transparent;padding:7px 0;font-size:0.92rem;font-family:'DM Sans',sans-serif;color:var(--ink);outline:none;margin-bottom:10px}
 .nb-input:focus{border-bottom-color:var(--sage)}
 .nb-input::placeholder{color:#c4bdb5}
 select.nb-input{cursor:pointer}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-group{display:flex;flex-direction:column;gap:3px}
-.form-label{
-  font-size:0.7rem;color:var(--muted);
-  text-transform:uppercase;letter-spacing:0.05em;
-}
-textarea.nb-input{
-  border:1.5px solid var(--border);border-radius:10px;
-  padding:9px 12px;resize:vertical;min-height:80px;
-}
+.form-label{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+textarea.nb-input{border:1.5px solid var(--border);border-radius:10px;padding:9px 12px;resize:vertical;min-height:80px}
 textarea.nb-input:focus{border-color:var(--sage)}
 
-/* ── ROTA ── */
-.rota-item{
-  display:flex;align-items:flex-start;gap:12px;
-  padding:13px;border:1px solid var(--border);
-  border-radius:12px;margin-bottom:8px;transition:all 0.2s;
-}
+.rota-item{display:flex;align-items:flex-start;gap:12px;padding:13px;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;transition:all 0.2s}
 .rota-item.done{background:#f0fdf4;border-color:#bbf7d0}
 .rota-item.missed{background:#fff1f2;border-color:#fecdd3}
 .rota-item.today{background:var(--accent-light);border-color:#f0c080}
-.avatar{
-  width:38px;height:38px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:0.82rem;font-weight:500;flex-shrink:0;
-}
-.badge{
-  font-size:0.68rem;padding:3px 9px;
-  border-radius:20px;font-weight:500;
-}
-.b-pending{background:#fef3c7;color:#92400e}
+.avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:500;flex-shrink:0}
+.badge{font-size:0.68rem;padding:3px 9px;border-radius:20px;font-weight:500}
 .b-done{background:#dcfce7;color:#15803d}
 .b-missed{background:#fee2e2;color:#991b1b}
 .b-today{background:var(--accent-light);color:#7c4a0e}
 .b-sched{background:#f3f4f6;color:#374151}
+.b-cycle{background:#ede9fe;color:#5b21b6}
 
-/* ── EXPENSES ── */
-.exp-item{
-  display:flex;align-items:center;gap:10px;
-  padding:11px 0;border-bottom:1px dashed var(--border);
-}
+.exp-item{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed var(--border)}
 .exp-item:last-child{border-bottom:none}
 .exp-date{font-size:0.72rem;color:var(--muted);min-width:68px}
 .exp-name{flex:1;font-size:0.875rem}
-.exp-cat{
-  font-size:0.68rem;background:var(--sage-light);
-  color:var(--sage);padding:2px 8px;border-radius:20px;
-}
+.exp-cat{font-size:0.68rem;background:var(--sage-light);color:var(--sage);padding:2px 8px;border-radius:20px}
 .exp-amt{font-weight:500;font-size:0.9rem}
-.receipt-thumb{
-  width:44px;height:44px;object-fit:cover;
-  border-radius:7px;cursor:pointer;border:1px solid var(--border);
-}
+.receipt-thumb{width:44px;height:44px;object-fit:cover;border-radius:7px;cursor:pointer;border:1px solid var(--border)}
 
-/* ── FUND ── */
-.fund-row{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 0;border-bottom:1px dashed var(--border);
-}
+.fund-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--border)}
 .fund-row:last-child{border-bottom:none}
-.toggle-btn{
-  width:26px;height:26px;border-radius:50%;
-  border:2px solid var(--border);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  background:none;transition:all 0.2s;flex-shrink:0;
-}
-.toggle-btn.paid{
-  background:var(--success);border-color:var(--success);color:white;
-}
+.toggle-btn{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;background:none;transition:all 0.2s;flex-shrink:0}
+.toggle-btn.paid{background:var(--success);border-color:var(--success);color:white}
 
-/* ── UPLOAD AREA ── */
-.upload-area{
-  border:2px dashed var(--border);border-radius:10px;
-  padding:1.2rem;text-align:center;cursor:pointer;
-  transition:all 0.2s;display:block;
-}
+.upload-area{border:2px dashed var(--border);border-radius:10px;padding:1.2rem;text-align:center;cursor:pointer;transition:all 0.2s;display:block}
 .upload-area:hover{border-color:var(--sage);background:var(--sage-light)}
 input[type=file]{display:none}
 
-/* ── WHATSAPP BANNER ── */
-.wa-banner{
-  background:#0f0f0f;border-radius:14px;
-  padding:1.25rem 1.5rem;
-  display:flex;align-items:center;gap:16px;
-  color:white;margin-bottom:1.5rem;
-}
+.wa-banner{background:#0f0f0f;border-radius:14px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:16px;color:white;margin-bottom:1.5rem}
 .wa-icon{font-size:2.2rem;color:#25d366}
 .wa-text{flex:1}
 .wa-title{font-weight:500;font-size:1rem}
 .wa-sub{font-size:0.78rem;color:#9ca3af;margin-top:2px}
 
-/* ── MODAL ── */
-.modal-bg{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,0.55);z-index:500;
-  align-items:center;justify-content:center;padding:1rem;
-}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:500;align-items:center;justify-content:center;padding:1rem}
 .modal-bg.open{display:flex}
-.modal{
-  background:white;border-radius:16px;
-  padding:1.5rem;width:100%;max-width:420px;
-}
-.modal h3{
-  font-family:'DM Serif Display',serif;
-  font-size:1.2rem;margin-bottom:0.75rem;
-}
-.modal-footer{
-  display:flex;gap:8px;justify-content:flex-end;margin-top:1rem;
-}
+.modal{background:white;border-radius:16px;padding:1.5rem;width:100%;max-width:420px}
+.modal h3{font-family:'DM Serif Display',serif;font-size:1.2rem;margin-bottom:0.75rem}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem}
 
-/* ── ADMIN ── */
 .admin-gate{text-align:center;padding:2.5rem 1rem}
 .admin-gate .ti{font-size:2.5rem;color:var(--muted);margin-bottom:1rem;display:block}
-.pw-input{
-  border:1.5px solid var(--border);border-radius:8px;
-  padding:9px 14px;font-family:'DM Sans',sans-serif;
-  font-size:0.9rem;outline:none;width:240px;
-}
+.pw-input{border:1.5px solid var(--border);border-radius:8px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;width:240px}
 .pw-input:focus{border-color:var(--sage)}
 
-/* ── MISC ── */
+.info-box{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:1rem;font-size:0.82rem;color:#1e40af;margin-bottom:1rem;line-height:1.6}
+.success-box{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:1rem;font-size:0.82rem;color:#15803d;margin-bottom:1rem}
+
 .empty{text-align:center;padding:1.5rem;color:var(--muted)}
 .empty .ti{font-size:1.8rem;display:block;margin-bottom:0.5rem;opacity:0.35}
 .proof-img{max-width:100%;border-radius:10px;margin-top:8px;border:1px solid var(--border)}
-.email-note{
-  background:#eff6ff;border:1px solid #bfdbfe;
-  border-radius:10px;padding:1rem;font-size:0.82rem;
-  color:#1e40af;margin-bottom:1rem;line-height:1.6;
-}
+
+.cycle-badge{display:inline-block;font-size:0.68rem;background:#ede9fe;color:#5b21b6;padding:1px 7px;border-radius:4px;margin-left:4px}
 
 @media(max-width:600px){
   .form-row{grid-template-columns:1fr}
@@ -364,16 +167,14 @@ input[type=file]{display:none}
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     PIN SCREEN
-══════════════════════════════════════════ -->
+<!-- PIN SCREEN -->
 <div id="pin-screen">
   <div>
-    <div class="pin-house-name">57 <em>Hind Grove</em> Web</div>
-    <p style="font-size:0.7rem;color:#4b5563;text-align:center;margin-top:4px;font-style:italic">Everything you need for this home is here.</p>
+    <div class="pin-title">57 <em>Hind Grove</em> Web</div>
+    <p class="pin-sub">Everything you need for this home is here.</p>
   </div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:1rem">
-    <p class="pin-house-sub">Enter house PIN</p>
+    <p class="pin-label">Enter house PIN</p>
     <div class="pin-dots" id="pinDots">
       <div class="pin-dot" id="pd0"></div>
       <div class="pin-dot" id="pd1"></div>
@@ -391,19 +192,15 @@ input[type=file]{display:none}
       <button class="pin-btn" onclick="kp('7')">7</button>
       <button class="pin-btn" onclick="kp('8')">8</button>
       <button class="pin-btn" onclick="kp('9')">9</button>
-      <button class="pin-btn" onclick="kp('clr')" style="font-size:0.72rem;letter-spacing:0.05em">CLR</button>
+      <button class="pin-btn" onclick="kp('clr')" style="font-size:0.72rem">CLR</button>
       <button class="pin-btn" onclick="kp('0')">0</button>
       <button class="pin-btn" onclick="kp('del')"><i class="ti ti-backspace"></i></button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     MAIN APP
-══════════════════════════════════════════ -->
+<!-- APP -->
 <div id="app">
-
-  <!-- Top bar -->
   <div class="top-bar">
     <div class="top-bar-logo">
       57 <em>Hind Grove</em> Web
@@ -418,7 +215,6 @@ input[type=file]{display:none}
     </div>
   </div>
 
-  <!-- Nav tabs -->
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="goTab('dash')"><i class="ti ti-home"></i>Home</button>
     <button class="nav-tab" onclick="goTab('rota')"><i class="ti ti-calendar"></i>Cleaning Rota</button>
@@ -428,17 +224,16 @@ input[type=file]{display:none}
     <button class="nav-tab" onclick="goTab('admin')"><i class="ti ti-lock"></i>Admin</button>
   </div>
 
-  <!-- Search results -->
-  <div id="search-panel"></div>
+  <div id="search-panel"><div id="search-panel-inner"></div></div>
 
-  <!-- ── DASHBOARD ── -->
+  <!-- DASHBOARD -->
   <div id="page-dash" class="page active">
     <div class="page-title">Welcome to <em>57 Hind Grove</em> 🏠</div>
     <p class="page-sub">57 Hind Grove Web — Everything you need for this home is here.</p>
     <div class="stat-row" id="dashStats"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
       <div class="card">
-        <div class="section-head"><span class="section-title">Next on rota</span></div>
+        <div class="section-head"><span class="section-title">Upcoming rota</span></div>
         <div id="dashRota"></div>
       </div>
       <div class="card">
@@ -448,14 +243,17 @@ input[type=file]{display:none}
     </div>
   </div>
 
-  <!-- ── CLEANING ROTA ── -->
+  <!-- ROTA -->
   <div id="page-rota" class="page">
     <div class="page-title">Cleaning <em>Rota</em></div>
-    <p class="page-sub">1-day gap between each person's turn. Upload photo proof when done!</p>
+    <p class="page-sub">2-day gap between turns. Rota cycles forever — same order every round. Upload photo proof when done!</p>
     <div id="rotaList"></div>
+    <div style="text-align:center;margin-top:1rem">
+      <button class="btn btn-outline btn-sm" onclick="loadMoreRota()"><i class="ti ti-chevron-down"></i>Show next cycle</button>
+    </div>
   </div>
 
-  <!-- ── EXPENSES ── -->
+  <!-- EXPENSES -->
   <div id="page-expenses" class="page">
     <div class="page-title">House <em>Expenses</em></div>
     <p class="page-sub">Our shared spending notebook — write it down, track it together</p>
@@ -508,7 +306,7 @@ input[type=file]{display:none}
     </div>
   </div>
 
-  <!-- ── RESERVE FUND ── -->
+  <!-- FUND -->
   <div id="page-fund" class="page">
     <div class="page-title">Reserve <em>Fund</em></div>
     <p class="page-sub">Track the shared pot — who's paid, who hasn't, and what's left</p>
@@ -533,7 +331,7 @@ input[type=file]{display:none}
     </div>
   </div>
 
-  <!-- ── CONTACT ── -->
+  <!-- CONTACT -->
   <div id="page-contact" class="page">
     <div class="page-title">Contact <em>&amp; Complaints</em></div>
     <p class="page-sub">Reach the group or raise a complaint — housemates only</p>
@@ -561,7 +359,7 @@ input[type=file]{display:none}
     </div>
   </div>
 
-  <!-- ── ADMIN ── -->
+  <!-- ADMIN -->
   <div id="page-admin" class="page">
     <div class="page-title"><em>Admin</em> Panel</div>
     <p class="page-sub">Fagun only — manage all house settings here</p>
@@ -569,8 +367,7 @@ input[type=file]{display:none}
       <div class="admin-gate">
         <i class="ti ti-lock"></i>
         <p style="color:var(--muted);font-size:0.875rem;margin-bottom:1rem">Enter your admin password</p>
-        <input class="pw-input" type="password" id="aPwIn" placeholder="Admin password..."
-          onkeydown="if(event.key==='Enter')unlockAdmin()">
+        <input class="pw-input" type="password" id="aPwIn" placeholder="Admin password..." onkeydown="if(event.key==='Enter')unlockAdmin()">
         <br>
         <button class="btn btn-primary" style="margin-top:10px" onclick="unlockAdmin()">Unlock</button>
         <p id="aErr" style="color:var(--danger);font-size:0.78rem;margin-top:8px;display:none">Incorrect password</p>
@@ -578,44 +375,33 @@ input[type=file]{display:none}
     </div>
     <div id="adminPanel" style="display:none">
 
-      <!-- Email reminders setup -->
+      <!-- GitHub Actions info -->
+      <div class="success-box">
+        <strong>✅ Automatic email reminders are handled by GitHub Actions</strong><br>
+        Every day at 9:00 AM London time, GitHub automatically checks the rota and sends a reminder email to whoever cleans the next day. Each person only ever gets <strong>one email per turn</strong> — no duplicates. No one needs to open the website for this to work!<br><br>
+        To activate: add your 3 EmailJS keys as GitHub Secrets (see instructions below).
+      </div>
+
+      <!-- GitHub Secrets setup -->
       <div class="card">
-        <div class="section-head"><span class="section-title">📧 Email reminder settings</span></div>
-        <div class="email-note">
-          <strong>How automated cleaning reminders work:</strong><br>
-          This app uses <strong>EmailJS</strong> (free — 200 emails/month) to automatically send a Gmail reminder
-          to each person <strong>1 day before</strong> their cleaning turn.<br><br>
-          <strong>Setup steps:</strong><br>
-          1. Go to <a href="https://emailjs.com" target="_blank" style="color:#1d4ed8;text-decoration:underline">emailjs.com</a> → create a free account<br>
-          2. Add a service → choose Gmail → connect your Gmail → copy the <strong>Service ID</strong><br>
-          3. Create an email template → use variables: <code>{{to_name}}</code>, <code>{{to_email}}</code>, <code>{{cleaning_date}}</code>, <code>{{tasks}}</code> → copy the <strong>Template ID</strong><br>
-          4. Go to Account → copy your <strong>Public Key</strong><br>
-          5. Paste all three below and click Save
+        <div class="section-head"><span class="section-title">🔐 GitHub Secrets setup (one time only)</span></div>
+        <div class="info-box">
+          <strong>Add these 3 secrets to your GitHub repo:</strong><br><br>
+          1. Go to <strong>github.com/CyberGun-bit/hind-grove</strong><br>
+          2. Click <strong>Settings</strong> → <strong>Secrets and variables</strong> → <strong>Actions</strong><br>
+          3. Click <strong>"New repository secret"</strong> and add these one by one:<br><br>
+          &nbsp;&nbsp;• Name: <code>EMAILJS_PUBLIC_KEY</code> → Value: your EmailJS public key<br>
+          &nbsp;&nbsp;• Name: <code>EMAILJS_SERVICE_ID</code> → Value: <code>service_mseqn1e</code><br>
+          &nbsp;&nbsp;• Name: <code>EMAILJS_TEMPLATE_ID</code> → Value: your template ID<br><br>
+          4. To get your <strong>Public Key</strong>: EmailJS dashboard → Account → API Keys<br>
+          5. To get your <strong>Template ID</strong>: EmailJS dashboard → Email Templates → your template
         </div>
-        <div class="form-row" style="margin-bottom:10px">
-          <div class="form-group">
-            <span class="form-label">EmailJS Public Key</span>
-            <input class="nb-input" id="ejPubKey" placeholder="e.g. user_xxxxxxxxxx">
-          </div>
-          <div class="form-group">
-            <span class="form-label">Service ID</span>
-            <input class="nb-input" id="ejService" placeholder="e.g. service_xxxxxx">
-          </div>
-        </div>
-        <div class="form-row" style="margin-bottom:12px">
-          <div class="form-group">
-            <span class="form-label">Template ID</span>
-            <input class="nb-input" id="ejTemplate" placeholder="e.g. template_xxxxxx">
-          </div>
-        </div>
-        <button class="btn btn-primary btn-sm" onclick="saveEmail()"><i class="ti ti-device-floppy"></i>Save email settings</button>
-        <button class="btn btn-outline btn-sm" style="margin-left:8px" onclick="testEmail()"><i class="ti ti-send"></i>Send test email to Fagun</button>
       </div>
 
       <!-- Housemate emails -->
       <div class="card" style="margin-top:1rem">
         <div class="section-head"><span class="section-title">Housemate email addresses</span></div>
-        <p style="font-size:0.8rem;color:var(--muted);margin-bottom:1rem">Enter each person's Gmail so they receive cleaning day reminders</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-bottom:1rem">Add each person's Gmail. These are saved here for display — the actual reminder emails are sent by GitHub Actions using rota.json</p>
         <div id="emailInputs"></div>
         <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="saveEmails()"><i class="ti ti-device-floppy"></i>Save emails</button>
       </div>
@@ -625,22 +411,6 @@ input[type=file]{display:none}
         <div class="section-head"><span class="section-title">Housemate names</span></div>
         <div id="nameInputs"></div>
         <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="saveNames()"><i class="ti ti-device-floppy"></i>Save names</button>
-      </div>
-
-      <!-- Rota settings -->
-      <div class="card" style="margin-top:1rem">
-        <div class="section-head"><span class="section-title">Rota settings</span></div>
-        <div class="form-row" style="margin-bottom:10px">
-          <div class="form-group">
-            <span class="form-label">Rota start date</span>
-            <input type="date" class="nb-input" id="rotaDate">
-          </div>
-          <div class="form-group">
-            <span class="form-label">Start from person (1–9)</span>
-            <input type="number" class="nb-input" id="rotaStart" min="1" max="9" value="1">
-          </div>
-        </div>
-        <button class="btn btn-primary btn-sm" onclick="saveRotaSettings()"><i class="ti ti-refresh"></i>Rebuild rota</button>
       </div>
 
       <!-- Fund settings -->
@@ -659,15 +429,13 @@ input[type=file]{display:none}
         <div style="display:flex;flex-wrap:wrap;gap:8px">
           <button class="btn btn-danger btn-sm" onclick="if(confirm('Clear all expenses?')){S.expenses=[];sv();renderExp();renderDash();}">Clear expenses</button>
           <button class="btn btn-danger btn-sm" onclick="if(confirm('Reset fund?')){S.fund.payments={};sv();renderFund();renderDash();}">Reset fund</button>
-          <button class="btn btn-danger btn-sm" onclick="if(confirm('Rebuild rota from today?')){buildRota();renderRota();renderDash();}">Reset rota</button>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-</div><!-- end #app -->
-
-<!-- ── PROOF UPLOAD MODAL ── -->
+<!-- PROOF MODAL -->
 <div class="modal-bg" id="proofModal">
   <div class="modal">
     <h3>Upload Proof Photo</h3>
@@ -685,193 +453,156 @@ input[type=file]{display:none}
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════════ -->
 <script>
-/* ─── CONFIG ───────────────────────────────────────
-   IMPORTANT: After setting up EmailJS, paste your
-   keys into the Admin panel — they are saved to
-   localStorage automatically.
-────────────────────────────────────────────────── */
-const HOUSE_PIN    = '5757';
-const ADMIN_PW     = 'F@g771289';  // Change this in Firebase for production
-const WA_LINK      = 'https://chat.whatsapp.com/Js4BykzJT7NCDObPCCr827';
-const REMINDER_DAYS_BEFORE = 1; // send email 1 day before cleaning turn
+// ── CONFIG ──────────────────────────────────────────────────
+const HOUSE_PIN  = '5757';
+const ADMIN_PW   = 'F@g771289';
+const WA_LINK    = 'https://chat.whatsapp.com/Js4BykzJT7NCDObPCCr827';
+const START_DATE = '2026-05-11';
+const GAP_DAYS   = 2;
+const TASKS      = ['Kitchen','Bathroom','Hoovering','Bins','Mopping'];
+const COLORS     = ['#4a7c59','#c17f3e','#6366f1','#ec4899','#14b8a6','#f59e0b','#8b5cf6','#0891b2','#10b981'];
 
-const AVATAR_COLORS = [
-  '#4a7c59','#c17f3e','#6366f1','#ec4899',
-  '#14b8a6','#f59e0b','#8b5cf6','#0891b2','#10b981'
+// ── DEFAULT MEMBERS ─────────────────────────────────────────
+const DEFAULT_MEMBERS = [
+  { name:'Apou',   email:'' },
+  { name:'Tanvir', email:'' },
+  { name:'Marup',  email:'' },
+  { name:'Nahid',  email:'' },
+  { name:'Fahad',  email:'' },
+  { name:'Shadat', email:'' },
+  { name:'Fagun',  email:'shahriarfagun2005@gmail.com' },
+  { name:'Rakib',  email:'' },
+  { name:'Sanim',  email:'' }
 ];
 
-const TASKS_LIST = ['Kitchen','Bathroom','Hoovering','Bins','Mopping'];
-
-/* ─── STATE ─────────────────────────────────────── */
+// ── STATE ────────────────────────────────────────────────────
 let S = {
-  names:  ['Fagun','Marup','Nahid','Fahad','Mushtak','Apou',
-           'Person 7','Person 8','Person 9'],
-  emails: [
-    'shahriarfagun2005@gmail.com', // Fagun (testing)
-    '','','','','','','',''        // fill in admin panel
-  ],
+  members:  JSON.parse(JSON.stringify(DEFAULT_MEMBERS)),
   expenses: [],
-  rota: [],
-  fund: { perPerson: 30, payments: {} },
-  email: { pubKey:'', serviceId:'', templateId:'' }
+  rotaStatus: {}, // key: "personIdx_date" => { status, proof }
+  fund: { perPerson: 30, payments: {} }
 };
 
-function sv() {
-  try { localStorage.setItem('hg57v2', JSON.stringify(S)); } catch(e){}
-}
-function ld() {
-  try {
-    const d = localStorage.getItem('hg57v2');
-    if (d) { const p = JSON.parse(d); S = { ...S, ...p }; }
-  } catch(e) {}
+function sv(){ try{ localStorage.setItem('hg57v3', JSON.stringify(S)); }catch(e){} }
+function ld(){
+  try{
+    const d = localStorage.getItem('hg57v3');
+    if(d){ const p = JSON.parse(d); S = {...S, ...p}; }
+  }catch(e){}
 }
 
-/* ─── ROTA BUILDER ──────────────────────────────── */
-function buildRota(startDateStr, startIdx) {
-  startIdx = parseInt(startIdx) || 0;
-  const base = startDateStr ? new Date(startDateStr) : new Date();
-  S.rota = S.names.map((_, i) => {
-    const idx = (startIdx + i) % S.names.length;
+// ── ROTATING ROTA ENGINE ─────────────────────────────────────
+// Calculates rota entries for N cycles infinitely from startDate
+function getRotaEntries(count) {
+  const entries = [];
+  const base = new Date(START_DATE);
+  for(let i = 0; i < count; i++){
     const d = new Date(base);
-    d.setDate(d.getDate() + i * 2); // 1 day gap = every 2nd day
-    return {
-      personIdx: idx,
-      date: d.toISOString().split('T')[0],
-      tasks: [...TASKS_LIST],
-      status: i === 0 ? 'today' : 'scheduled',
-      proof: null
-    };
-  });
-  sv();
-}
-
-/* ─── EMAIL REMINDERS ───────────────────────────── */
-function initEmailJS() {
-  if (S.email.pubKey) {
-    emailjs.init(S.email.pubKey);
+    d.setDate(d.getDate() + i * GAP_DAYS);
+    const dateStr = d.toISOString().split('T')[0];
+    const memberIdx = i % S.members.length;
+    const cycleNum = Math.floor(i / S.members.length) + 1;
+    const key = `${memberIdx}_${dateStr}`;
+    const saved = S.rotaStatus[key] || {};
+    entries.push({
+      memberIdx,
+      date: dateStr,
+      tasks: [...TASKS],
+      status: saved.status || getAutoStatus(dateStr),
+      proof: saved.proof || null,
+      key,
+      cycleNum,
+      slotIndex: i
+    });
   }
+  return entries;
 }
 
-function checkAndSendReminders() {
-  if (!S.email.pubKey || !S.email.serviceId || !S.email.templateId) return;
-  const today = new Date();
-  S.rota.forEach(r => {
-    if (r.status === 'done' || r.status === 'missed') return;
-    const cleanDate = new Date(r.date);
-    const diff = Math.round((cleanDate - today) / (1000 * 60 * 60 * 24));
-    if (diff === REMINDER_DAYS_BEFORE) {
-      const email = S.emails[r.personIdx];
-      const name  = S.names[r.personIdx];
-      if (!email) return;
-      const lastSentKey = `remind_${r.personIdx}_${r.date}`;
-      if (localStorage.getItem(lastSentKey)) return; // already sent
-      emailjs.send(S.email.serviceId, S.email.templateId, {
-        to_name:       name,
-        to_email:      email,
-        cleaning_date: r.date,
-        tasks:         r.tasks.join(', '),
-        house_name:    '57 Hind Grove'
-      }).then(() => {
-        localStorage.setItem(lastSentKey, '1');
-        console.log('Reminder sent to', name);
-      }).catch(e => console.error('Email error:', e));
-    }
-  });
+function getAutoStatus(dateStr){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const d = new Date(dateStr);
+  if(d < today) return 'missed'; // past and not marked done
+  if(d.toDateString() === today.toDateString()) return 'today';
+  return 'scheduled';
 }
 
-/* ─── PIN LOGIC ─────────────────────────────────── */
+function toDateStr(d){ return d.toISOString().split('T')[0]; }
+
+// How many entries to show in rota
+let rotaShowCount = 18; // 2 full cycles
+
+// ── PIN ───────────────────────────────────────────────────────
 let pinEntry = '';
-function kp(v) {
-  if (v === 'clr') { pinEntry = ''; }
-  else if (v === 'del') { pinEntry = pinEntry.slice(0, -1); }
-  else if (pinEntry.length < 4) {
-    pinEntry += v;
-    if (pinEntry.length === 4) setTimeout(checkPin, 180);
-  }
+function kp(v){
+  if(v==='clr'){ pinEntry=''; }
+  else if(v==='del'){ pinEntry=pinEntry.slice(0,-1); }
+  else if(pinEntry.length<4){ pinEntry+=v; if(pinEntry.length===4) setTimeout(checkPin,180); }
   updateDots();
 }
-function updateDots() {
-  for (let i = 0; i < 4; i++)
-    document.getElementById('pd' + i).classList.toggle('filled', i < pinEntry.length);
+function updateDots(){
+  for(let i=0;i<4;i++) document.getElementById('pd'+i).classList.toggle('filled', i<pinEntry.length);
 }
-function checkPin() {
-  if (pinEntry === HOUSE_PIN) {
-    document.getElementById('pin-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
+function checkPin(){
+  if(pinEntry===HOUSE_PIN){
+    document.getElementById('pin-screen').style.display='none';
+    document.getElementById('app').style.display='block';
     renderAll();
-    initEmailJS();
-    checkAndSendReminders();
   } else {
-    const e = document.getElementById('pinErr');
-    e.classList.add('show');
-    pinEntry = ''; updateDots();
-    setTimeout(() => e.classList.remove('show'), 2200);
+    const e=document.getElementById('pinErr');
+    e.classList.add('show'); pinEntry=''; updateDots();
+    setTimeout(()=>e.classList.remove('show'),2200);
   }
 }
 
-/* ─── NAVIGATION ────────────────────────────────── */
-function goTab(tab) {
-  document.querySelectorAll('.nav-tab').forEach((t, i) => {
-    const tabs = ['dash','rota','expenses','fund','contact','admin'];
-    t.classList.toggle('active', tabs[i] === tab);
+// ── NAV ───────────────────────────────────────────────────────
+function goTab(tab){
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>{
+    const tabs=['dash','rota','expenses','fund','contact','admin'];
+    t.classList.toggle('active', tabs[i]===tab);
   });
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + tab).classList.add('active');
-  document.getElementById('search-panel').style.display = 'none';
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+tab).classList.add('active');
+  document.getElementById('search-panel').style.display='none';
 }
 
-/* ─── RENDER ALL ────────────────────────────────── */
-function renderAll() {
-  populateSelects();
-  renderDash();
-  renderRota();
-  renderExp();
-  renderFund();
-  renderContact();
+// ── RENDER ALL ────────────────────────────────────────────────
+function renderAll(){ populateSelects(); renderDash(); renderRota(); renderExp(); renderFund(); renderContact(); }
+
+function populateSelects(){
+  const opts = S.members.map((m,i)=>`<option value="${i}">${m.name}</option>`).join('');
+  ['ePerson','fPerson','cName'].forEach(id=>{ const el=document.getElementById(id); if(el) el.innerHTML=opts; });
 }
 
-function populateSelects() {
-  const opts = S.names.map((n, i) => `<option value="${i}">${n}</option>`).join('');
-  ['ePerson','fPerson','cName'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = opts;
-  });
-}
-
-/* ─── DASHBOARD ─────────────────────────────────── */
-function renderDash() {
-  const totalExp = S.expenses.reduce((s, e) => s + parseFloat(e.amount || 0), 0);
-  const totalFund = Object.values(S.fund.payments || {}).reduce((s, v) => s + parseFloat(v || 0), 0);
+// ── DASHBOARD ─────────────────────────────────────────────────
+function renderDash(){
+  const totalExp = S.expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+  const totalFund = Object.values(S.fund.payments||{}).reduce((s,v)=>s+parseFloat(v||0),0);
   const balance = totalFund - totalExp;
-  const paidCount = Object.keys(S.fund.payments || {}).filter(k => parseFloat(S.fund.payments[k]) > 0).length;
-  const doneCnt = S.rota.filter(r => r.status === 'done').length;
+  const paidCnt = Object.keys(S.fund.payments||{}).filter(k=>parseFloat(S.fund.payments[k])>0).length;
+  const entries = getRotaEntries(rotaShowCount);
+  const doneCnt = entries.filter(r=>r.status==='done').length;
 
-  document.getElementById('dashStats').innerHTML = `
+  document.getElementById('dashStats').innerHTML=`
     <div class="stat"><div class="stat-label">Total Spent</div><div class="stat-val amber">£${totalExp.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">Fund Balance</div><div class="stat-val ${balance >= 0 ? 'green' : 'red'}">£${balance.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">Contributed</div><div class="stat-val">${paidCount} / ${S.names.length}</div></div>
-    <div class="stat"><div class="stat-label">Cleans Done</div><div class="stat-val">${doneCnt} / ${S.rota.length}</div></div>
+    <div class="stat"><div class="stat-label">Fund Balance</div><div class="stat-val ${balance>=0?'green':'red'}">£${balance.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-label">Contributed</div><div class="stat-val">${paidCnt} / ${S.members.length}</div></div>
+    <div class="stat"><div class="stat-label">Cleans Done</div><div class="stat-val">${doneCnt}</div></div>
   `;
 
-  const upcoming = S.rota.filter(r => r.status !== 'done' && r.status !== 'missed').slice(0, 4);
+  const upcoming = entries.filter(r=>r.status!=='done'&&r.status!=='missed').slice(0,4);
   document.getElementById('dashRota').innerHTML = upcoming.length
-    ? upcoming.map(r => `
+    ? upcoming.map(r=>`
       <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px dashed var(--border)">
-        <div class="avatar" style="width:30px;height:30px;background:${AVATAR_COLORS[r.personIdx % AVATAR_COLORS.length]}22;color:${AVATAR_COLORS[r.personIdx % AVATAR_COLORS.length]};font-size:0.72rem">
-          ${S.names[r.personIdx][0]}
-        </div>
-        <div style="flex:1;font-size:0.85rem">${S.names[r.personIdx]}</div>
+        <div class="avatar" style="width:30px;height:30px;background:${COLORS[r.memberIdx%COLORS.length]}22;color:${COLORS[r.memberIdx%COLORS.length]};font-size:0.72rem">${S.members[r.memberIdx].name[0]}</div>
+        <div style="flex:1;font-size:0.85rem">${S.members[r.memberIdx].name}${r.cycleNum>1?`<span class="cycle-badge">Cycle ${r.cycleNum}</span>`:''}</div>
         <div style="font-size:0.72rem;color:var(--muted)">${r.date}</div>
       </div>`).join('')
     : '<div class="empty"><i class="ti ti-check"></i>All done!</div>';
 
-  const recent = [...S.expenses].reverse().slice(0, 4);
+  const recent = [...S.expenses].reverse().slice(0,4);
   document.getElementById('dashExp').innerHTML = recent.length
-    ? recent.map(e => `
+    ? recent.map(e=>`
       <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px dashed var(--border)">
         <div style="flex:1;font-size:0.85rem">${e.item}</div>
         <div style="font-size:0.85rem;font-weight:500">£${parseFloat(e.amount).toFixed(2)}</div>
@@ -879,335 +610,244 @@ function renderDash() {
     : '<div class="empty"><i class="ti ti-pencil"></i>Nothing yet</div>';
 }
 
-/* ─── ROTA ──────────────────────────────────────── */
-function renderRota() {
-  if (!S.rota.length) buildRota();
-  document.getElementById('rotaList').innerHTML = S.rota.map((r, i) => {
-    const c = AVATAR_COLORS[r.personIdx % AVATAR_COLORS.length];
-    const badgeMap = { done:'b-done', missed:'b-missed', today:'b-today', scheduled:'b-sched' };
-    const labelMap = { done:'✓ Done', missed:'✗ Missed', today:'Today!', scheduled:'Scheduled' };
-    return `
-    <div class="rota-item ${r.status === 'done' ? 'done' : r.status === 'missed' ? 'missed' : r.status === 'today' ? 'today' : ''}">
-      <div class="avatar" style="background:${c}22;color:${c}">${S.names[r.personIdx][0]}</div>
+// ── ROTA ──────────────────────────────────────────────────────
+function renderRota(){
+  const entries = getRotaEntries(rotaShowCount);
+  const badgeMap = { done:'b-done', missed:'b-missed', today:'b-today', scheduled:'b-sched' };
+  const labelMap = { done:'✓ Done', missed:'✗ Missed', today:'Today!', scheduled:'Scheduled' };
+
+  // Group by cycle
+  let html = '';
+  let lastCycle = 0;
+  entries.forEach((r,i)=>{
+    if(r.cycleNum !== lastCycle){
+      if(lastCycle > 0) html += '</div>';
+      html += `<div style="font-size:0.72rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin:${lastCycle>0?'1.5rem':0} 0 0.5rem">
+        Cycle ${r.cycleNum} ${r.cycleNum===1?'— Current':'— Repeating'}
+      </div><div>`;
+      lastCycle = r.cycleNum;
+    }
+    const c = COLORS[r.memberIdx % COLORS.length];
+    html += `
+    <div class="rota-item ${r.status==='done'?'done':r.status==='missed'?'missed':r.status==='today'?'today':''}">
+      <div class="avatar" style="background:${c}22;color:${c}">${S.members[r.memberIdx].name[0]}</div>
       <div style="flex:1">
-        <div style="font-size:0.9rem;font-weight:500">${S.names[r.personIdx]}</div>
+        <div style="font-size:0.9rem;font-weight:500">${S.members[r.memberIdx].name}</div>
         <div style="font-size:0.75rem;color:var(--muted);margin:2px 0">${r.tasks.join(' · ')}</div>
-        ${r.proof ? `<img src="${r.proof}" style="max-width:70px;border-radius:7px;margin-top:6px;border:1px solid var(--border)">` : ''}
+        ${r.proof?`<img src="${r.proof}" style="max-width:70px;border-radius:7px;margin-top:6px;border:1px solid var(--border)">` : ''}
       </div>
       <div style="text-align:right;flex-shrink:0">
         <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px">${r.date}</div>
-        <span class="badge ${badgeMap[r.status] || 'b-sched'}">${labelMap[r.status] || r.status}</span>
-        ${r.status !== 'done' ? `
-          <br><button class="btn btn-sm btn-outline" style="margin-top:5px;font-size:0.7rem" onclick="openProof(${i})">
-            <i class="ti ti-camera"></i>Proof
-          </button>` : ''}
-        ${r.status !== 'done' && r.status !== 'missed' ? `
-          <button class="btn btn-sm" style="margin-top:5px;margin-left:3px;background:#fee2e2;color:#991b1b;border:none;font-size:0.7rem;padding:5px 8px;border-radius:7px;cursor:pointer" onclick="markMissed(${i})">
-            Missed
-          </button>` : ''}
+        <span class="badge ${badgeMap[r.status]||'b-sched'}">${labelMap[r.status]||r.status}</span>
+        ${r.status!=='done'?`<br><button class="btn btn-sm btn-outline" style="margin-top:5px;font-size:0.7rem" onclick="openProof('${r.key}')"><i class="ti ti-camera"></i>Proof</button>` : ''}
+        ${r.status!=='done'&&r.status!=='missed'?`<button class="btn btn-sm" style="margin-top:5px;margin-left:3px;background:#fee2e2;color:#991b1b;border:none;font-size:0.7rem;padding:5px 8px;border-radius:7px;cursor:pointer" onclick="markMissed('${r.key}','${r.date}')">Missed</button>` : ''}
       </div>
     </div>`;
-  }).join('');
+  });
+  if(lastCycle > 0) html += '</div>';
+  document.getElementById('rotaList').innerHTML = html;
 }
 
-let pendingProofIdx = null;
+function loadMoreRota(){ rotaShowCount += 9; renderRota(); }
+
+let pendingProofKey = null;
 let pendingProofData = null;
-
-function openProof(i) {
-  pendingProofIdx = i;
-  pendingProofData = null;
-  document.getElementById('proofPrev').style.display = 'none';
-  document.getElementById('proofModal').classList.add('open');
-}
-function closeMod() {
-  document.getElementById('proofModal').classList.remove('open');
-}
-function prevProof(inp) {
-  if (!inp.files[0]) return;
-  const r = new FileReader();
-  r.onload = e => {
-    pendingProofData = e.target.result;
-    const img = document.getElementById('proofPrev');
-    img.src = pendingProofData;
-    img.style.display = 'block';
-  };
+function openProof(key){ pendingProofKey=key; pendingProofData=null; document.getElementById('proofPrev').style.display='none'; document.getElementById('proofModal').classList.add('open'); }
+function closeMod(){ document.getElementById('proofModal').classList.remove('open'); }
+function prevProof(inp){
+  if(!inp.files[0]) return;
+  const r=new FileReader();
+  r.onload=e=>{ pendingProofData=e.target.result; const img=document.getElementById('proofPrev'); img.src=pendingProofData; img.style.display='block'; };
   r.readAsDataURL(inp.files[0]);
 }
-function confirmProof() {
-  if (pendingProofIdx !== null) {
-    S.rota[pendingProofIdx].status = 'done';
-    S.rota[pendingProofIdx].proof  = pendingProofData;
+function confirmProof(){
+  if(pendingProofKey){
+    if(!S.rotaStatus) S.rotaStatus={};
+    S.rotaStatus[pendingProofKey] = { status:'done', proof: pendingProofData };
     sv(); renderRota(); renderDash();
   }
   closeMod();
 }
-function markMissed(i) {
-  S.rota[i].status = 'missed';
+function markMissed(key, date){
+  if(!S.rotaStatus) S.rotaStatus={};
+  S.rotaStatus[key] = { status:'missed', proof:null };
   sv(); renderRota(); renderDash();
 }
 
-/* ─── EXPENSES ──────────────────────────────────── */
-function addExp() {
-  const item   = document.getElementById('eItem').value.trim();
-  const amount = parseFloat(document.getElementById('eAmt').value);
-  const cat    = document.getElementById('eCat').value;
-  const person = document.getElementById('ePerson').value;
-  const prev   = document.getElementById('rPreview');
-  if (!item || isNaN(amount) || amount <= 0) {
-    alert('Please fill in what was bought and a valid amount');
-    return;
-  }
-  S.expenses.push({
-    item, amount, cat,
-    personIdx: parseInt(person),
-    date: new Date().toLocaleDateString('en-GB'),
-    receipt: prev.src && prev.src !== window.location.href ? prev.src : null
-  });
-  document.getElementById('eItem').value  = '';
-  document.getElementById('eAmt').value   = '';
-  prev.style.display = 'none'; prev.src   = '';
+// ── EXPENSES ──────────────────────────────────────────────────
+function addExp(){
+  const item=document.getElementById('eItem').value.trim();
+  const amount=parseFloat(document.getElementById('eAmt').value);
+  const cat=document.getElementById('eCat').value;
+  const person=document.getElementById('ePerson').value;
+  const prev=document.getElementById('rPreview');
+  if(!item||isNaN(amount)||amount<=0){ alert('Please fill in what was bought and a valid amount'); return; }
+  S.expenses.push({ item, amount, cat, memberIdx:parseInt(person), date:new Date().toLocaleDateString('en-GB'), receipt: prev.src&&prev.src!==window.location.href?prev.src:null });
+  document.getElementById('eItem').value=''; document.getElementById('eAmt').value='';
+  prev.style.display='none'; prev.src='';
   sv(); renderExp(); renderDash();
 }
-
-function prevReceipt(inp) {
-  if (!inp.files[0]) return;
-  const r = new FileReader();
-  r.onload = e => {
-    const img = document.getElementById('rPreview');
-    img.src = e.target.result;
-    img.style.display = 'block';
-  };
+function prevReceipt(inp){
+  if(!inp.files[0]) return;
+  const r=new FileReader();
+  r.onload=e=>{ const img=document.getElementById('rPreview'); img.src=e.target.result; img.style.display='block'; };
   r.readAsDataURL(inp.files[0]);
 }
-
-function renderExp() {
-  const total = S.expenses.reduce((s, e) => s + parseFloat(e.amount || 0), 0);
-  const bycat = {};
-  S.expenses.forEach(e => { bycat[e.cat] = (bycat[e.cat] || 0) + parseFloat(e.amount || 0); });
-  const topCat = Object.entries(bycat).sort((a, b) => b[1] - a[1])[0];
-
-  document.getElementById('expStats').innerHTML = `
+function renderExp(){
+  const total=S.expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+  const bycat={};
+  S.expenses.forEach(e=>{ bycat[e.cat]=(bycat[e.cat]||0)+parseFloat(e.amount||0); });
+  const topCat=Object.entries(bycat).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('expStats').innerHTML=`
     <div class="stat"><div class="stat-label">Total Spent</div><div class="stat-val amber">£${total.toFixed(2)}</div></div>
     <div class="stat"><div class="stat-label">Items Logged</div><div class="stat-val">${S.expenses.length}</div></div>
-    <div class="stat"><div class="stat-label">Top Category</div><div class="stat-val" style="font-size:1rem">${topCat ? topCat[0] : '—'}</div></div>
+    <div class="stat"><div class="stat-label">Top Category</div><div class="stat-val" style="font-size:1rem">${topCat?topCat[0]:'—'}</div></div>
   `;
-
   document.getElementById('expList').innerHTML = S.expenses.length
-    ? [...S.expenses].reverse().map((e, ri) => {
-        const i = S.expenses.length - 1 - ri;
-        return `
-        <div class="exp-item">
+    ? [...S.expenses].reverse().map((e,ri)=>{
+        const i=S.expenses.length-1-ri;
+        return `<div class="exp-item">
           <span class="exp-date">${e.date}</span>
           <span class="exp-name">${e.item}</span>
           <span class="exp-cat">${e.cat}</span>
-          <span style="font-size:0.78rem;color:var(--muted)">${S.names[e.personIdx] || ''}</span>
-          ${e.receipt ? `<img src="${e.receipt}" class="receipt-thumb" onclick="window.open('${e.receipt}','_blank')" title="View receipt">` : ''}
+          <span style="font-size:0.78rem;color:var(--muted)">${(S.members[e.memberIdx]||{}).name||''}</span>
+          ${e.receipt?`<img src="${e.receipt}" class="receipt-thumb" onclick="window.open('${e.receipt}','_blank')" title="View receipt">` : ''}
           <span class="exp-amt">£${parseFloat(e.amount).toFixed(2)}</span>
-          <button style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.85rem;padding:2px" onclick="delExp(${i})" title="Delete">
-            <i class="ti ti-trash"></i>
-          </button>
+          <button style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.85rem;padding:2px" onclick="delExp(${i})"><i class="ti ti-trash"></i></button>
         </div>`;
       }).join('')
-    : '<div class="empty"><i class="ti ti-pencil"></i>The notebook is empty — add your first expense above</div>';
+    : '<div class="empty"><i class="ti ti-pencil"></i>The notebook is empty</div>';
 }
+function delExp(i){ if(confirm('Remove this expense?')){ S.expenses.splice(i,1); sv(); renderExp(); renderDash(); } }
 
-function delExp(i) {
-  if (confirm('Remove this expense?')) {
-    S.expenses.splice(i, 1);
-    sv(); renderExp(); renderDash();
-  }
-}
-
-/* ─── RESERVE FUND ──────────────────────────────── */
-function addFund() {
-  const amt    = parseFloat(document.getElementById('fAmt').value);
-  const person = document.getElementById('fPerson').value;
-  if (isNaN(amt) || amt <= 0) { alert('Enter a valid amount'); return; }
-  if (!S.fund.payments) S.fund.payments = {};
-  S.fund.payments[person] = ((parseFloat(S.fund.payments[person] || 0)) + amt).toString();
-  document.getElementById('fAmt').value = '';
+// ── FUND ──────────────────────────────────────────────────────
+function addFund(){
+  const amt=parseFloat(document.getElementById('fAmt').value);
+  const person=document.getElementById('fPerson').value;
+  if(isNaN(amt)||amt<=0){ alert('Enter a valid amount'); return; }
+  if(!S.fund.payments) S.fund.payments={};
+  S.fund.payments[person]=((parseFloat(S.fund.payments[person]||0))+amt).toString();
+  document.getElementById('fAmt').value='';
   sv(); renderFund(); renderDash();
 }
-
-function toggleFund(i) {
-  if (!S.fund.payments) S.fund.payments = {};
-  const paid = parseFloat(S.fund.payments[i] || 0);
-  S.fund.payments[i] = paid > 0 ? '0' : (S.fund.perPerson || 0).toString();
+function toggleFund(i){
+  if(!S.fund.payments) S.fund.payments={};
+  const paid=parseFloat(S.fund.payments[i]||0);
+  S.fund.payments[i]=paid>0?'0':(S.fund.perPerson||0).toString();
   sv(); renderFund(); renderDash();
 }
-
-function renderFund() {
-  const payments    = S.fund.payments || {};
-  const perPerson   = S.fund.perPerson || 0;
-  const collected   = Object.values(payments).reduce((s, v) => s + parseFloat(v || 0), 0);
-  const totalExp    = S.expenses.reduce((s, e) => s + parseFloat(e.amount || 0), 0);
-  const balance     = collected - totalExp;
-  const expected    = S.names.length * perPerson;
-
-  document.getElementById('fundStats').innerHTML = `
+function renderFund(){
+  const payments=S.fund.payments||{};
+  const perPerson=S.fund.perPerson||0;
+  const collected=Object.values(payments).reduce((s,v)=>s+parseFloat(v||0),0);
+  const totalExp=S.expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+  const balance=collected-totalExp;
+  const expected=S.members.length*perPerson;
+  document.getElementById('fundStats').innerHTML=`
     <div class="stat"><div class="stat-label">Collected</div><div class="stat-val green">£${collected.toFixed(2)}</div></div>
     <div class="stat"><div class="stat-label">Spent</div><div class="stat-val amber">£${totalExp.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-val ${balance >= 0 ? 'green' : 'red'}">£${balance.toFixed(2)}</div><div class="stat-label">Balance</div></div>
-    <div class="stat"><div class="stat-label">Expected total</div><div class="stat-val">£${expected}</div></div>
+    <div class="stat"><div class="stat-val ${balance>=0?'green':'red'}">£${balance.toFixed(2)}</div><div class="stat-label">Balance</div></div>
+    <div class="stat"><div class="stat-label">Expected</div><div class="stat-val">£${expected}</div></div>
   `;
-
-  document.getElementById('fundList').innerHTML = S.names.map((name, i) => {
-    const paid = parseFloat(payments[i] || 0);
-    const hasPaid = paid > 0;
-    const c = AVATAR_COLORS[i % AVATAR_COLORS.length];
-    return `
-    <div class="fund-row">
-      <div class="avatar" style="width:34px;height:34px;background:${c}22;color:${c};font-size:0.78rem">${name[0]}</div>
-      <div style="flex:1;font-size:0.875rem">${name}</div>
-      ${hasPaid ? `<span style="font-size:0.8rem;color:var(--success);font-weight:500">£${paid.toFixed(2)}</span>` : ''}
-      <span style="font-size:0.75rem;font-weight:500;color:${hasPaid ? 'var(--success)' : 'var(--danger)'}">${hasPaid ? 'Paid' : 'Unpaid'}</span>
-      <button class="toggle-btn ${hasPaid ? 'paid' : ''}" onclick="toggleFund(${i})" title="Toggle payment">
-        ${hasPaid ? '<i class="ti ti-check" style="font-size:12px"></i>' : ''}
+  document.getElementById('fundList').innerHTML = S.members.map((m,i)=>{
+    const paid=parseFloat(payments[i]||0);
+    const hasPaid=paid>0;
+    const c=COLORS[i%COLORS.length];
+    return `<div class="fund-row">
+      <div class="avatar" style="width:34px;height:34px;background:${c}22;color:${c};font-size:0.78rem">${m.name[0]}</div>
+      <div style="flex:1;font-size:0.875rem">${m.name}</div>
+      ${hasPaid?`<span style="font-size:0.8rem;color:var(--success);font-weight:500">£${paid.toFixed(2)}</span>`:''}
+      <span style="font-size:0.75rem;font-weight:500;color:${hasPaid?'var(--success)':'var(--danger)'}">${hasPaid?'Paid':'Unpaid'}</span>
+      <button class="toggle-btn ${hasPaid?'paid':''}" onclick="toggleFund(${i})">
+        ${hasPaid?'<i class="ti ti-check" style="font-size:12px"></i>':''}
       </button>
     </div>`;
   }).join('');
 }
 
-/* ─── CONTACT ───────────────────────────────────── */
-function renderContact() {
-  const el = document.getElementById('cName');
-  if (el) el.innerHTML = S.names.map((n, i) => `<option value="${i}">${n}</option>`).join('');
+// ── CONTACT ───────────────────────────────────────────────────
+function renderContact(){
+  const el=document.getElementById('cName');
+  if(el) el.innerHTML=S.members.map((m,i)=>`<option value="${i}">${m.name}</option>`).join('');
 }
-function sendComplaint() {
-  const name = S.names[document.getElementById('cName').value];
-  const msg  = document.getElementById('cMsg').value.trim();
-  if (!msg) { alert('Please write a message first'); return; }
-  const text = encodeURIComponent(`[57 Hind Grove Web]\n${name} says:\n${msg}`);
-  window.open(`https://wa.me/?text=${text}`, '_blank');
-  document.getElementById('cMsg').value = '';
+function sendComplaint(){
+  const name=S.members[document.getElementById('cName').value].name;
+  const msg=document.getElementById('cMsg').value.trim();
+  if(!msg){ alert('Please write a message first'); return; }
+  const text=encodeURIComponent(`[57 Hind Grove Web]\n${name} says:\n${msg}`);
+  window.open(`https://wa.me/?text=${text}`,'_blank');
+  document.getElementById('cMsg').value='';
 }
 
-/* ─── ADMIN ─────────────────────────────────────── */
-function unlockAdmin() {
-  const pw = document.getElementById('aPwIn').value;
-  if (pw === ADMIN_PW) {
-    document.getElementById('adminGate').style.display  = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
+// ── ADMIN ─────────────────────────────────────────────────────
+function unlockAdmin(){
+  const pw=document.getElementById('aPwIn').value;
+  if(pw===ADMIN_PW){
+    document.getElementById('adminGate').style.display='none';
+    document.getElementById('adminPanel').style.display='block';
     renderAdminPanel();
   } else {
-    const err = document.getElementById('aErr');
-    err.style.display = 'block';
-    setTimeout(() => err.style.display = 'none', 2500);
+    const err=document.getElementById('aErr');
+    err.style.display='block';
+    setTimeout(()=>err.style.display='none',2500);
   }
 }
-
-function renderAdminPanel() {
-  // Names
-  document.getElementById('nameInputs').innerHTML = S.names.map((n, i) => `
+function renderAdminPanel(){
+  document.getElementById('nameInputs').innerHTML=S.members.map((m,i)=>`
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
       <span style="font-size:0.72rem;color:var(--muted);width:18px">${i+1}.</span>
-      <input class="nb-input" id="ni_${i}" value="${n}" style="margin-bottom:0;flex:1">
-      ${i === 0 ? '<span style="font-size:0.68rem;color:var(--sage);padding:2px 6px;background:var(--sage-light);border-radius:4px">Admin</span>' : ''}
+      <input class="nb-input" id="ni_${i}" value="${m.name}" style="margin-bottom:0;flex:1">
+      ${i===6?'<span style="font-size:0.68rem;color:var(--sage);padding:2px 6px;background:var(--sage-light);border-radius:4px">Admin</span>':''}
     </div>`).join('');
-
-  // Emails
-  document.getElementById('emailInputs').innerHTML = S.names.map((n, i) => `
+  document.getElementById('emailInputs').innerHTML=S.members.map((m,i)=>`
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-      <span style="font-size:0.72rem;color:var(--muted);width:60px">${n}</span>
-      <input class="nb-input" id="ei_${i}" type="email" value="${S.emails[i] || ''}" placeholder="gmail address" style="margin-bottom:0;flex:1">
+      <span style="font-size:0.72rem;color:var(--muted);width:55px">${m.name}</span>
+      <input class="nb-input" id="ei_${i}" type="email" value="${m.email||''}" placeholder="gmail address" style="margin-bottom:0;flex:1">
     </div>`).join('');
-
-  // EmailJS keys
-  document.getElementById('ejPubKey').value  = S.email.pubKey    || '';
-  document.getElementById('ejService').value = S.email.serviceId || '';
-  document.getElementById('ejTemplate').value= S.email.templateId|| '';
-
-  // Fund
-  document.getElementById('contribAmt').value = S.fund.perPerson || 30;
+  document.getElementById('contribAmt').value=S.fund.perPerson||30;
 }
-
-function saveNames() {
-  S.names = S.names.map((_, i) => document.getElementById('ni_' + i).value.trim() || S.names[i]);
+function saveNames(){
+  S.members=S.members.map((m,i)=>({...m, name:document.getElementById('ni_'+i).value.trim()||m.name}));
   sv(); renderAll(); alert('Names saved!');
 }
-function saveEmails() {
-  S.emails = S.names.map((_, i) => document.getElementById('ei_' + i).value.trim() || '');
-  sv(); alert('Emails saved!');
+function saveEmails(){
+  S.members=S.members.map((m,i)=>({...m, email:document.getElementById('ei_'+i).value.trim()||''}));
+  sv(); alert('Emails saved! Remember to also update rota.json on GitHub with these emails for the automatic reminders.');
 }
-function saveEmail() {
-  S.email = {
-    pubKey:     document.getElementById('ejPubKey').value.trim(),
-    serviceId:  document.getElementById('ejService').value.trim(),
-    templateId: document.getElementById('ejTemplate').value.trim()
-  };
-  sv(); initEmailJS(); alert('Email settings saved!');
-}
-function testEmail() {
-  if (!S.email.pubKey || !S.email.serviceId || !S.email.templateId) {
-    alert('Please fill in and save your EmailJS keys first');
-    return;
-  }
-  emailjs.send(S.email.serviceId, S.email.templateId, {
-    to_name:       'Fagun',
-    to_email:      S.emails[0] || 'shahriarfagun2005@gmail.com',
-    cleaning_date: new Date().toISOString().split('T')[0],
-    tasks:         TASKS_LIST.join(', '),
-    house_name:    '57 Hind Grove'
-  }).then(() => alert('Test email sent to ' + (S.emails[0] || 'shahriarfagun2005@gmail.com') + '!'))
-    .catch(e => alert('Error sending email: ' + e.text));
-}
-function saveContrib() {
-  const v = parseFloat(document.getElementById('contribAmt').value);
-  if (v > 0) { S.fund.perPerson = v; sv(); renderFund(); alert('Contribution amount saved!'); }
-}
-function saveRotaSettings() {
-  const date  = document.getElementById('rotaDate').value;
-  const start = parseInt(document.getElementById('rotaStart').value) - 1;
-  buildRota(date || null, isNaN(start) ? 0 : start);
-  renderRota(); renderDash();
-  alert('Rota rebuilt!');
+function saveContrib(){
+  const v=parseFloat(document.getElementById('contribAmt').value);
+  if(v>0){ S.fund.perPerson=v; sv(); renderFund(); alert('Saved!'); }
 }
 
-/* ─── SEARCH ────────────────────────────────────── */
-function doSearch(q) {
-  const panel = document.getElementById('search-panel');
-  if (!q || q.length < 2) { panel.style.display = 'none'; return; }
-  const ql = q.toLowerCase();
-  const results = [];
-
-  S.expenses.forEach(e => {
-    if (e.item.toLowerCase().includes(ql) || e.cat.toLowerCase().includes(ql) ||
-        (S.names[e.personIdx] || '').toLowerCase().includes(ql)) {
-      results.push({ type:'receipt', label:`${e.item} — £${parseFloat(e.amount).toFixed(2)}`,
-        sub:`${e.cat} · ${e.date} · ${S.names[e.personIdx] || ''}`, tab:'expenses' });
-    }
+// ── SEARCH ────────────────────────────────────────────────────
+function doSearch(q){
+  const panel=document.getElementById('search-panel');
+  const inner=document.getElementById('search-panel-inner');
+  if(!q||q.length<2){ panel.style.display='none'; return; }
+  const ql=q.toLowerCase();
+  const results=[];
+  S.expenses.forEach(e=>{
+    if(e.item.toLowerCase().includes(ql)||e.cat.toLowerCase().includes(ql)||(S.members[e.memberIdx]||{name:''}).name.toLowerCase().includes(ql))
+      results.push({type:'receipt',label:`${e.item} — £${parseFloat(e.amount).toFixed(2)}`,sub:`${e.cat} · ${e.date}`,tab:'expenses'});
   });
-  S.rota.forEach(r => {
-    const n = S.names[r.personIdx] || '';
-    if (n.toLowerCase().includes(ql) || r.status.toLowerCase().includes(ql) || r.date.includes(ql)) {
-      results.push({ type:'rota', label:`${n} — ${r.date}`,
-        sub:`Status: ${r.status} · ${r.tasks.join(', ')}`, tab:'rota' });
-    }
+  getRotaEntries(rotaShowCount).forEach(r=>{
+    const n=S.members[r.memberIdx].name;
+    if(n.toLowerCase().includes(ql)||r.status.toLowerCase().includes(ql)||r.date.includes(ql))
+      results.push({type:'rota',label:`${n} — ${r.date}`,sub:`Status: ${r.status} · Cycle ${r.cycleNum}`,tab:'rota'});
   });
-
-  if (!results.length) {
-    panel.innerHTML = '<div style="padding:12px 16px;font-size:0.85rem;color:var(--muted)">No results found</div>';
-  } else {
-    panel.innerHTML = results.map(r =>
-      `<div class="sr-item" onclick="goTab('${r.tab}')">
-        <span class="sr-tag">${r.type}</span>
-        <strong style="font-size:0.875rem">${r.label}</strong>
-        <br><span style="color:var(--muted);font-size:0.78rem">${r.sub}</span>
-      </div>`).join('');
-  }
-  panel.style.display = 'block';
+  inner.innerHTML = results.length
+    ? results.map(r=>`<div class="sr-item" onclick="goTab('${r.tab}')"><span class="sr-tag">${r.type}</span><strong style="font-size:0.875rem">${r.label}</strong><br><span style="color:var(--muted);font-size:0.78rem">${r.sub}</span></div>`).join('')
+    : '<div style="padding:12px 16px;font-size:0.85rem;color:var(--muted)">No results found</div>';
+  panel.style.display='block';
 }
-
-document.addEventListener('click', e => {
-  if (!e.target.closest('#search-panel') && !e.target.closest('#gSearch'))
-    document.getElementById('search-panel').style.display = 'none';
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#search-panel')&&!e.target.closest('#gSearch'))
+    document.getElementById('search-panel').style.display='none';
 });
 
-/* ─── INIT ──────────────────────────────────────── */
+// ── INIT ──────────────────────────────────────────────────────
 ld();
-if (!S.rota || S.rota.length === 0) buildRota();
-// Ensure emails array length matches names
-while (S.emails.length < S.names.length) S.emails.push('');
 </script>
 </body>
 </html>
+
