@@ -17,7 +17,7 @@ if (!PUBLIC_KEY || !SERVICE_ID || !TEMPLATE_ID) {
   process.exit(0);
 }
 
-emailjs.init({ publicKey: PUBLIC_KEY, privateKey: PUBLIC_KEY });
+emailjs.init({ publicKey: PUBLIC_KEY, privateKey: process.env.EMAILJS_PRIVATE_KEY });
 
 function toDateStr(date) { return date.toISOString().split('T')[0]; }
 
