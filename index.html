@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>57 Hind Grove Web - Everything you need for this home is here.</title>
+<title>57 Hind Grove Web - Everything you need for this house is here.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
@@ -46,11 +46,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .nav-tab{padding:13px 16px;font-size:0.82rem;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;border-top:none;border-left:none;border-right:none;background:none;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:5px}
 .nav-tab.active{color:var(--sage);border-bottom-color:var(--sage)}
 .tab-badge{background:#dc2626;color:white;font-size:0.6rem;padding:1px 5px;border-radius:10px;margin-left:2px;font-weight:600}
-#search-panel{display:none;margin:1rem auto;max-width:900px;padding:0 1.5rem}
-#search-panel-inner{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.sr-item{padding:11px 16px;border-bottom:1px solid var(--border);cursor:pointer;font-size:0.875rem}
+
+/* Search results dropdown */
+#search-panel{display:none;position:fixed;top:58px;left:0;right:0;z-index:150;padding:0 1.5rem;max-width:900px;margin:0 auto}
+#search-panel-inner{background:white;border:1px solid var(--border);border-radius:0 0 12px 12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.12);max-height:60vh;overflow-y:auto}
+.sr-item{padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s}
+.sr-item:last-child{border-bottom:none}
 .sr-item:hover{background:var(--warm)}
-.sr-tag{font-size:0.68rem;background:var(--warm);color:var(--muted);padding:1px 7px;border-radius:4px;margin-right:6px}
+.sr-tag{font-size:0.68rem;background:var(--warm);color:var(--muted);padding:2px 8px;border-radius:20px;margin-right:6px;font-weight:500}
+.sr-label{font-size:0.875rem;font-weight:500}
+.sr-sub{font-size:0.75rem;color:var(--muted);margin-top:2px}
+.sr-empty{padding:16px;text-align:center;color:var(--muted);font-size:0.85rem}
+
 .page{display:none;padding:1.5rem;max-width:920px;margin:0 auto}
 .page.active{display:block}
 .page-title{font-family:'DM Serif Display',serif;font-size:1.65rem;margin-bottom:0.2rem}
@@ -133,6 +140,15 @@ input[type=file]{display:none}
 .cycle-badge{display:inline-block;font-size:0.68rem;background:#ede9fe;color:#5b21b6;padding:1px 7px;border-radius:4px;margin-left:4px}
 .img-size-note{font-size:0.72rem;color:var(--muted);margin-top:4px;font-style:italic}
 .reset-btn{margin-top:5px;margin-left:3px;background:#ede9fe;color:#5b21b6;border:none;font-size:0.7rem;padding:5px 8px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:3px}
+
+/* Fund period tabs */
+.period-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.period-tab{padding:5px 12px;border-radius:20px;font-size:0.78rem;cursor:pointer;border:1px solid var(--border);background:white;font-family:'DM Sans',sans-serif;transition:all 0.15s}
+.period-tab.active{background:var(--sage);color:white;border-color:var(--sage)}
+.period-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem}
+.period-title{font-size:0.9rem;font-weight:500}
+.period-note{font-size:0.72rem;color:var(--muted);font-style:italic}
+
 @media(max-width:600px){.form-row{grid-template-columns:1fr}.stat-row{grid-template-columns:1fr 1fr}.search-bar{width:140px}.exp-cat{display:none}.top-bar-logo small{display:none}}
 </style>
 </head>
@@ -141,7 +157,7 @@ input[type=file]{display:none}
 <div id="pin-screen">
   <div>
     <div class="pin-title">57 <em>Hind Grove</em> Web</div>
-    <p class="pin-sub">Everything you need for this home is here.</p>
+    <p class="pin-sub">Everything you need for this house is here.</p>
   </div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:1rem">
     <p class="pin-label">Enter house PIN</p>
@@ -173,11 +189,11 @@ input[type=file]{display:none}
 
 <div id="app">
   <div class="top-bar">
-    <div class="top-bar-logo">57 <em>Hind Grove</em> Web<small>Everything you need for this home is here.</small></div>
+    <div class="top-bar-logo">57 <em>Hind Grove</em> Web<small>Everything you need for this house is here.</small></div>
     <div class="top-bar-right">
       <div class="search-wrap">
         <i class="ti ti-search"></i>
-        <input class="search-bar" id="gSearch" placeholder="Search..." oninput="doSearch(this.value)">
+        <input class="search-bar" id="gSearch" placeholder="Search rota, expenses..." oninput="doSearch(this.value)" onfocus="if(this.value.length>1)document.getElementById('search-panel').style.display='block'">
       </div>
       <button class="icon-btn" onclick="goTab('admin')">
         <i class="ti ti-settings"></i>
@@ -185,6 +201,12 @@ input[type=file]{display:none}
       </button>
     </div>
   </div>
+
+  <!-- Search panel — fixed below top bar -->
+  <div id="search-panel">
+    <div id="search-panel-inner"></div>
+  </div>
+
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="goTab('dash')"><i class="ti ti-home"></i>Home</button>
     <button class="nav-tab" onclick="goTab('rota')"><i class="ti ti-calendar"></i>Cleaning Rota</button>
@@ -193,11 +215,11 @@ input[type=file]{display:none}
     <button class="nav-tab" onclick="goTab('contact')"><i class="ti ti-message-circle"></i>Contact</button>
     <button class="nav-tab" id="adminTab" onclick="goTab('admin')"><i class="ti ti-lock"></i>Admin</button>
   </div>
-  <div id="search-panel"><div id="search-panel-inner"></div></div>
 
+  <!-- DASHBOARD -->
   <div id="page-dash" class="page active">
     <div class="page-title">Welcome to <em>57 Hind Grove</em> 🏠</div>
-    <p class="page-sub">All data synced in real time across every device</p>
+    <p class="page-sub">Everything you need for this house is here. Synced in real time.</p>
     <div class="stat-row" id="dashStats"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
       <div class="card"><div class="section-head"><span class="section-title">Upcoming rota</span></div><div id="dashRota"></div></div>
@@ -205,6 +227,7 @@ input[type=file]{display:none}
     </div>
   </div>
 
+  <!-- ROTA -->
   <div id="page-rota" class="page">
     <div class="page-title">Cleaning <em>Rota</em></div>
     <p class="page-sub">Submit photo proof — Fagun will approve it. Rota cycles forever!</p>
@@ -214,6 +237,7 @@ input[type=file]{display:none}
     </div>
   </div>
 
+  <!-- EXPENSES -->
   <div id="page-expenses" class="page">
     <div class="page-title">House <em>Expenses</em></div>
     <p class="page-sub">Everyone can add — only admin can delete</p>
@@ -248,24 +272,57 @@ input[type=file]{display:none}
     </div>
   </div>
 
+  <!-- RESERVE FUND -->
   <div id="page-fund" class="page">
     <div class="page-title">Reserve <em>Fund</em></div>
-    <p class="page-sub">Track the shared pot — admin manages payments</p>
+    <p class="page-sub">Monthly fund tracker — each period tracked separately</p>
     <div class="stat-row" id="fundStats"></div>
-    <div class="card" id="fundAddCard" style="display:none">
-      <div class="section-head"><span class="section-title">Record a payment</span></div>
+
+    <!-- Period selector -->
+    <div class="card" style="margin-bottom:1rem">
+      <div class="period-header">
+        <span class="section-title">Fund period</span>
+        <button class="btn btn-outline btn-sm" id="addPeriodBtn" style="display:none" onclick="showAddPeriod()"><i class="ti ti-plus"></i>New period</button>
+      </div>
+      <div class="period-tabs" id="periodTabs"></div>
+      <div id="addPeriodForm" style="display:none;margin-top:0.75rem">
+        <div class="form-row" style="margin-bottom:8px">
+          <div class="form-group">
+            <span class="form-label">Period label (e.g. "May 2026" or "May 1st Half")</span>
+            <input class="nb-input" id="periodLabel" placeholder="e.g. May 2026" style="margin-bottom:0">
+          </div>
+          <div class="form-group">
+            <span class="form-label">Amount per person (£)</span>
+            <input type="number" class="nb-input" id="periodAmount" placeholder="e.g. 30" style="margin-bottom:0">
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary btn-sm" onclick="createPeriod()"><i class="ti ti-check"></i>Create period</button>
+          <button class="btn btn-outline btn-sm" onclick="document.getElementById('addPeriodForm').style.display='none'">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fund add (admin only) -->
+    <div class="card" id="fundAddCard" style="display:none;margin-bottom:1rem">
+      <div class="section-head"><span class="section-title">Record a payment for current period</span></div>
       <div class="form-row" style="margin-bottom:10px">
         <div class="form-group"><span class="form-label">Amount (£)</span><input class="nb-input" id="fAmt" type="number" min="0" placeholder="0.00"></div>
         <div class="form-group"><span class="form-label">From</span><select class="nb-input" id="fPerson"></select></div>
       </div>
       <button class="btn btn-primary btn-sm" onclick="addFund()"><i class="ti ti-check"></i>Mark as paid</button>
     </div>
-    <div class="card" style="margin-top:1rem">
-      <div class="section-head"><span class="section-title">Payment tracker</span></div>
+
+    <div class="card">
+      <div class="section-head">
+        <span class="section-title" id="fundPeriodTitle">Payment tracker</span>
+        <span id="fundPeriodMeta" style="font-size:0.75rem;color:var(--muted)"></span>
+      </div>
       <div id="fundList"></div>
     </div>
   </div>
 
+  <!-- CONTACT -->
   <div id="page-contact" class="page">
     <div class="page-title">Contact <em>&amp; Complaints</em></div>
     <p class="page-sub">Reach the group or raise a complaint</p>
@@ -282,6 +339,7 @@ input[type=file]{display:none}
     </div>
   </div>
 
+  <!-- ADMIN -->
   <div id="page-admin" class="page">
     <div class="page-title"><em>Admin</em> Panel</div>
     <p class="page-sub">Fagun only — approve cleaning proof &amp; manage settings</p>
@@ -304,27 +362,23 @@ input[type=file]{display:none}
         <div id="nameInputs"></div>
         <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="saveNames()"><i class="ti ti-device-floppy"></i>Save names</button>
       </div>
-      <div class="card" style="margin-top:1rem">
-        <div class="section-head"><span class="section-title">Per-person contribution</span></div>
-        <div class="form-group" style="margin-bottom:10px"><span class="form-label">Amount per person (£/month)</span><input type="number" class="nb-input" id="contribAmt" placeholder="e.g. 30"></div>
-        <button class="btn btn-primary btn-sm" onclick="saveContrib()"><i class="ti ti-device-floppy"></i>Save</button>
-      </div>
       <div class="card" style="margin-top:1rem;border-color:#fca5a5">
         <div class="section-head"><span class="section-title" style="color:var(--danger)">⚠ Danger zone</span></div>
         <div style="display:flex;flex-wrap:wrap;gap:8px">
           <button class="btn btn-danger btn-sm" onclick="clearExpenses()">Clear all expenses</button>
-          <button class="btn btn-danger btn-sm" onclick="resetFund()">Reset fund</button>
+          <button class="btn btn-danger btn-sm" onclick="resetFund()">Reset all fund data</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- PROOF MODAL -->
 <div class="modal-bg" id="proofModal">
   <div class="modal">
     <h3>Submit Proof Photo</h3>
     <p style="font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem">Upload a clear photo — Fagun will review and approve it</p>
-    <p style="font-size:0.72rem;color:var(--muted);margin-bottom:1rem;font-style:italic">💡 Tip: Take a new photo rather than picking from gallery for faster upload</p>
+    <p style="font-size:0.72rem;color:var(--muted);margin-bottom:1rem;font-style:italic">💡 Take a new photo rather than picking from gallery for faster upload</p>
     <label class="upload-area" for="proofFile">
       <i class="ti ti-camera" style="font-size:1.4rem;color:var(--muted);display:block;margin-bottom:4px"></i>
       <span style="font-size:0.78rem;color:var(--muted)">Tap to take / upload photo</span>
@@ -341,7 +395,7 @@ input[type=file]{display:none}
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc, getDocs, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD7cDTQ7qwbCaLiZ-Cana3jsfj7xrft5uQ",
@@ -363,156 +417,145 @@ const TASKS      = ['Kitchen','Bathroom','Hoovering','Bins','Mopping'];
 const COLORS     = ['#4a7c59','#c17f3e','#6366f1','#ec4899','#14b8a6','#f59e0b','#8b5cf6','#0891b2','#10b981'];
 const MAX_BYTES  = 900000;
 
-let names    = ['Apou','Tanvir','Marup','Nahid','Fahad','Shadat','Fagun','Rakib','Sanim'];
-let expenses = [];
-let rotaStat = {};
-let fund     = { perPerson:30, payments:{} };
-let pending  = [];
+let names        = ['Apou','Tanvir','Marup','Nahid','Fahad','Shadat','Fagun','Rakib','Sanim'];
+let expenses     = [];
+let rotaStat     = {};
+let fundPeriods  = {}; // { periodId: { label, perPerson, payments:{}, createdAt } }
+let activePeriod = null;
+let pending      = [];
 let rotaShowCount    = 18;
 let pendingProofInfo = null;
 let pendingProofData = null;
 let receiptData      = null;
 let adminUnlocked    = false;
 
-// ── SMART IMAGE COMPRESSION ───────────────────────────────────
-async function smartCompress(dataUrl, targetBytes, startPx, startQuality) {
-  const steps = [
-    { px: startPx,       q: startQuality },
-    { px: startPx,       q: startQuality - 0.1 },
-    { px: startPx - 100, q: startQuality - 0.15 },
-    { px: startPx - 200, q: startQuality - 0.2 },
-    { px: 500,           q: 0.5 },
-    { px: 400,           q: 0.4 },
-    { px: 300,           q: 0.35 },
+// ── IMAGE COMPRESSION ─────────────────────────────────────────
+async function smartCompress(dataUrl, targetBytes, startPx, startQ) {
+  const steps=[
+    {px:startPx,    q:startQ},
+    {px:startPx,    q:startQ-0.1},
+    {px:startPx-100,q:startQ-0.15},
+    {px:startPx-200,q:startQ-0.2},
+    {px:500,q:0.5},{px:400,q:0.4},{px:300,q:0.35}
   ];
-  for (const step of steps) {
-    const result = await compressOnce(dataUrl, step.px, step.q);
-    const bytes = Math.round((result.length * 3) / 4);
-    if (bytes <= targetBytes) return result;
+  for(const s of steps){
+    const r=await compressOnce(dataUrl,s.px,s.q);
+    if(Math.round((r.length*3)/4)<=targetBytes) return r;
   }
-  return await compressOnce(dataUrl, 250, 0.3);
+  return await compressOnce(dataUrl,250,0.3);
 }
-
-function compressOnce(dataUrl, maxPx, quality) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onerror = () => reject(new Error('Image load failed'));
-    img.onload = () => {
-      try {
-        const canvas = document.createElement('canvas');
-        let w = img.width, h = img.height;
-        if (w > maxPx || h > maxPx) {
-          if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
-          else { w = Math.round(w * maxPx / h); h = maxPx; }
-        }
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL('image/jpeg', quality));
-      } catch(e) { reject(e); }
+function compressOnce(dataUrl,maxPx,quality){
+  return new Promise((res,rej)=>{
+    const img=new Image();
+    img.onerror=()=>rej(new Error('Load failed'));
+    img.onload=()=>{
+      try{
+        const c=document.createElement('canvas');
+        let w=img.width,h=img.height;
+        if(w>maxPx||h>maxPx){if(w>h){h=Math.round(h*maxPx/w);w=maxPx;}else{w=Math.round(w*maxPx/h);h=maxPx;}}
+        c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+        res(c.toDataURL('image/jpeg',quality));
+      }catch(e){rej(e);}
     };
-    img.src = dataUrl;
+    img.src=dataUrl;
   });
 }
-
-function getBytes(dataUrl) { return Math.round((dataUrl.length * 3) / 4); }
+function getBytes(d){return Math.round((d.length*3)/4);}
 
 // ── ROTA ENGINE ───────────────────────────────────────────────
-function getRotaEntries(count) {
-  const entries = [];
-  const base = new Date(START_DATE);
-  for (let i = 0; i < count; i++) {
-    const d = new Date(base);
-    d.setDate(d.getDate() + i * GAP_DAYS);
-    const dateStr = d.toISOString().split('T')[0];
-    const mIdx = i % names.length;
-    const key = `${mIdx}_${dateStr}`;
-    const saved = rotaStat[key] || {};
-    entries.push({
-      mIdx, date: dateStr, tasks: [...TASKS],
-      status: saved.status || autoStatus(dateStr),
-      proofData: saved.proofData || null,
-      key, cycleNum: Math.floor(i / names.length) + 1
-    });
+function getRotaEntries(count){
+  const entries=[];const base=new Date(START_DATE);
+  for(let i=0;i<count;i++){
+    const d=new Date(base);d.setDate(d.getDate()+i*GAP_DAYS);
+    const dateStr=d.toISOString().split('T')[0];
+    const mIdx=i%names.length;const key=`${mIdx}_${dateStr}`;
+    const saved=rotaStat[key]||{};
+    entries.push({mIdx,date:dateStr,tasks:[...TASKS],status:saved.status||autoStatus(dateStr),proofData:saved.proofData||null,key,cycleNum:Math.floor(i/names.length)+1});
   }
   return entries;
 }
-function autoStatus(d) {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const dt = new Date(d);
-  if (dt < today) return 'missed';
-  if (dt.toDateString() === today.toDateString()) return 'today';
-  return 'scheduled';
+function autoStatus(d){
+  const t=new Date();t.setHours(0,0,0,0);const dt=new Date(d);
+  if(dt<t)return'missed';if(dt.toDateString()===t.toDateString())return'today';return'scheduled';
 }
 
 // ── PIN ───────────────────────────────────────────────────────
-let pinEntry = '';
-window.kp = function(v) {
-  if (v==='clr') pinEntry='';
-  else if (v==='del') pinEntry=pinEntry.slice(0,-1);
-  else if (pinEntry.length<4) { pinEntry+=v; if(pinEntry.length===4) setTimeout(checkPin,180); }
-  for(let i=0;i<4;i++) document.getElementById('pd'+i).classList.toggle('filled',i<pinEntry.length);
+let pinEntry='';
+window.kp=function(v){
+  if(v==='clr')pinEntry='';
+  else if(v==='del')pinEntry=pinEntry.slice(0,-1);
+  else if(pinEntry.length<4){pinEntry+=v;if(pinEntry.length===4)setTimeout(checkPin,180);}
+  for(let i=0;i<4;i++)document.getElementById('pd'+i).classList.toggle('filled',i<pinEntry.length);
 };
-function checkPin() {
-  if (pinEntry===HOUSE_PIN) {
+function checkPin(){
+  if(pinEntry===HOUSE_PIN){
     document.getElementById('pin-screen').style.display='none';
     document.getElementById('loading-screen').style.display='flex';
     initFire();
   } else {
-    const e=document.getElementById('pinErr');
-    e.classList.add('show'); pinEntry='';
-    for(let i=0;i<4;i++) document.getElementById('pd'+i).classList.remove('filled');
+    const e=document.getElementById('pinErr');e.classList.add('show');pinEntry='';
+    for(let i=0;i<4;i++)document.getElementById('pd'+i).classList.remove('filled');
     setTimeout(()=>e.classList.remove('show'),2200);
   }
 }
 
 // ── FIREBASE ──────────────────────────────────────────────────
-function initFire() {
-  onSnapshot(doc(db,'house','settings'), snap => {
-    if (snap.exists()) { const d=snap.data(); if(d.names) names=d.names; if(d.fund) fund=d.fund; }
+function initFire(){
+  onSnapshot(doc(db,'house','settings'),snap=>{
+    if(snap.exists()){const d=snap.data();if(d.names)names=d.names;}
     renderAll();
   });
-  onSnapshot(collection(db,'expenses'), snap => {
-    expenses=[];
-    snap.forEach(d=>expenses.push({id:d.id,...d.data()}));
+  onSnapshot(collection(db,'expenses'),snap=>{
+    expenses=[];snap.forEach(d=>expenses.push({id:d.id,...d.data()}));
     expenses.sort((a,b)=>a.createdAt-b.createdAt);
-    renderExp(); renderDash();
+    renderExp();renderDash();
   });
-  onSnapshot(collection(db,'rotaStatus'), snap => {
-    rotaStat={};
-    snap.forEach(d=>{rotaStat[d.id]=d.data();});
-    renderRota(); renderDash(); updateBadge();
+  onSnapshot(collection(db,'rotaStatus'),snap=>{
+    rotaStat={};snap.forEach(d=>{rotaStat[d.id]=d.data();});
+    renderRota();renderDash();updateBadge();
   });
-  onSnapshot(collection(db,'pending'), snap => {
-    pending=[];
-    snap.forEach(d=>pending.push({id:d.id,...d.data()}));
-    updateBadge();
-    if(adminUnlocked) renderPending();
+  onSnapshot(collection(db,'fundPeriods'),snap=>{
+    fundPeriods={};
+    snap.forEach(d=>{fundPeriods[d.id]=d.data();});
+    // Set active period to latest if not set
+    if(!activePeriod){
+      const ids=Object.keys(fundPeriods).sort((a,b)=>(fundPeriods[b].createdAt||0)-(fundPeriods[a].createdAt||0));
+      activePeriod=ids[0]||null;
+    }
+    renderFund();renderDash();
   });
-  setTimeout(()=>{
+  onSnapshot(collection(db,'pending'),snap=>{
+    pending=[];snap.forEach(d=>pending.push({id:d.id,...d.data()}));
+    updateBadge();if(adminUnlocked)renderPending();
+  });
+  // Create default period if none exists
+  setTimeout(async()=>{
+    const snap=await getDocs(collection(db,'fundPeriods'));
+    if(snap.empty){
+      const now=new Date();
+      const label=now.toLocaleString('default',{month:'long',year:'numeric'});
+      await addDoc(collection(db,'fundPeriods'),{label,perPerson:30,payments:{},createdAt:Date.now()});
+    }
     document.getElementById('loading-screen').style.display='none';
     document.getElementById('app').style.display='block';
     populateSelects();
-  },1200);
+  },1400);
 }
 
-function updateBadge() {
+function updateBadge(){
   const cnt=pending.length;
   const b=document.getElementById('adminBadge');
-  b.style.display=cnt>0?'flex':'none'; b.textContent=cnt;
+  b.style.display=cnt>0?'flex':'none';b.textContent=cnt;
   let tb=document.getElementById('adminTabBadge');
-  if(cnt>0){
-    if(!tb){tb=document.createElement('span');tb.className='tab-badge';tb.id='adminTabBadge';document.getElementById('adminTab').appendChild(tb);}
-    tb.textContent=cnt;
-  } else if(tb) tb.remove();
+  if(cnt>0){if(!tb){tb=document.createElement('span');tb.className='tab-badge';tb.id='adminTabBadge';document.getElementById('adminTab').appendChild(tb);}tb.textContent=cnt;}
+  else if(tb)tb.remove();
 }
 
 window.goTab=function(tab){
-  document.querySelectorAll('.nav-tab').forEach((t,i)=>{
-    t.classList.toggle('active',['dash','rota','expenses','fund','contact','admin'][i]===tab);
-  });
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>{t.classList.toggle('active',['dash','rota','expenses','fund','contact','admin'][i]===tab);});
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+tab).classList.add('active');
-  document.getElementById('search-panel').style.display='none';
+  hideSP();
 };
 
 function renderAll(){populateSelects();renderDash();renderRota();renderExp();renderFund();}
@@ -523,17 +566,17 @@ function populateSelects(){
 
 // ── DASHBOARD ─────────────────────────────────────────────────
 function renderDash(){
+  // Total across all periods
+  const allCol=Object.values(fundPeriods).reduce((s,p)=>s+Object.values(p.payments||{}).reduce((ss,v)=>ss+parseFloat(v||0),0),0);
   const te=expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
-  const py=fund.payments||{};
-  const col=Object.values(py).reduce((s,v)=>s+parseFloat(v||0),0);
-  const bal=col-te;
-  const pc=Object.keys(py).filter(k=>parseFloat(py[k])>0).length;
+  const bal=allCol-te;
+  const pc=activePeriod&&fundPeriods[activePeriod]?Object.keys(fundPeriods[activePeriod].payments||{}).filter(k=>parseFloat(fundPeriods[activePeriod].payments[k])>0).length:0;
   const ent=getRotaEntries(rotaShowCount);
   const dc=ent.filter(r=>r.status==='done').length;
   document.getElementById('dashStats').innerHTML=`
     <div class="stat"><div class="stat-label">Total Spent</div><div class="stat-val amber">£${te.toFixed(2)}</div></div>
     <div class="stat"><div class="stat-label">Fund Balance</div><div class="stat-val ${bal>=0?'green':'red'}">£${bal.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">Contributed</div><div class="stat-val">${pc}/${names.length}</div></div>
+    <div class="stat"><div class="stat-label">This Period</div><div class="stat-val">${pc}/${names.length} paid</div></div>
     <div class="stat"><div class="stat-label">Cleans Done</div><div class="stat-val">${dc}</div></div>`;
   const up=ent.filter(r=>r.status!=='done'&&r.status!=='missed').slice(0,4);
   document.getElementById('dashRota').innerHTML=up.length?up.map(r=>`
@@ -563,23 +606,21 @@ function renderRota(){
       lc=r.cycleNum;
     }
     const c=COLORS[r.mIdx%COLORS.length];
-    // Admin reset button — only visible when admin is unlocked, only on done/missed/pending entries
-    const showReset = adminUnlocked && (r.status==='done'||r.status==='missed'||r.status==='pending');
+    const showReset=adminUnlocked&&(r.status==='done'||r.status==='missed'||r.status==='pending');
     html+=`<div class="rota-item ${r.status==='done'?'done':r.status==='missed'?'missed':r.status==='today'?'today':r.status==='pending'?'pending':''}">
       <div class="avatar" style="background:${c}22;color:${c}">${names[r.mIdx][0]}</div>
       <div style="flex:1">
         <div style="font-size:0.9rem;font-weight:500">${names[r.mIdx]}</div>
         <div style="font-size:0.75rem;color:var(--muted);margin:2px 0">${r.tasks.join(' · ')}</div>
-        ${r.proofData?`<img src="${r.proofData}" style="max-width:80px;border-radius:7px;margin-top:6px;border:1px solid var(--border);cursor:pointer" onclick="openImg('${r.proofData}')" title="Tap to view full size">`:''}
+        ${r.proofData?`<img src="${r.proofData}" style="max-width:80px;border-radius:7px;margin-top:6px;border:1px solid var(--border);cursor:pointer" onclick="openImg('${r.proofData}')" title="Tap to view">`:''}
         ${r.status==='pending'?`<p style="font-size:0.72rem;color:#854d0e;margin-top:4px">⏳ Waiting for Fagun's approval</p>`:''}
       </div>
       <div style="text-align:right;flex-shrink:0">
         <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px">${r.date}</div>
-        <span class="badge ${bm[r.status]||'b-sched'}">${lm[r.status]||r.status}</span>
-        <br>
+        <span class="badge ${bm[r.status]||'b-sched'}">${lm[r.status]||r.status}</span><br>
         ${r.status!=='done'&&r.status!=='pending'?`<button class="btn btn-sm btn-outline" style="margin-top:5px;font-size:0.7rem" onclick="openProof('${r.key}','${r.date}',${r.mIdx})"><i class="ti ti-camera"></i>Proof</button>`:''}
         ${r.status!=='done'&&r.status!=='missed'&&r.status!=='pending'?`<button class="btn btn-sm" style="margin-top:5px;margin-left:3px;background:#fee2e2;color:#991b1b;border:none;font-size:0.7rem;padding:5px 8px;border-radius:7px;cursor:pointer" onclick="markMissed('${r.key}')">Missed</button>`:''}
-        ${showReset?`<button class="reset-btn" onclick="resetRotaEntry('${r.key}')" title="Reset this entry — brings back the Proof button"><i class="ti ti-refresh" style="font-size:11px"></i>Reset</button>`:''}
+        ${showReset?`<button class="reset-btn" onclick="resetRotaEntry('${r.key}')" title="Reset — brings back Proof button"><i class="ti ti-refresh" style="font-size:11px"></i>Reset</button>`:''}
       </div>
     </div>`;
   });
@@ -587,7 +628,6 @@ function renderRota(){
   document.getElementById('rotaList').innerHTML=html;
 }
 
-// ── PROOF SUBMIT ──────────────────────────────────────────────
 window.openProof=function(key,date,mIdx){
   pendingProofInfo={key,date,mIdx};pendingProofData=null;
   document.getElementById('proofPrev').style.display='none';
@@ -601,11 +641,9 @@ window.prevProof=function(inp){
   const r=new FileReader();
   r.onload=e=>{
     pendingProofData=e.target.result;
-    const img=document.getElementById('proofPrev');
-    img.src=pendingProofData;img.style.display='block';
-    const kb=Math.round(getBytes(pendingProofData)/1024);
+    const img=document.getElementById('proofPrev');img.src=pendingProofData;img.style.display='block';
     const note=document.getElementById('proofSizeNote');
-    note.textContent=`Photo: ${kb}KB — will be compressed before upload`;
+    note.textContent=`Photo: ${Math.round(getBytes(pendingProofData)/1024)}KB — will be compressed`;
     note.style.display='block';
   };
   r.readAsDataURL(inp.files[0]);
@@ -615,38 +653,21 @@ window.submitProof=async function(){
   const btn=document.getElementById('submitProofBtn');
   btn.innerHTML='<i class="ti ti-loader"></i>Compressing...';btn.disabled=true;
   try{
-    // Proof photos: start 800px quality 0.72
-    const compressed=await smartCompress(pendingProofData, MAX_BYTES, 800, 0.72);
+    const compressed=await smartCompress(pendingProofData,MAX_BYTES,800,0.72);
     btn.innerHTML='<i class="ti ti-loader"></i>Uploading...';
-    await addDoc(collection(db,'pending'),{
-      key:pendingProofInfo.key,date:pendingProofInfo.date,
-      mIdx:pendingProofInfo.mIdx,name:names[pendingProofInfo.mIdx],
-      proofData:compressed,submittedAt:Date.now()
-    });
+    await addDoc(collection(db,'pending'),{key:pendingProofInfo.key,date:pendingProofInfo.date,mIdx:pendingProofInfo.mIdx,name:names[pendingProofInfo.mIdx],proofData:compressed,submittedAt:Date.now()});
     await setDoc(doc(db,'rotaStatus',pendingProofInfo.key),{status:'pending',proofData:compressed});
-    closeMod();
-    alert('✅ Proof submitted! Waiting for Fagun to approve.');
-  }catch(e){
-    alert('Upload failed. Try taking a new photo instead of picking from gallery.');
-  }
+    closeMod();alert('✅ Proof submitted! Waiting for Fagun to approve.');
+  }catch(e){alert('Upload failed. Try taking a new photo instead of picking from gallery.');}
   btn.innerHTML='<i class="ti ti-send"></i>Submit for approval';btn.disabled=false;
 };
-window.markMissed=async function(key){
-  if(!confirm('Mark as missed?'))return;
-  await setDoc(doc(db,'rotaStatus',key),{status:'missed',proofData:null});
-};
-
-// ── INDIVIDUAL ROTA RESET (Admin only) ───────────────────────
+window.markMissed=async function(key){if(!confirm('Mark as missed?'))return;await setDoc(doc(db,'rotaStatus',key),{status:'missed',proofData:null});};
 window.resetRotaEntry=async function(key){
-  if(!confirm('Reset this entry?\n\nThe proof photo will be removed and the "Submit Proof" button will come back for this person.'))return;
-  // Remove from rotaStatus
+  if(!confirm('Reset this entry?\n\nProof photo removed and Proof button comes back.'))return;
   await deleteDoc(doc(db,'rotaStatus',key));
-  // Remove from pending if it's there
   const snap=await getDocs(collection(db,'pending'));
-  for(const d of snap.docs){
-    if(d.data().key===key) await deleteDoc(doc(db,'pending',d.id));
-  }
-  alert('✅ Reset done! The Proof button is back for this person.');
+  for(const d of snap.docs){if(d.data().key===key)await deleteDoc(doc(db,'pending',d.id));}
+  alert('✅ Reset done!');
 };
 
 // ── ADMIN ─────────────────────────────────────────────────────
@@ -656,8 +677,8 @@ window.unlockAdmin=function(){
     document.getElementById('adminGate').style.display='none';
     document.getElementById('adminPanel').style.display='block';
     document.getElementById('fundAddCard').style.display='block';
-    renderAdminPanel();renderPending();
-    renderExp();renderFund();renderRota();
+    document.getElementById('addPeriodBtn').style.display='flex';
+    renderAdminPanel();renderPending();renderExp();renderFund();renderRota();
   } else {
     const e=document.getElementById('aErr');e.style.display='block';
     setTimeout(()=>e.style.display='none',2500);
@@ -673,7 +694,7 @@ function renderPending(){
         <div class="avatar" style="width:32px;height:32px;background:${COLORS[p.mIdx%COLORS.length]}22;color:${COLORS[p.mIdx%COLORS.length]};font-size:0.75rem">${p.name[0]}</div>
         <div><div style="font-size:0.9rem;font-weight:500">${p.name}</div><div style="font-size:0.75rem;color:var(--muted)">${p.date}</div></div>
       </div>
-      ${p.proofData?`<img src="${p.proofData}" class="pending-proof" onclick="openImg('${p.proofData}')" title="Tap to view full size">`:'<p style="font-size:0.8rem;color:var(--muted)">No photo submitted</p>'}
+      ${p.proofData?`<img src="${p.proofData}" class="pending-proof" onclick="openImg('${p.proofData}')">`:'<p style="font-size:0.8rem;color:var(--muted)">No photo</p>'}
       <div style="display:flex;gap:8px;margin-top:8px">
         <button class="btn btn-success btn-sm" onclick="approveProof('${p.id}','${p.key}')"><i class="ti ti-check"></i>Approve ✅</button>
         <button class="btn btn-danger btn-sm" onclick="rejectProof('${p.id}','${p.key}')"><i class="ti ti-x"></i>Reject ❌</button>
@@ -696,16 +717,11 @@ function renderAdminPanel(){
       <input class="nb-input" id="ni_${i}" value="${n}" style="margin-bottom:0;flex:1">
       ${i===6?'<span style="font-size:0.68rem;color:var(--sage);padding:2px 6px;background:var(--sage-light);border-radius:4px">Admin</span>':''}
     </div>`).join('');
-  document.getElementById('contribAmt').value=fund.perPerson||30;
 }
 window.saveNames=async function(){
   const n=names.map((_,i)=>document.getElementById('ni_'+i).value.trim()||names[i]);
-  await setDoc(doc(db,'house','settings'),{names:n,fund},{merge:true});
+  await setDoc(doc(db,'house','settings'),{names:n},{merge:true});
   alert('Names saved!');
-};
-window.saveContrib=async function(){
-  const v=parseFloat(document.getElementById('contribAmt').value);
-  if(v>0){await setDoc(doc(db,'house','settings'),{names,fund:{...fund,perPerson:v}},{merge:true});alert('Saved!');}
 };
 window.clearExpenses=async function(){
   if(!confirm('Clear ALL expenses?'))return;
@@ -713,8 +729,96 @@ window.clearExpenses=async function(){
   for(const d of snap.docs)await deleteDoc(doc(db,'expenses',d.id));
 };
 window.resetFund=async function(){
-  if(!confirm('Reset fund?'))return;
-  await setDoc(doc(db,'house','settings'),{names,fund:{...fund,payments:{}}},{merge:true});
+  if(!confirm('Reset ALL fund data including all periods?'))return;
+  const snap=await getDocs(collection(db,'fundPeriods'));
+  for(const d of snap.docs)await deleteDoc(doc(db,'fundPeriods',d.id));
+  activePeriod=null;
+};
+
+// ── RESERVE FUND — MONTHLY PERIODS ────────────────────────────
+function renderFund(){
+  // Total across all periods
+  const allCol=Object.values(fundPeriods).reduce((s,p)=>s+Object.values(p.payments||{}).reduce((ss,v)=>ss+parseFloat(v||0),0),0);
+  const te=expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+  const bal=allCol-te;
+
+  // Active period stats
+  const ap=activePeriod&&fundPeriods[activePeriod];
+  const apCol=ap?Object.values(ap.payments||{}).reduce((s,v)=>s+parseFloat(v||0),0):0;
+  const apExpected=ap?(ap.perPerson||0)*names.length:0;
+
+  document.getElementById('fundStats').innerHTML=`
+    <div class="stat"><div class="stat-label">All Time Collected</div><div class="stat-val green">£${allCol.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-label">Total Spent</div><div class="stat-val amber">£${te.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-val ${bal>=0?'green':'red'}">£${bal.toFixed(2)}</div><div class="stat-label">Balance</div></div>
+    <div class="stat"><div class="stat-label">This Period</div><div class="stat-val">£${apCol.toFixed(2)} / £${apExpected}</div></div>`;
+
+  // Period tabs — sorted newest first
+  const sortedIds=Object.keys(fundPeriods).sort((a,b)=>(fundPeriods[b].createdAt||0)-(fundPeriods[a].createdAt||0));
+  document.getElementById('periodTabs').innerHTML=sortedIds.map(id=>`
+    <button class="period-tab ${activePeriod===id?'active':''}" onclick="switchPeriod('${id}')">${fundPeriods[id].label}</button>`).join('');
+
+  if(!activePeriod||!fundPeriods[activePeriod]){
+    document.getElementById('fundList').innerHTML='<div class="empty"><i class="ti ti-coin"></i>No fund periods yet</div>';
+    return;
+  }
+
+  const period=fundPeriods[activePeriod];
+  const py=period.payments||{};
+  const pp=period.perPerson||0;
+
+  document.getElementById('fundPeriodTitle').textContent=period.label;
+  document.getElementById('fundPeriodMeta').textContent=`£${pp}/person · Expected: £${pp*names.length}`;
+
+  document.getElementById('fundList').innerHTML=names.map((n,i)=>{
+    const paid=parseFloat(py[i]||0);const hp=paid>0;const c=COLORS[i%COLORS.length];
+    return`<div class="fund-row">
+      <div class="avatar" style="width:34px;height:34px;background:${c}22;color:${c};font-size:0.78rem">${n[0]}</div>
+      <div style="flex:1;font-size:0.875rem">${n}</div>
+      ${hp?`<span style="font-size:0.8rem;color:var(--success);font-weight:500">£${paid.toFixed(2)}</span>`:''}
+      <span style="font-size:0.75rem;font-weight:500;color:${hp?'var(--success)':'var(--danger)'}">${hp?'✓ Paid':'✗ Unpaid'}</span>
+      ${adminUnlocked?`<button class="toggle-btn ${hp?'paid':''}" onclick="toggleFund(${i})">${hp?'<i class="ti ti-check" style="font-size:12px"></i>':''}</button>`:''}
+    </div>`;
+  }).join('');
+}
+
+window.switchPeriod=function(id){activePeriod=id;renderFund();};
+
+window.showAddPeriod=function(){
+  document.getElementById('addPeriodForm').style.display='block';
+  const now=new Date();
+  document.getElementById('periodLabel').value=now.toLocaleString('default',{month:'long',year:'numeric'});
+  document.getElementById('periodAmount').value='30';
+};
+
+window.createPeriod=async function(){
+  const label=document.getElementById('periodLabel').value.trim();
+  const perPerson=parseFloat(document.getElementById('periodAmount').value)||30;
+  if(!label){alert('Enter a period label');return;}
+  const ref=await addDoc(collection(db,'fundPeriods'),{label,perPerson,payments:{},createdAt:Date.now()});
+  activePeriod=ref.id;
+  document.getElementById('addPeriodForm').style.display='none';
+  alert(`Period "${label}" created!`);
+};
+
+window.addFund=async function(){
+  if(!activePeriod){alert('No active period selected');return;}
+  const amt=parseFloat(document.getElementById('fAmt').value);
+  const mi=document.getElementById('fPerson').value;
+  if(isNaN(amt)||amt<=0){alert('Enter a valid amount');return;}
+  const period=fundPeriods[activePeriod]||{};
+  const py={...period.payments||{}};
+  py[mi]=((parseFloat(py[mi]||0))+amt).toString();
+  await setDoc(doc(db,'fundPeriods',activePeriod),{...period,payments:py},{merge:true});
+  document.getElementById('fAmt').value='';
+};
+
+window.toggleFund=async function(i){
+  if(!activePeriod||!adminUnlocked)return;
+  const period=fundPeriods[activePeriod]||{};
+  const py={...period.payments||{}};
+  py[i]=parseFloat(py[i]||0)>0?'0':(period.perPerson||0).toString();
+  await setDoc(doc(db,'fundPeriods',activePeriod),{...period,payments:py},{merge:true});
 };
 
 // ── EXPENSES ──────────────────────────────────────────────────
@@ -728,22 +832,12 @@ window.addExp=async function(){
   btn.innerHTML='<i class="ti ti-loader"></i>Saving...';btn.disabled=true;
   let receiptUrl=null;
   if(receiptData){
-    try{
-      // Receipts: start 900px quality 0.78 — keep text readable
-      receiptUrl=await smartCompress(receiptData, MAX_BYTES, 900, 0.78);
-    }catch(e){console.error('Receipt compress failed',e);}
+    try{receiptUrl=await smartCompress(receiptData,MAX_BYTES,900,0.78);}catch(e){}
   }
-  await addDoc(collection(db,'expenses'),{
-    item,amount,cat,mIdx,
-    date:new Date().toLocaleDateString('en-GB'),
-    createdAt:Date.now(),receiptUrl
-  });
-  document.getElementById('eItem').value='';
-  document.getElementById('eAmt').value='';
-  document.getElementById('rPreview').style.display='none';
-  document.getElementById('rSizeNote').style.display='none';
-  receiptData=null;
-  btn.innerHTML='<i class="ti ti-plus"></i>Add to notebook';btn.disabled=false;
+  await addDoc(collection(db,'expenses'),{item,amount,cat,mIdx,date:new Date().toLocaleDateString('en-GB'),createdAt:Date.now(),receiptUrl});
+  document.getElementById('eItem').value='';document.getElementById('eAmt').value='';
+  document.getElementById('rPreview').style.display='none';document.getElementById('rSizeNote').style.display='none';
+  receiptData=null;btn.innerHTML='<i class="ti ti-plus"></i>Add to notebook';btn.disabled=false;
 };
 window.prevReceipt=function(inp){
   if(!inp.files[0])return;
@@ -751,9 +845,8 @@ window.prevReceipt=function(inp){
   r.onload=e=>{
     receiptData=e.target.result;
     const img=document.getElementById('rPreview');img.src=receiptData;img.style.display='block';
-    const kb=Math.round(getBytes(receiptData)/1024);
     const note=document.getElementById('rSizeNote');
-    note.textContent=`Photo: ${kb}KB — will be compressed before upload`;
+    note.textContent=`Photo: ${Math.round(getBytes(receiptData)/1024)}KB — will be compressed`;
     note.style.display='block';
   };
   r.readAsDataURL(inp.files[0]);
@@ -772,52 +865,13 @@ function renderExp(){
         <span class="exp-name">${e.item}</span>
         <span class="exp-cat">${e.cat}</span>
         <span style="font-size:0.78rem;color:var(--muted)">${names[e.mIdx]||''}</span>
-        ${e.receiptUrl?`<img src="${e.receiptUrl}" class="receipt-thumb" onclick="openImg('${e.receiptUrl}')" title="Tap to view receipt">`:''}
+        ${e.receiptUrl?`<img src="${e.receiptUrl}" class="receipt-thumb" onclick="openImg('${e.receiptUrl}')" title="View receipt">`:''}
         <span class="exp-amt">£${parseFloat(e.amount).toFixed(2)}</span>
         ${adminUnlocked?`<button style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.85rem" onclick="delExp('${e.id}')"><i class="ti ti-trash"></i></button>`:''}
       </div>`).join('')
-    :'<div class="empty"><i class="ti ti-pencil"></i>Nothing yet — add your first expense above</div>';
+    :'<div class="empty"><i class="ti ti-pencil"></i>Nothing yet</div>';
 }
 window.delExp=async function(id){if(confirm('Remove this expense?'))await deleteDoc(doc(db,'expenses',id));};
-
-// ── FUND ──────────────────────────────────────────────────────
-window.addFund=async function(){
-  const amt=parseFloat(document.getElementById('fAmt').value);
-  const mi=document.getElementById('fPerson').value;
-  if(isNaN(amt)||amt<=0){alert('Enter a valid amount');return;}
-  const py={...fund.payments||{}};
-  py[mi]=((parseFloat(py[mi]||0))+amt).toString();
-  await setDoc(doc(db,'house','settings'),{names,fund:{...fund,payments:py}},{merge:true});
-  document.getElementById('fAmt').value='';
-};
-window.toggleFund=async function(i){
-  if(!adminUnlocked)return;
-  const py={...fund.payments||{}};
-  py[i]=parseFloat(py[i]||0)>0?'0':(fund.perPerson||0).toString();
-  await setDoc(doc(db,'house','settings'),{names,fund:{...fund,payments:py}},{merge:true});
-};
-function renderFund(){
-  const py=fund.payments||{};
-  const pp=fund.perPerson||0;
-  const col=Object.values(py).reduce((s,v)=>s+parseFloat(v||0),0);
-  const te=expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
-  const bal=col-te;
-  document.getElementById('fundStats').innerHTML=`
-    <div class="stat"><div class="stat-label">Collected</div><div class="stat-val green">£${col.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">Spent</div><div class="stat-val amber">£${te.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-val ${bal>=0?'green':'red'}">£${bal.toFixed(2)}</div><div class="stat-label">Balance</div></div>
-    <div class="stat"><div class="stat-label">Expected</div><div class="stat-val">£${names.length*pp}</div></div>`;
-  document.getElementById('fundList').innerHTML=names.map((n,i)=>{
-    const paid=parseFloat(py[i]||0);const hp=paid>0;const c=COLORS[i%COLORS.length];
-    return`<div class="fund-row">
-      <div class="avatar" style="width:34px;height:34px;background:${c}22;color:${c};font-size:0.78rem">${n[0]}</div>
-      <div style="flex:1;font-size:0.875rem">${n}</div>
-      ${hp?`<span style="font-size:0.8rem;color:var(--success);font-weight:500">£${paid.toFixed(2)}</span>`:''}
-      <span style="font-size:0.75rem;font-weight:500;color:${hp?'var(--success)':'var(--danger)'}">${hp?'✓ Paid':'✗ Unpaid'}</span>
-      ${adminUnlocked?`<button class="toggle-btn ${hp?'paid':''}" onclick="toggleFund(${i})">${hp?'<i class="ti ti-check" style="font-size:12px"></i>':''}</button>`:''}
-    </div>`;
-  }).join('');
-}
 
 // ── CONTACT ───────────────────────────────────────────────────
 window.sendComplaint=function(){
@@ -832,26 +886,89 @@ window.sendComplaint=function(){
 window.openImg=function(src){document.getElementById('overlayImg').src=src;document.getElementById('imgOverlay').classList.add('open');};
 window.closeImg=function(){document.getElementById('imgOverlay').classList.remove('open');};
 
-// ── SEARCH ────────────────────────────────────────────────────
+// ── SEARCH — FULLY FIXED ──────────────────────────────────────
+function hideSP(){document.getElementById('search-panel').style.display='none';document.getElementById('gSearch').value='';}
+
 window.doSearch=function(q){
   const panel=document.getElementById('search-panel');
   const inner=document.getElementById('search-panel-inner');
-  if(!q||q.length<2){panel.style.display='none';return;}
-  const ql=q.toLowerCase();const res=[];
+  const trimmed=q.trim();
+
+  if(!trimmed||trimmed.length<1){panel.style.display='none';return;}
+
+  const ql=trimmed.toLowerCase();
+  const results=[];
+
+  // Search expenses — item name, category, person name
   expenses.forEach(e=>{
-    if(e.item.toLowerCase().includes(ql)||e.cat.toLowerCase().includes(ql)||(names[e.mIdx]||'').toLowerCase().includes(ql))
-      res.push({type:'receipt',label:`${e.item} — £${parseFloat(e.amount).toFixed(2)}`,sub:`${e.cat} · ${e.date}`,tab:'expenses'});
+    const personName=(names[e.mIdx]||'').toLowerCase();
+    if(e.item.toLowerCase().includes(ql)||e.cat.toLowerCase().includes(ql)||personName.includes(ql)){
+      results.push({
+        type:'expense',
+        label:`${e.item}`,
+        sub:`£${parseFloat(e.amount).toFixed(2)} · ${e.cat} · ${e.date} · ${names[e.mIdx]||''}`,
+        tab:'expenses'
+      });
+    }
   });
+
+  // Search rota — person name, date, status
   getRotaEntries(rotaShowCount).forEach(r=>{
-    const n=names[r.mIdx]||'';
-    if(n.toLowerCase().includes(ql)||r.status.toLowerCase().includes(ql)||r.date.includes(ql))
-      res.push({type:'rota',label:`${n} — ${r.date}`,sub:`Status: ${r.status} · Cycle ${r.cycleNum}`,tab:'rota'});
+    const n=(names[r.mIdx]||'').toLowerCase();
+    const statusWords={done:'done complete finished',missed:'missed failed',today:'today',scheduled:'scheduled upcoming next',pending:'pending waiting approval'};
+    const searchable=`${n} ${r.date} ${r.status} ${statusWords[r.status]||''} cleaning rota`;
+    if(searchable.includes(ql)){
+      results.push({
+        type:'rota',
+        label:`${names[r.mIdx]} — ${r.date}`,
+        sub:`${r.status==='done'?'✓ Done':r.status==='missed'?'✗ Missed':r.status==='pending'?'⏳ Pending':r.status==='today'?'Today!':'Scheduled'} · Cycle ${r.cycleNum}`,
+        tab:'rota'
+      });
+    }
   });
-  inner.innerHTML=res.length?res.map(r=>`<div class="sr-item" onclick="goTab('${r.tab}')"><span class="sr-tag">${r.type}</span><strong>${r.label}</strong><br><span style="color:var(--muted);font-size:0.78rem">${r.sub}</span></div>`).join(''):'<div style="padding:12px 16px;font-size:0.85rem;color:var(--muted)">No results found</div>';
+
+  // Search fund periods
+  Object.entries(fundPeriods).forEach(([id,p])=>{
+    if(p.label.toLowerCase().includes(ql)||'fund'.includes(ql)){
+      results.push({
+        type:'fund',
+        label:`Fund: ${p.label}`,
+        sub:`£${Object.values(p.payments||{}).reduce((s,v)=>s+parseFloat(v||0),0).toFixed(2)} collected · £${p.perPerson}/person`,
+        tab:'fund',
+        periodId:id
+      });
+    }
+  });
+
+  if(!results.length){
+    inner.innerHTML=`<div class="sr-empty">No results for "<strong>${trimmed}</strong>"</div>`;
+  } else {
+    inner.innerHTML=results.slice(0,8).map(r=>`
+      <div class="sr-item" onclick="srClick('${r.tab}','${r.periodId||''}')">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="sr-tag">${r.type}</span>
+          <span class="sr-label">${r.label}</span>
+        </div>
+        <div class="sr-sub">${r.sub}</div>
+      </div>`).join('');
+  }
   panel.style.display='block';
 };
+
+window.srClick=function(tab,periodId){
+  if(periodId){activePeriod=periodId;}
+  goTab(tab);
+  hideSP();
+};
+
 document.addEventListener('click',e=>{
-  if(!e.target.closest('#search-panel')&&!e.target.closest('#gSearch'))document.getElementById('search-panel').style.display='none';
+  if(!e.target.closest('#search-panel')&&!e.target.closest('#gSearch'))
+    document.getElementById('search-panel').style.display='none';
+});
+
+// Close search on Escape
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') hideSP();
 });
 </script>
 </body>
