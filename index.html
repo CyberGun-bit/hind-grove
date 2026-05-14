@@ -634,7 +634,7 @@ function renderRota(){
       <div style="flex:1">
         <div style="font-size:0.9rem;font-weight:500">${S.members[r.memberIdx].name}</div>
         <div style="font-size:0.75rem;color:var(--muted);margin:2px 0">${r.tasks.join(' · ')}</div>
-        ${r.proof?`<img src="${r.proof}" style="max-width:70px;border-radius:7px;margin-top:6px;border:1px solid var(--border)">` : ''}
+       ${r.proof?`<img src="${r.proof}" style="max-width:70px;border-radius:7px;margin-top:6px;border:1px solid var(--border);cursor:pointer" onclick="openImg('${r.key}')" title="Click to view">` : ''}
       </div>
       <div style="text-align:right;flex-shrink:0">
         <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px">${r.date}</div>
@@ -846,6 +846,13 @@ document.addEventListener('click',e=>{
 });
 
 // ── INIT ──────────────────────────────────────────────────────
+  function openImg(key){
+  const s = S.rotaStatus[key];
+  if(s && s.proof){
+    const w = window.open();
+    w.document.write(`<img src="${s.proof}" style="max-width:100%;display:block;margin:auto">`);
+  }
+}
 ld();
 </script>
 </body>
