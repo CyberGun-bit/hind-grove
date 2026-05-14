@@ -17,10 +17,8 @@
   --danger:#dc2626;--success:#16a34a;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
-
-/* PIN */
 #pin-screen{position:fixed;inset:0;background:#0f0f0f;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:1.75rem}
-.pin-title{color:white;font-family:'DM Serif Display',serif;font-size:1.5rem;text-align:center;line-height:1.3}
+.pin-title{color:white;font-family:'DM Serif Display',serif;font-size:1.5rem;text-align:center}
 .pin-title em{color:var(--accent);font-style:italic}
 .pin-sub{font-size:0.7rem;color:#4b5563;text-align:center;font-style:italic;margin-top:4px}
 .pin-label{font-size:0.72rem;color:#6b7280;letter-spacing:0.12em;text-transform:uppercase}
@@ -33,13 +31,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .pin-btn:active{background:var(--accent);transform:scale(0.96)}
 .pin-error{color:#f87171;font-size:0.8rem;opacity:0;transition:opacity 0.3s}
 .pin-error.show{opacity:1}
-
-/* LOADING */
 #loading-screen{position:fixed;inset:0;background:var(--cream);display:none;align-items:center;justify-content:center;z-index:8888;flex-direction:column;gap:1rem}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--sage);border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* APP */
 #app{display:none;min-height:100vh}
 .top-bar{background:#0f0f0f;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:200;border-bottom:1px solid #1f1f1f}
 .top-bar-logo{font-family:'DM Serif Display',serif;color:white;font-size:1rem;line-height:1.2}
@@ -53,32 +47,25 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .icon-btn{background:none;border:none;color:#6b7280;cursor:pointer;padding:7px;border-radius:8px;font-size:1.1rem;transition:color 0.2s;position:relative}
 .icon-btn:hover{color:white}
 .notif-badge{position:absolute;top:2px;right:2px;background:#dc2626;color:white;font-size:0.6rem;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
-
 .nav-tabs{display:flex;background:var(--warm);border-bottom:1.5px solid var(--border);padding:0 1rem;overflow-x:auto;scrollbar-width:none}
 .nav-tabs::-webkit-scrollbar{display:none}
-.nav-tab{padding:13px 16px;font-size:0.82rem;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;border-top:none;border-left:none;border-right:none;background:none;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:5px;position:relative}
+.nav-tab{padding:13px 16px;font-size:0.82rem;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;border-top:none;border-left:none;border-right:none;background:none;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:5px}
 .nav-tab.active{color:var(--sage);border-bottom-color:var(--sage)}
-.nav-tab:hover{color:var(--ink)}
 .tab-badge{background:#dc2626;color:white;font-size:0.6rem;padding:1px 5px;border-radius:10px;margin-left:2px;font-weight:600}
-
 #search-panel{display:none;margin:1rem auto;max-width:900px;padding:0 1.5rem}
 #search-panel-inner{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.sr-item{padding:11px 16px;border-bottom:1px solid var(--border);cursor:pointer;font-size:0.875rem;transition:background 0.15s}
-.sr-item:last-child{border-bottom:none}
+.sr-item{padding:11px 16px;border-bottom:1px solid var(--border);cursor:pointer;font-size:0.875rem}
 .sr-item:hover{background:var(--warm)}
 .sr-tag{font-size:0.68rem;background:var(--warm);color:var(--muted);padding:1px 7px;border-radius:4px;margin-right:6px}
-
 .page{display:none;padding:1.5rem;max-width:920px;margin:0 auto}
 .page.active{display:block}
 .page-title{font-family:'DM Serif Display',serif;font-size:1.65rem;margin-bottom:0.2rem}
 .page-title em{color:var(--sage);font-style:italic}
 .page-sub{color:var(--muted);font-size:0.875rem;margin-bottom:1.5rem}
-
 .card{background:white;border:1px solid var(--border);border-radius:14px;padding:1.25rem}
 .card+.card{margin-top:1rem}
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
 .section-title{font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted)}
-
 .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.5rem}
 .stat{background:var(--warm);border-radius:12px;padding:1rem}
 .stat-label{font-size:0.72rem;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em}
@@ -86,7 +73,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .stat-val.green{color:var(--success)}
 .stat-val.amber{color:var(--accent)}
 .stat-val.red{color:var(--danger)}
-
 .btn{padding:8px 16px;border-radius:9px;font-size:0.85rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;border:none;display:inline-flex;align-items:center;gap:5px}
 .btn-primary{background:var(--sage);color:white}
 .btn-primary:hover{background:#3d6b4a}
@@ -96,7 +82,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .btn-danger{background:#fee2e2;color:var(--danger);border:1px solid #fca5a5}
 .btn-success{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
 .btn-wa{background:#25d366;color:white}
-
 .nb-input{width:100%;border:none;border-bottom:1.5px solid var(--border);background:transparent;padding:7px 0;font-size:0.92rem;font-family:'DM Sans',sans-serif;color:var(--ink);outline:none;margin-bottom:10px}
 .nb-input:focus{border-bottom-color:var(--sage)}
 .nb-input::placeholder{color:#c4bdb5}
@@ -106,7 +91,6 @@ select.nb-input{cursor:pointer}
 .form-label{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
 textarea.nb-input{border:1.5px solid var(--border);border-radius:10px;padding:9px 12px;resize:vertical;min-height:80px}
 textarea.nb-input:focus{border-color:var(--sage)}
-
 .rota-item{display:flex;align-items:flex-start;gap:12px;padding:13px;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;transition:all 0.2s}
 .rota-item.done{background:#f0fdf4;border-color:#bbf7d0}
 .rota-item.missed{background:#fff1f2;border-color:#fecdd3}
@@ -119,7 +103,6 @@ textarea.nb-input:focus{border-color:var(--sage)}
 .b-today{background:var(--accent-light);color:#7c4a0e}
 .b-sched{background:#f3f4f6;color:#374151}
 .b-pending{background:#fef9c3;color:#854d0e}
-
 .exp-item{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed var(--border)}
 .exp-item:last-child{border-bottom:none}
 .exp-date{font-size:0.72rem;color:var(--muted);min-width:68px}
@@ -127,60 +110,39 @@ textarea.nb-input:focus{border-color:var(--sage)}
 .exp-cat{font-size:0.68rem;background:var(--sage-light);color:var(--sage);padding:2px 8px;border-radius:20px}
 .exp-amt{font-weight:500;font-size:0.9rem}
 .receipt-thumb{width:44px;height:44px;object-fit:cover;border-radius:7px;cursor:pointer;border:1px solid var(--border)}
-
 .fund-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--border)}
 .fund-row:last-child{border-bottom:none}
 .toggle-btn{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;background:none;transition:all 0.2s;flex-shrink:0}
 .toggle-btn.paid{background:var(--success);border-color:var(--success);color:white}
-
 .upload-area{border:2px dashed var(--border);border-radius:10px;padding:1.2rem;text-align:center;cursor:pointer;transition:all 0.2s;display:block}
 .upload-area:hover{border-color:var(--sage);background:var(--sage-light)}
 input[type=file]{display:none}
-
 .wa-banner{background:#0f0f0f;border-radius:14px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:16px;color:white;margin-bottom:1.5rem}
 .wa-icon{font-size:2.2rem;color:#25d366}
 .wa-text{flex:1}
-.wa-title{font-weight:500;font-size:1rem}
-.wa-sub{font-size:0.78rem;color:#9ca3af;margin-top:2px}
-
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:500;align-items:center;justify-content:center;padding:1rem}
 .modal-bg.open{display:flex}
 .modal{background:white;border-radius:16px;padding:1.5rem;width:100%;max-width:440px;max-height:85vh;overflow-y:auto}
 .modal h3{font-family:'DM Serif Display',serif;font-size:1.2rem;margin-bottom:0.75rem}
 .modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem}
-
-/* IMAGE OVERLAY */
 .img-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;display:none;align-items:center;justify-content:center;cursor:pointer}
 .img-overlay.open{display:flex}
 .img-overlay img{max-width:90vw;max-height:90vh;border-radius:12px;object-fit:contain}
-.img-overlay-close{position:absolute;top:20px;right:28px;color:white;font-size:2rem;cursor:pointer;font-weight:300;line-height:1}
-
+.img-close{position:absolute;top:20px;right:28px;color:white;font-size:2rem;cursor:pointer}
 .admin-gate{text-align:center;padding:2.5rem 1rem}
 .admin-gate .ti{font-size:2.5rem;color:var(--muted);margin-bottom:1rem;display:block}
 .pw-input{border:1.5px solid var(--border);border-radius:8px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;width:240px}
 .pw-input:focus{border-color:var(--sage)}
-
 .pending-card{border:2px solid #fde68a;border-radius:12px;padding:1rem;margin-bottom:10px;background:#fefce8}
 .pending-proof{max-width:120px;border-radius:8px;margin:8px 0;cursor:pointer;border:1px solid var(--border)}
-
-.info-box{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:1rem;font-size:0.82rem;color:#1e40af;margin-bottom:1rem;line-height:1.6}
-.success-box{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:1rem;font-size:0.82rem;color:#15803d;margin-bottom:1rem}
 .empty{text-align:center;padding:1.5rem;color:var(--muted)}
 .empty .ti{font-size:1.8rem;display:block;margin-bottom:0.5rem;opacity:0.35}
 .cycle-badge{display:inline-block;font-size:0.68rem;background:#ede9fe;color:#5b21b6;padding:1px 7px;border-radius:4px;margin-left:4px}
-
-@media(max-width:600px){
-  .form-row{grid-template-columns:1fr}
-  .stat-row{grid-template-columns:1fr 1fr}
-  .search-bar{width:140px}
-  .exp-cat{display:none}
-  .top-bar-logo small{display:none}
-}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}.stat-row{grid-template-columns:1fr 1fr}.search-bar{width:140px}.exp-cat{display:none}.top-bar-logo small{display:none}}
 </style>
 </head>
 <body>
 
-<!-- PIN -->
 <div id="pin-screen">
   <div>
     <div class="pin-title">57 <em>Hind Grove</em> Web</div>
@@ -189,10 +151,8 @@ input[type=file]{display:none}
   <div style="display:flex;flex-direction:column;align-items:center;gap:1rem">
     <p class="pin-label">Enter house PIN</p>
     <div class="pin-dots">
-      <div class="pin-dot" id="pd0"></div>
-      <div class="pin-dot" id="pd1"></div>
-      <div class="pin-dot" id="pd2"></div>
-      <div class="pin-dot" id="pd3"></div>
+      <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
+      <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
     </div>
     <p class="pin-error" id="pinErr">Wrong PIN — try again</p>
     <div class="pin-keypad">
@@ -212,19 +172,16 @@ input[type=file]{display:none}
   </div>
 </div>
 
-<!-- LOADING -->
 <div id="loading-screen">
   <div class="spinner"></div>
   <p style="color:var(--muted);font-size:0.85rem">Loading house data...</p>
 </div>
 
-<!-- IMAGE OVERLAY -->
-<div class="img-overlay" id="imgOverlay" onclick="closeImgOverlay()">
-  <span class="img-overlay-close">✕</span>
-  <img id="overlayImg" src="" alt="Proof">
+<div class="img-overlay" id="imgOverlay" onclick="closeImg()">
+  <span class="img-close">✕</span>
+  <img id="overlayImg" src="" alt="Photo">
 </div>
 
-<!-- APP -->
 <div id="app">
   <div class="top-bar">
     <div class="top-bar-logo">
@@ -236,7 +193,7 @@ input[type=file]{display:none}
         <i class="ti ti-search"></i>
         <input class="search-bar" id="gSearch" placeholder="Search..." oninput="doSearch(this.value)">
       </div>
-      <button class="icon-btn" title="Admin" onclick="goTab('admin')">
+      <button class="icon-btn" onclick="goTab('admin')">
         <i class="ti ti-settings"></i>
         <span class="notif-badge" id="adminBadge" style="display:none">0</span>
       </button>
@@ -254,65 +211,40 @@ input[type=file]{display:none}
 
   <div id="search-panel"><div id="search-panel-inner"></div></div>
 
-  <!-- DASHBOARD -->
   <div id="page-dash" class="page active">
     <div class="page-title">Welcome to <em>57 Hind Grove</em> 🏠</div>
-    <p class="page-sub">Everything synced in real time across all devices</p>
+    <p class="page-sub">All data synced in real time across every device</p>
     <div class="stat-row" id="dashStats"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-      <div class="card">
-        <div class="section-head"><span class="section-title">Upcoming rota</span></div>
-        <div id="dashRota"></div>
-      </div>
-      <div class="card">
-        <div class="section-head"><span class="section-title">Recent expenses</span></div>
-        <div id="dashExp"></div>
-      </div>
+      <div class="card"><div class="section-head"><span class="section-title">Upcoming rota</span></div><div id="dashRota"></div></div>
+      <div class="card"><div class="section-head"><span class="section-title">Recent expenses</span></div><div id="dashExp"></div></div>
     </div>
   </div>
 
-  <!-- ROTA -->
   <div id="page-rota" class="page">
     <div class="page-title">Cleaning <em>Rota</em></div>
-    <p class="page-sub">Upload photo proof — Fagun will approve it. Cycles forever in the same order!</p>
+    <p class="page-sub">Submit photo proof — Fagun will approve it. Rota cycles forever!</p>
     <div id="rotaList"></div>
     <div style="text-align:center;margin-top:1rem">
       <button class="btn btn-outline btn-sm" onclick="rotaShowCount+=9;renderRota()"><i class="ti ti-chevron-down"></i>Show next cycle</button>
     </div>
   </div>
 
-  <!-- EXPENSES -->
   <div id="page-expenses" class="page">
     <div class="page-title">House <em>Expenses</em></div>
     <p class="page-sub">Our shared spending notebook — synced for everyone</p>
     <div class="stat-row" id="expStats"></div>
     <div class="card">
-      <div class="section-head">
-        <span class="section-title">Add new expense</span>
-        <span style="font-size:0.75rem;color:var(--muted);font-style:italic">✏️ jot it down</span>
-      </div>
+      <div class="section-head"><span class="section-title">Add new expense</span><span style="font-size:0.75rem;color:var(--muted);font-style:italic">✏️ jot it down</span></div>
       <div class="form-row" style="margin-bottom:4px">
-        <div class="form-group">
-          <span class="form-label">What was bought</span>
-          <input class="nb-input" id="eItem" placeholder="e.g. Washing up liquid...">
-        </div>
-        <div class="form-group">
-          <span class="form-label">Amount (£)</span>
-          <input class="nb-input" id="eAmt" type="number" step="0.01" min="0" placeholder="0.00">
-        </div>
+        <div class="form-group"><span class="form-label">What was bought</span><input class="nb-input" id="eItem" placeholder="e.g. Washing up liquid..."></div>
+        <div class="form-group"><span class="form-label">Amount (£)</span><input class="nb-input" id="eAmt" type="number" step="0.01" min="0" placeholder="0.00"></div>
       </div>
       <div class="form-row" style="margin-bottom:12px">
-        <div class="form-group">
-          <span class="form-label">Category</span>
-          <select class="nb-input" id="eCat">
-            <option>Groceries</option><option>Utilities</option>
-            <option>Cleaning Supplies</option><option>Repairs</option><option>Other</option>
-          </select>
+        <div class="form-group"><span class="form-label">Category</span>
+          <select class="nb-input" id="eCat"><option>Groceries</option><option>Utilities</option><option>Cleaning Supplies</option><option>Repairs</option><option>Other</option></select>
         </div>
-        <div class="form-group">
-          <span class="form-label">Paid by</span>
-          <select class="nb-input" id="ePerson"></select>
-        </div>
+        <div class="form-group"><span class="form-label">Paid by</span><select class="nb-input" id="ePerson"></select></div>
       </div>
       <div style="margin-bottom:14px">
         <span class="form-label" style="display:block;margin-bottom:6px">Receipt photo (optional)</span>
@@ -321,7 +253,7 @@ input[type=file]{display:none}
           <span style="font-size:0.78rem;color:var(--muted)">Tap to upload receipt</span>
         </label>
         <input type="file" id="rFile" accept="image/*" onchange="prevReceipt(this)">
-        <img id="rPreview" style="display:none;max-width:90px;border-radius:8px;margin-top:8px;border:1px solid var(--border)">
+        <img id="rPreview" style="display:none;max-width:90px;border-radius:8px;margin-top:8px">
       </div>
       <button class="btn btn-primary" onclick="addExp()"><i class="ti ti-plus"></i>Add to notebook</button>
     </div>
@@ -331,7 +263,6 @@ input[type=file]{display:none}
     </div>
   </div>
 
-  <!-- FUND -->
   <div id="page-fund" class="page">
     <div class="page-title">Reserve <em>Fund</em></div>
     <p class="page-sub">Track the shared pot — who's paid, who hasn't</p>
@@ -339,14 +270,8 @@ input[type=file]{display:none}
     <div class="card">
       <div class="section-head"><span class="section-title">Record a payment</span></div>
       <div class="form-row" style="margin-bottom:10px">
-        <div class="form-group">
-          <span class="form-label">Amount (£)</span>
-          <input class="nb-input" id="fAmt" type="number" min="0" placeholder="0.00">
-        </div>
-        <div class="form-group">
-          <span class="form-label">From</span>
-          <select class="nb-input" id="fPerson"></select>
-        </div>
+        <div class="form-group"><span class="form-label">Amount (£)</span><input class="nb-input" id="fAmt" type="number" min="0" placeholder="0.00"></div>
+        <div class="form-group"><span class="form-label">From</span><select class="nb-input" id="fPerson"></select></div>
       </div>
       <button class="btn btn-primary btn-sm" onclick="addFund()"><i class="ti ti-check"></i>Mark as paid</button>
     </div>
@@ -356,77 +281,49 @@ input[type=file]{display:none}
     </div>
   </div>
 
-  <!-- CONTACT -->
   <div id="page-contact" class="page">
     <div class="page-title">Contact <em>&amp; Complaints</em></div>
-    <p class="page-sub">Reach the group or raise a complaint — housemates only</p>
+    <p class="page-sub">Reach the group or raise a complaint</p>
     <div class="wa-banner">
       <i class="ti ti-brand-whatsapp wa-icon"></i>
-      <div class="wa-text">
-        <div class="wa-title">57 Hind Grove — WhatsApp Group</div>
-        <div class="wa-sub">Tap to open the house group chat directly</div>
-      </div>
-      <a class="btn btn-wa" href="https://chat.whatsapp.com/Js4BykzJT7NCDObPCCr827" target="_blank">
-        <i class="ti ti-brand-whatsapp"></i>Open Group
-      </a>
+      <div class="wa-text"><div style="font-weight:500">57 Hind Grove — WhatsApp Group</div><div style="font-size:0.78rem;color:#9ca3af;margin-top:2px">Tap to open the house group chat</div></div>
+      <a class="btn btn-wa" href="https://chat.whatsapp.com/Js4BykzJT7NCDObPCCr827" target="_blank"><i class="ti ti-brand-whatsapp"></i>Open Group</a>
     </div>
     <div class="card">
       <div class="section-head"><span class="section-title">Raise a complaint or suggestion</span></div>
-      <div class="form-group" style="margin-bottom:10px">
-        <span class="form-label">Your name</span>
-        <select class="nb-input" id="cName"></select>
-      </div>
-      <div class="form-group" style="margin-bottom:12px">
-        <span class="form-label">Your message</span>
-        <textarea class="nb-input" id="cMsg" placeholder="Write your complaint or suggestion..."></textarea>
-      </div>
+      <div class="form-group" style="margin-bottom:10px"><span class="form-label">Your name</span><select class="nb-input" id="cName"></select></div>
+      <div class="form-group" style="margin-bottom:12px"><span class="form-label">Your message</span><textarea class="nb-input" id="cMsg" placeholder="Write your complaint or suggestion..."></textarea></div>
       <button class="btn btn-wa" onclick="sendComplaint()"><i class="ti ti-brand-whatsapp"></i>Send to WhatsApp Group</button>
     </div>
   </div>
 
-  <!-- ADMIN -->
   <div id="page-admin" class="page">
     <div class="page-title"><em>Admin</em> Panel</div>
-    <p class="page-sub">Fagun only — approve cleaning, manage settings</p>
+    <p class="page-sub">Fagun only — approve cleaning proof & manage settings</p>
     <div id="adminGate">
       <div class="admin-gate">
         <i class="ti ti-lock"></i>
         <p style="color:var(--muted);font-size:0.875rem;margin-bottom:1rem">Enter your admin password</p>
         <input class="pw-input" type="password" id="aPwIn" placeholder="Admin password..." onkeydown="if(event.key==='Enter')unlockAdmin()">
-        <br>
-        <button class="btn btn-primary" style="margin-top:10px" onclick="unlockAdmin()">Unlock</button>
+        <br><button class="btn btn-primary" style="margin-top:10px" onclick="unlockAdmin()">Unlock</button>
         <p id="aErr" style="color:var(--danger);font-size:0.78rem;margin-top:8px;display:none">Incorrect password</p>
       </div>
     </div>
     <div id="adminPanel" style="display:none">
-
-      <!-- Pending approvals -->
       <div class="card">
-        <div class="section-head">
-          <span class="section-title">⏳ Pending proof approvals</span>
-          <span id="pendingCount" style="font-size:0.78rem;color:var(--muted)"></span>
-        </div>
+        <div class="section-head"><span class="section-title">⏳ Pending proof approvals</span><span id="pendingCount" style="font-size:0.78rem;color:var(--muted)"></span></div>
         <div id="pendingList"></div>
       </div>
-
-      <!-- Names -->
       <div class="card" style="margin-top:1rem">
         <div class="section-head"><span class="section-title">Housemate names</span></div>
         <div id="nameInputs"></div>
         <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="saveNames()"><i class="ti ti-device-floppy"></i>Save names</button>
       </div>
-
-      <!-- Fund settings -->
       <div class="card" style="margin-top:1rem">
         <div class="section-head"><span class="section-title">Per-person contribution</span></div>
-        <div class="form-group" style="margin-bottom:10px">
-          <span class="form-label">Amount per person (£/month)</span>
-          <input type="number" class="nb-input" id="contribAmt" placeholder="e.g. 30">
-        </div>
+        <div class="form-group" style="margin-bottom:10px"><span class="form-label">Amount per person (£/month)</span><input type="number" class="nb-input" id="contribAmt" placeholder="e.g. 30"></div>
         <button class="btn btn-primary btn-sm" onclick="saveContrib()"><i class="ti ti-device-floppy"></i>Save</button>
       </div>
-
-      <!-- Danger zone -->
       <div class="card" style="margin-top:1rem;border-color:#fca5a5">
         <div class="section-head"><span class="section-title" style="color:var(--danger)">⚠ Danger zone</span></div>
         <div style="display:flex;flex-wrap:wrap;gap:8px">
@@ -438,7 +335,6 @@ input[type=file]{display:none}
   </div>
 </div>
 
-<!-- PROOF UPLOAD MODAL -->
 <div class="modal-bg" id="proofModal">
   <div class="modal">
     <h3>Submit Proof Photo</h3>
@@ -451,18 +347,15 @@ input[type=file]{display:none}
     <img id="proofPrev" style="display:none;max-width:100%;border-radius:10px;margin-top:8px">
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeMod()">Cancel</button>
-      <button class="btn btn-primary" onclick="submitProof()"><i class="ti ti-send"></i>Submit for approval</button>
+      <button class="btn btn-primary" id="submitProofBtn" onclick="submitProof()"><i class="ti ti-send"></i>Submit for approval</button>
     </div>
   </div>
 </div>
 
-<!-- Firebase -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, addDoc, deleteDoc, updateDoc, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
+import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-// ── FIREBASE CONFIG ─────────────────────────────────────────
 const firebaseConfig = {
   apiKey: "AIzaSyD7cDTQ7qwbCaLiZ-Cana3jsfj7xrft5uQ",
   authDomain: "hind-grove.firebaseapp.com",
@@ -472,9 +365,8 @@ const firebaseConfig = {
   appId: "1:308457493109:web:baecd6a550666bc474de3c"
 };
 
-const fireApp  = initializeApp(firebaseConfig);
-const db       = getFirestore(fireApp);
-const storage  = getStorage(fireApp);
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
 
 // ── CONFIG ──────────────────────────────────────────────────
 const HOUSE_PIN  = '5757';
@@ -483,202 +375,181 @@ const START_DATE = '2026-05-11';
 const GAP_DAYS   = 2;
 const TASKS      = ['Kitchen','Bathroom','Hoovering','Bins','Mopping'];
 const COLORS     = ['#4a7c59','#c17f3e','#6366f1','#ec4899','#14b8a6','#f59e0b','#8b5cf6','#0891b2','#10b981'];
-const DEFAULT_NAMES = ['Apou','Tanvir','Marup','Nahid','Fahad','Shadat','Fagun','Rakib','Sanim'];
+const IMG_MAX_PX = 800; // compress images to max 800px
+const IMG_QUALITY = 0.6;
 
-// ── STATE ────────────────────────────────────────────────────
-let names     = [...DEFAULT_NAMES];
-let expenses  = [];
-let rotaStat  = {}; // key => {status, proofUrl}
-let fund      = { perPerson: 30, payments: {} };
-let pending   = []; // pending proof approvals
-let rotaShowCount = 18;
-let pendingProofKey  = null;
+let names    = ['Apou','Tanvir','Marup','Nahid','Fahad','Shadat','Fagun','Rakib','Sanim'];
+let expenses = [];
+let rotaStat = {};
+let fund     = { perPerson:30, payments:{} };
+let pending  = [];
+let rotaShowCount  = 18;
+let pendingProofInfo = null;
 let pendingProofData = null;
+let receiptData = null;
 let adminUnlocked = false;
 
-// ── ROTA ENGINE ──────────────────────────────────────────────
+// ── IMAGE COMPRESS ────────────────────────────────────────────
+function compressImage(dataUrl, maxPx, quality) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      let w=img.width, h=img.height;
+      if(w>maxPx||h>maxPx){
+        if(w>h){h=Math.round(h*maxPx/w);w=maxPx;}
+        else{w=Math.round(w*maxPx/h);h=maxPx;}
+      }
+      canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      resolve(canvas.toDataURL('image/jpeg',quality));
+    };
+    img.src=dataUrl;
+  });
+}
+
+// ── ROTA ENGINE ───────────────────────────────────────────────
 function getRotaEntries(count) {
-  const entries = [];
-  const base = new Date(START_DATE);
-  for (let i = 0; i < count; i++) {
-    const d = new Date(base);
-    d.setDate(d.getDate() + i * GAP_DAYS);
-    const dateStr = d.toISOString().split('T')[0];
-    const mIdx = i % names.length;
-    const cycleNum = Math.floor(i / names.length) + 1;
-    const key = `${mIdx}_${dateStr}`;
-    const saved = rotaStat[key] || {};
-    entries.push({
-      mIdx, date: dateStr, tasks: [...TASKS],
-      status: saved.status || autoStatus(dateStr),
-      proofUrl: saved.proofUrl || null,
-      key, cycleNum, slotIndex: i
-    });
+  const entries=[];
+  const base=new Date(START_DATE);
+  for(let i=0;i<count;i++){
+    const d=new Date(base);
+    d.setDate(d.getDate()+i*GAP_DAYS);
+    const dateStr=d.toISOString().split('T')[0];
+    const mIdx=i%names.length;
+    const cycleNum=Math.floor(i/names.length)+1;
+    const key=`${mIdx}_${dateStr}`;
+    const saved=rotaStat[key]||{};
+    entries.push({mIdx,date:dateStr,tasks:[...TASKS],status:saved.status||autoStatus(dateStr),proofData:saved.proofData||null,key,cycleNum});
   }
   return entries;
 }
-
-function autoStatus(dateStr) {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const d = new Date(dateStr);
-  if (d < today) return 'missed';
-  if (d.toDateString() === today.toDateString()) return 'today';
-  return 'scheduled';
+function autoStatus(d){
+  const today=new Date();today.setHours(0,0,0,0);
+  const dt=new Date(d);
+  if(dt<today)return'missed';
+  if(dt.toDateString()===today.toDateString())return'today';
+  return'scheduled';
 }
 
 // ── PIN ───────────────────────────────────────────────────────
-let pinEntry = '';
-window.kp = function(v) {
-  if (v==='clr') { pinEntry=''; }
-  else if (v==='del') { pinEntry=pinEntry.slice(0,-1); }
-  else if (pinEntry.length<4) { pinEntry+=v; if(pinEntry.length===4) setTimeout(checkPin,180); }
-  for(let i=0;i<4;i++) document.getElementById('pd'+i).classList.toggle('filled',i<pinEntry.length);
+let pinEntry='';
+window.kp=function(v){
+  if(v==='clr'){pinEntry='';}
+  else if(v==='del'){pinEntry=pinEntry.slice(0,-1);}
+  else if(pinEntry.length<4){pinEntry+=v;if(pinEntry.length===4)setTimeout(checkPin,180);}
+  for(let i=0;i<4;i++)document.getElementById('pd'+i).classList.toggle('filled',i<pinEntry.length);
 };
-function checkPin() {
-  if (pinEntry===HOUSE_PIN) {
+function checkPin(){
+  if(pinEntry===HOUSE_PIN){
     document.getElementById('pin-screen').style.display='none';
     document.getElementById('loading-screen').style.display='flex';
-    initFirebase();
+    initFire();
   } else {
     const e=document.getElementById('pinErr');
-    e.classList.add('show'); pinEntry='';
-    for(let i=0;i<4;i++) document.getElementById('pd'+i).classList.remove('filled');
+    e.classList.add('show');pinEntry='';
+    for(let i=0;i<4;i++)document.getElementById('pd'+i).classList.remove('filled');
     setTimeout(()=>e.classList.remove('show'),2200);
   }
 }
 
-// ── FIREBASE INIT ─────────────────────────────────────────────
-async function initFirebase() {
-  // Listen to all collections in real time
-  onSnapshot(doc(db,'house','settings'), snap => {
-    if (snap.exists()) {
-      const d = snap.data();
-      if (d.names) names = d.names;
-      if (d.fund)  fund  = d.fund;
-    }
+// ── FIREBASE ──────────────────────────────────────────────────
+function initFire(){
+  onSnapshot(doc(db,'house','settings'),snap=>{
+    if(snap.exists()){const d=snap.data();if(d.names)names=d.names;if(d.fund)fund=d.fund;}
     renderAll();
   });
-
-  onSnapshot(collection(db,'expenses'), snap => {
-    expenses = [];
-    snap.forEach(d => expenses.push({id:d.id,...d.data()}));
+  onSnapshot(collection(db,'expenses'),snap=>{
+    expenses=[];
+    snap.forEach(d=>expenses.push({id:d.id,...d.data()}));
     expenses.sort((a,b)=>a.createdAt-b.createdAt);
-    renderExp(); renderDash();
+    renderExp();renderDash();
   });
-
-  onSnapshot(collection(db,'rotaStatus'), snap => {
-    rotaStat = {};
-    snap.forEach(d => { rotaStat[d.id] = d.data(); });
-    renderRota(); renderDash();
-    updatePendingBadge();
+  onSnapshot(collection(db,'rotaStatus'),snap=>{
+    rotaStat={};
+    snap.forEach(d=>{rotaStat[d.id]=d.data();});
+    renderRota();renderDash();updateBadge();
   });
-
-  onSnapshot(collection(db,'pending'), snap => {
-    pending = [];
-    snap.forEach(d => pending.push({id:d.id,...d.data()}));
-    updatePendingBadge();
-    if (adminUnlocked) renderPending();
+  onSnapshot(collection(db,'pending'),snap=>{
+    pending=[];
+    snap.forEach(d=>pending.push({id:d.id,...d.data()}));
+    updateBadge();
+    if(adminUnlocked)renderPending();
   });
-
-  // Hide loading, show app
-  setTimeout(() => {
+  setTimeout(()=>{
     document.getElementById('loading-screen').style.display='none';
     document.getElementById('app').style.display='block';
     populateSelects();
-  }, 1200);
+  },1200);
 }
 
-// ── PENDING BADGE ─────────────────────────────────────────────
-function updatePendingBadge() {
-  const cnt = pending.length;
-  const badge  = document.getElementById('adminBadge');
-  const tabBadge = document.getElementById('adminTab');
-  if (cnt > 0) {
-    badge.style.display='flex'; badge.textContent=cnt;
-    if (!document.getElementById('adminTabBadge')) {
-      const b = document.createElement('span');
-      b.className='tab-badge'; b.id='adminTabBadge'; b.textContent=cnt;
-      tabBadge.appendChild(b);
-    } else {
-      document.getElementById('adminTabBadge').textContent=cnt;
-    }
-  } else {
-    badge.style.display='none';
-    const b = document.getElementById('adminTabBadge');
-    if (b) b.remove();
-  }
+function updateBadge(){
+  const cnt=pending.length;
+  const b=document.getElementById('adminBadge');
+  b.style.display=cnt>0?'flex':'none';
+  b.textContent=cnt;
+  let tb=document.getElementById('adminTabBadge');
+  if(cnt>0){
+    if(!tb){tb=document.createElement('span');tb.className='tab-badge';tb.id='adminTabBadge';document.getElementById('adminTab').appendChild(tb);}
+    tb.textContent=cnt;
+  } else if(tb) tb.remove();
 }
 
-// ── NAV ───────────────────────────────────────────────────────
-window.goTab = function(tab) {
+window.goTab=function(tab){
   document.querySelectorAll('.nav-tab').forEach((t,i)=>{
-    const tabs=['dash','rota','expenses','fund','contact','admin'];
-    t.classList.toggle('active',tabs[i]===tab);
+    t.classList.toggle('active',['dash','rota','expenses','fund','contact','admin'][i]===tab);
   });
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+tab).classList.add('active');
   document.getElementById('search-panel').style.display='none';
 };
 
-// ── RENDER ALL ────────────────────────────────────────────────
-function renderAll() { populateSelects(); renderDash(); renderRota(); renderExp(); renderFund(); }
-
-function populateSelects() {
-  const opts = names.map((n,i)=>`<option value="${i}">${n}</option>`).join('');
-  ['ePerson','fPerson','cName'].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.innerHTML=opts;
-  });
+function renderAll(){populateSelects();renderDash();renderRota();renderExp();renderFund();}
+function populateSelects(){
+  const o=names.map((n,i)=>`<option value="${i}">${n}</option>`).join('');
+  ['ePerson','fPerson','cName'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=o;});
 }
 
 // ── DASHBOARD ─────────────────────────────────────────────────
-function renderDash() {
-  const totalExp = expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
-  const payments = fund.payments||{};
-  const collected= Object.values(payments).reduce((s,v)=>s+parseFloat(v||0),0);
-  const balance  = collected-totalExp;
-  const paidCnt  = Object.keys(payments).filter(k=>parseFloat(payments[k])>0).length;
-  const entries  = getRotaEntries(rotaShowCount);
-  const doneCnt  = entries.filter(r=>r.status==='done').length;
-
+function renderDash(){
+  const te=expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+  const py=fund.payments||{};
+  const col=Object.values(py).reduce((s,v)=>s+parseFloat(v||0),0);
+  const bal=col-te;
+  const pc=Object.keys(py).filter(k=>parseFloat(py[k])>0).length;
+  const ent=getRotaEntries(rotaShowCount);
+  const dc=ent.filter(r=>r.status==='done').length;
   document.getElementById('dashStats').innerHTML=`
-    <div class="stat"><div class="stat-label">Total Spent</div><div class="stat-val amber">£${totalExp.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">Fund Balance</div><div class="stat-val ${balance>=0?'green':'red'}">£${balance.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">Contributed</div><div class="stat-val">${paidCnt} / ${names.length}</div></div>
-    <div class="stat"><div class="stat-label">Cleans Done</div><div class="stat-val">${doneCnt}</div></div>
-  `;
-
-  const upcoming = entries.filter(r=>r.status!=='done'&&r.status!=='missed').slice(0,4);
-  document.getElementById('dashRota').innerHTML = upcoming.length
-    ? upcoming.map(r=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px dashed var(--border)">
-        <div class="avatar" style="width:30px;height:30px;background:${COLORS[r.mIdx%COLORS.length]}22;color:${COLORS[r.mIdx%COLORS.length]};font-size:0.72rem">${names[r.mIdx][0]}</div>
-        <div style="flex:1;font-size:0.85rem">${names[r.mIdx]}${r.cycleNum>1?`<span class="cycle-badge">C${r.cycleNum}</span>`:''}</div>
-        <div style="font-size:0.72rem;color:var(--muted)">${r.date}</div>
-      </div>`).join('')
-    : '<div class="empty"><i class="ti ti-check"></i>All done!</div>';
-
-  const recent = [...expenses].reverse().slice(0,4);
-  document.getElementById('dashExp').innerHTML = recent.length
-    ? recent.map(e=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px dashed var(--border)">
-        <div style="flex:1;font-size:0.85rem">${e.item}</div>
-        <div style="font-size:0.85rem;font-weight:500">£${parseFloat(e.amount).toFixed(2)}</div>
-      </div>`).join('')
-    : '<div class="empty"><i class="ti ti-pencil"></i>Nothing yet</div>';
+    <div class="stat"><div class="stat-label">Total Spent</div><div class="stat-val amber">£${te.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-label">Fund Balance</div><div class="stat-val ${bal>=0?'green':'red'}">£${bal.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-label">Contributed</div><div class="stat-val">${pc}/${names.length}</div></div>
+    <div class="stat"><div class="stat-label">Cleans Done</div><div class="stat-val">${dc}</div></div>`;
+  const up=ent.filter(r=>r.status!=='done'&&r.status!=='missed').slice(0,4);
+  document.getElementById('dashRota').innerHTML=up.length?up.map(r=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px dashed var(--border)">
+      <div class="avatar" style="width:30px;height:30px;background:${COLORS[r.mIdx%COLORS.length]}22;color:${COLORS[r.mIdx%COLORS.length]};font-size:0.72rem">${names[r.mIdx][0]}</div>
+      <div style="flex:1;font-size:0.85rem">${names[r.mIdx]}${r.cycleNum>1?`<span class="cycle-badge">C${r.cycleNum}</span>`:''}</div>
+      <div style="font-size:0.72rem;color:var(--muted)">${r.date}</div>
+    </div>`).join(''):'<div class="empty"><i class="ti ti-check"></i>All done!</div>';
+  const re=[...expenses].reverse().slice(0,4);
+  document.getElementById('dashExp').innerHTML=re.length?re.map(e=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px dashed var(--border)">
+      <div style="flex:1;font-size:0.85rem">${e.item}</div>
+      <div style="font-size:0.85rem;font-weight:500">£${parseFloat(e.amount).toFixed(2)}</div>
+    </div>`).join(''):'<div class="empty"><i class="ti ti-pencil"></i>Nothing yet</div>';
 }
 
 // ── ROTA ──────────────────────────────────────────────────────
-function renderRota() {
-  const entries = getRotaEntries(rotaShowCount);
-  const badgeMap = {done:'b-done',missed:'b-missed',today:'b-today',scheduled:'b-sched',pending:'b-pending'};
-  const labelMap = {done:'✓ Done',missed:'✗ Missed',today:'Today!',scheduled:'Scheduled',pending:'⏳ Pending'};
-  let html=''; let lastCycle=0;
-
-  entries.forEach(r => {
-    if (r.cycleNum!==lastCycle) {
-      if (lastCycle>0) html+='</div>';
-      html+=`<div style="font-size:0.72rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin:${lastCycle>0?'1.5rem':0} 0 0.5rem">
-        Cycle ${r.cycleNum} ${r.cycleNum===1?'— Current':'— Repeating'}
-      </div><div>`;
-      lastCycle=r.cycleNum;
+function renderRota(){
+  const ent=getRotaEntries(rotaShowCount);
+  const bm={done:'b-done',missed:'b-missed',today:'b-today',scheduled:'b-sched',pending:'b-pending'};
+  const lm={done:'✓ Done',missed:'✗ Missed',today:'Today!',scheduled:'Scheduled',pending:'⏳ Pending'};
+  let html='';let lc=0;
+  ent.forEach(r=>{
+    if(r.cycleNum!==lc){
+      if(lc>0)html+='</div>';
+      html+=`<div style="font-size:0.72rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin:${lc>0?'1.5rem':0} 0 0.5rem">Cycle ${r.cycleNum} ${r.cycleNum===1?'— Current':'— Repeating'}</div><div>`;
+      lc=r.cycleNum;
     }
     const c=COLORS[r.mIdx%COLORS.length];
     html+=`<div class="rota-item ${r.status==='done'?'done':r.status==='missed'?'missed':r.status==='today'?'today':r.status==='pending'?'pending':''}">
@@ -686,259 +557,96 @@ function renderRota() {
       <div style="flex:1">
         <div style="font-size:0.9rem;font-weight:500">${names[r.mIdx]}</div>
         <div style="font-size:0.75rem;color:var(--muted);margin:2px 0">${r.tasks.join(' · ')}</div>
-        ${r.proofUrl?`<img src="${r.proofUrl}" style="max-width:80px;border-radius:7px;margin-top:6px;border:1px solid var(--border);cursor:pointer" onclick="openImg('${r.proofUrl}')" title="Click to view proof">` : ''}
+        ${r.proofData?`<img src="${r.proofData}" style="max-width:80px;border-radius:7px;margin-top:6px;border:1px solid var(--border);cursor:pointer" onclick="openImg('${r.proofData}')" title="View proof">`:''}
         ${r.status==='pending'?`<p style="font-size:0.72rem;color:#854d0e;margin-top:4px">⏳ Waiting for Fagun's approval</p>`:''}
       </div>
       <div style="text-align:right;flex-shrink:0">
         <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px">${r.date}</div>
-        <span class="badge ${badgeMap[r.status]||'b-sched'}">${labelMap[r.status]||r.status}</span>
-        ${r.status!=='done'&&r.status!=='pending'?`<br><button class="btn btn-sm btn-outline" style="margin-top:5px;font-size:0.7rem" onclick="openProof('${r.key}','${r.date}',${r.mIdx})">
-          <i class="ti ti-camera"></i>Proof
-        </button>`:''}
+        <span class="badge ${bm[r.status]||'b-sched'}">${lm[r.status]||r.status}</span>
+        ${r.status!=='done'&&r.status!=='pending'?`<br><button class="btn btn-sm btn-outline" style="margin-top:5px;font-size:0.7rem" onclick="openProof('${r.key}','${r.date}',${r.mIdx})"><i class="ti ti-camera"></i>Proof</button>`:''}
         ${r.status!=='done'&&r.status!=='missed'&&r.status!=='pending'?`<button class="btn btn-sm" style="margin-top:5px;margin-left:3px;background:#fee2e2;color:#991b1b;border:none;font-size:0.7rem;padding:5px 8px;border-radius:7px;cursor:pointer" onclick="markMissed('${r.key}')">Missed</button>`:''}
       </div>
     </div>`;
   });
-  if(lastCycle>0) html+='</div>';
+  if(lc>0)html+='</div>';
   document.getElementById('rotaList').innerHTML=html;
 }
 
-// ── PROOF SUBMIT ──────────────────────────────────────────────
-window.openProof = function(key, date, mIdx) {
-  pendingProofKey={key,date,mIdx}; pendingProofData=null;
+window.openProof=function(key,date,mIdx){
+  pendingProofInfo={key,date,mIdx};pendingProofData=null;
   document.getElementById('proofPrev').style.display='none';
   document.getElementById('proofModal').classList.add('open');
 };
-window.closeMod = function() { document.getElementById('proofModal').classList.remove('open'); };
-window.prevProof = function(inp) {
-  if(!inp.files[0]) return;
+window.closeMod=function(){document.getElementById('proofModal').classList.remove('open');};
+window.prevProof=function(inp){
+  if(!inp.files[0])return;
   const r=new FileReader();
-  r.onload=e=>{ pendingProofData=e.target.result; const img=document.getElementById('proofPrev'); img.src=pendingProofData; img.style.display='block'; };
+  r.onload=e=>{pendingProofData=e.target.result;const img=document.getElementById('proofPrev');img.src=pendingProofData;img.style.display='block';};
   r.readAsDataURL(inp.files[0]);
 };
-
-window.submitProof = async function() {
-  if (!pendingProofData) { alert('Please select a photo first'); return; }
-  const btn = document.querySelector('#proofModal .btn-primary');
-  btn.textContent='Uploading...'; btn.disabled=true;
-  try {
-    // Upload image to Firebase Storage
-    const storageRef = ref(storage, `proofs/${pendingProofKey.key}_${Date.now()}.jpg`);
-    await uploadString(storageRef, pendingProofData, 'data_url');
-    const proofUrl = await getDownloadURL(storageRef);
-
-    // Add to pending collection
-    await addDoc(collection(db,'pending'), {
-      key: pendingProofKey.key,
-      date: pendingProofKey.date,
-      mIdx: pendingProofKey.mIdx,
-      name: names[pendingProofKey.mIdx],
-      proofUrl,
-      submittedAt: Date.now()
+window.submitProof=async function(){
+  if(!pendingProofData){alert('Please select a photo first');return;}
+  const btn=document.getElementById('submitProofBtn');
+  btn.textContent='Uploading...';btn.disabled=true;
+  try{
+    const compressed=await compressImage(pendingProofData,IMG_MAX_PX,IMG_QUALITY);
+    // Save to pending
+    await addDoc(collection(db,'pending'),{
+      key:pendingProofInfo.key,date:pendingProofInfo.date,
+      mIdx:pendingProofInfo.mIdx,name:names[pendingProofInfo.mIdx],
+      proofData:compressed,submittedAt:Date.now()
     });
-
-    // Update rota status to pending
-    await setDoc(doc(db,'rotaStatus',pendingProofKey.key), {
-      status:'pending', proofUrl
-    });
-
+    // Update rota status
+    await setDoc(doc(db,'rotaStatus',pendingProofInfo.key),{status:'pending',proofData:compressed});
     closeMod();
     alert('✅ Proof submitted! Waiting for Fagun to approve.');
-  } catch(e) {
-    alert('Upload failed: '+e.message);
-  }
-  btn.textContent='Submit for approval'; btn.disabled=false;
+  }catch(e){alert('Error: '+e.message);}
+  btn.textContent='Submit for approval';btn.disabled=false;
+};
+window.markMissed=async function(key){
+  if(!confirm('Mark as missed?'))return;
+  await setDoc(doc(db,'rotaStatus',key),{status:'missed',proofData:null});
 };
 
-window.markMissed = async function(key) {
-  if (!confirm('Mark as missed?')) return;
-  await setDoc(doc(db,'rotaStatus',key), {status:'missed',proofUrl:null});
-};
-
-// ── ADMIN APPROVE / REJECT ────────────────────────────────────
-window.unlockAdmin = function() {
-  const pw=document.getElementById('aPwIn').value;
-  if(pw===ADMIN_PW){
+// ── ADMIN ─────────────────────────────────────────────────────
+window.unlockAdmin=function(){
+  if(document.getElementById('aPwIn').value===ADMIN_PW){
     adminUnlocked=true;
     document.getElementById('adminGate').style.display='none';
     document.getElementById('adminPanel').style.display='block';
-    renderAdminPanel();
-    renderPending();
+    renderAdminPanel();renderPending();
   } else {
-    const err=document.getElementById('aErr');
-    err.style.display='block';
-    setTimeout(()=>err.style.display='none',2500);
+    const e=document.getElementById('aErr');e.style.display='block';
+    setTimeout(()=>e.style.display='none',2500);
   }
 };
-
-function renderPending() {
+function renderPending(){
   const el=document.getElementById('pendingList');
   document.getElementById('pendingCount').textContent=`${pending.length} waiting`;
-  if(!pending.length){
-    el.innerHTML='<div class="empty"><i class="ti ti-check"></i>No pending approvals 🎉</div>';
-    return;
-  }
+  if(!pending.length){el.innerHTML='<div class="empty"><i class="ti ti-check"></i>No pending approvals 🎉</div>';return;}
   el.innerHTML=pending.map(p=>`
     <div class="pending-card">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <div class="avatar" style="width:32px;height:32px;background:${COLORS[p.mIdx%COLORS.length]}22;color:${COLORS[p.mIdx%COLORS.length]};font-size:0.75rem">${p.name[0]}</div>
-        <div>
-          <div style="font-size:0.9rem;font-weight:500">${p.name}</div>
-          <div style="font-size:0.75rem;color:var(--muted)">${p.date}</div>
-        </div>
+        <div><div style="font-size:0.9rem;font-weight:500">${p.name}</div><div style="font-size:0.75rem;color:var(--muted)">${p.date}</div></div>
       </div>
-      ${p.proofUrl?`<img src="${p.proofUrl}" class="pending-proof" onclick="openImg('${p.proofUrl}')" title="Click to enlarge">` : '<p style="font-size:0.8rem;color:var(--muted)">No photo</p>'}
+      ${p.proofData?`<img src="${p.proofData}" class="pending-proof" onclick="openImg('${p.proofData}')" title="Click to enlarge">`:'<p style="font-size:0.8rem;color:var(--muted)">No photo</p>'}
       <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="btn btn-success btn-sm" onclick="approveProof('${p.id}','${p.key}','${p.proofUrl}')"><i class="ti ti-check"></i>Approve ✅</button>
-        <button class="btn btn-danger btn-sm" onclick="rejectProof('${p.id}','${p.key}','${p.proofUrl}')"><i class="ti ti-x"></i>Reject ❌</button>
+        <button class="btn btn-success btn-sm" onclick="approveProof('${p.id}','${p.key}','${p.proofData?'yes':''}')"><i class="ti ti-check"></i>Approve ✅</button>
+        <button class="btn btn-danger btn-sm" onclick="rejectProof('${p.id}','${p.key}')"><i class="ti ti-x"></i>Reject ❌</button>
       </div>
     </div>`).join('');
 }
-
-window.approveProof = async function(pendingId, key, proofUrl) {
-  await setDoc(doc(db,'rotaStatus',key), {status:'done', proofUrl});
-  await deleteDoc(doc(db,'pending',pendingId));
-  renderPending();
+window.approveProof=async function(pid,key,hasProof){
+  const p=pending.find(x=>x.id===pid);
+  await setDoc(doc(db,'rotaStatus',key),{status:'done',proofData:p?p.proofData:null});
+  await deleteDoc(doc(db,'pending',pid));
 };
-
-window.rejectProof = async function(pendingId, key, proofUrl) {
-  await setDoc(doc(db,'rotaStatus',key), {status:'missed', proofUrl:null});
-  await deleteDoc(doc(db,'pending',pendingId));
-  // delete from storage
-  try {
-    const storageRef = ref(storage, proofUrl);
-    await deleteObject(storageRef);
-  } catch(e) {}
-  renderPending();
+window.rejectProof=async function(pid,key){
+  await setDoc(doc(db,'rotaStatus',key),{status:'missed',proofData:null});
+  await deleteDoc(doc(db,'pending',pid));
 };
-
-// ── IMAGE OVERLAY ─────────────────────────────────────────────
-window.openImg = function(url) {
-  document.getElementById('overlayImg').src=url;
-  document.getElementById('imgOverlay').classList.add('open');
-};
-window.closeImgOverlay = function() {
-  document.getElementById('imgOverlay').classList.remove('open');
-};
-
-// ── EXPENSES ──────────────────────────────────────────────────
-let receiptDataUrl = null;
-window.addExp = async function() {
-  const item=document.getElementById('eItem').value.trim();
-  const amount=parseFloat(document.getElementById('eAmt').value);
-  const cat=document.getElementById('eCat').value;
-  const mIdx=parseInt(document.getElementById('ePerson').value);
-  if(!item||isNaN(amount)||amount<=0){ alert('Please fill in item and amount'); return; }
-
-  let receiptUrl=null;
-  if(receiptDataUrl){
-    const storageRef=ref(storage,`receipts/${Date.now()}.jpg`);
-    await uploadString(storageRef,receiptDataUrl,'data_url');
-    receiptUrl=await getDownloadURL(storageRef);
-  }
-
-  await addDoc(collection(db,'expenses'),{
-    item,amount,cat,mIdx,
-    date:new Date().toLocaleDateString('en-GB'),
-    createdAt:Date.now(),
-    receiptUrl
-  });
-  document.getElementById('eItem').value='';
-  document.getElementById('eAmt').value='';
-  document.getElementById('rPreview').style.display='none';
-  receiptDataUrl=null;
-};
-
-window.prevReceipt = function(inp) {
-  if(!inp.files[0]) return;
-  const r=new FileReader();
-  r.onload=e=>{ receiptDataUrl=e.target.result; const img=document.getElementById('rPreview'); img.src=receiptDataUrl; img.style.display='block'; };
-  r.readAsDataURL(inp.files[0]);
-};
-
-function renderExp() {
-  const total=expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
-  const bycat={};
-  expenses.forEach(e=>{bycat[e.cat]=(bycat[e.cat]||0)+parseFloat(e.amount||0);});
-  const topCat=Object.entries(bycat).sort((a,b)=>b[1]-a[1])[0];
-  document.getElementById('expStats').innerHTML=`
-    <div class="stat"><div class="stat-label">Total Spent</div><div class="stat-val amber">£${total.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">Items Logged</div><div class="stat-val">${expenses.length}</div></div>
-    <div class="stat"><div class="stat-label">Top Category</div><div class="stat-val" style="font-size:1rem">${topCat?topCat[0]:'—'}</div></div>
-  `;
-  document.getElementById('expList').innerHTML=expenses.length
-    ? [...expenses].reverse().map(e=>`<div class="exp-item">
-        <span class="exp-date">${e.date}</span>
-        <span class="exp-name">${e.item}</span>
-        <span class="exp-cat">${e.cat}</span>
-        <span style="font-size:0.78rem;color:var(--muted)">${names[e.mIdx]||''}</span>
-        ${e.receiptUrl?`<img src="${e.receiptUrl}" class="receipt-thumb" onclick="openImg('${e.receiptUrl}')" title="View receipt">`:''}
-        <span class="exp-amt">£${parseFloat(e.amount).toFixed(2)}</span>
-        <button style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.85rem;padding:2px" onclick="delExp('${e.id}','${e.receiptUrl||''}')"><i class="ti ti-trash"></i></button>
-      </div>`).join('')
-    : '<div class="empty"><i class="ti ti-pencil"></i>Nothing yet</div>';
-}
-
-window.delExp = async function(id,receiptUrl) {
-  if(!confirm('Remove this expense?')) return;
-  await deleteDoc(doc(db,'expenses',id));
-  if(receiptUrl){try{await deleteObject(ref(storage,receiptUrl));}catch(e){}}
-};
-
-// ── FUND ──────────────────────────────────────────────────────
-window.addFund = async function() {
-  const amt=parseFloat(document.getElementById('fAmt').value);
-  const mIdx=document.getElementById('fPerson').value;
-  if(isNaN(amt)||amt<=0){alert('Enter a valid amount');return;}
-  const payments=fund.payments||{};
-  payments[mIdx]=((parseFloat(payments[mIdx]||0))+amt).toString();
-  await setDoc(doc(db,'house','settings'),{names,fund:{...fund,payments}},{merge:true});
-  document.getElementById('fAmt').value='';
-};
-
-window.toggleFund = async function(i) {
-  const payments=fund.payments||{};
-  payments[i]=parseFloat(payments[i]||0)>0?'0':(fund.perPerson||0).toString();
-  await setDoc(doc(db,'house','settings'),{names,fund:{...fund,payments}},{merge:true});
-};
-
-function renderFund() {
-  const payments=fund.payments||{};
-  const perPerson=fund.perPerson||0;
-  const collected=Object.values(payments).reduce((s,v)=>s+parseFloat(v||0),0);
-  const totalExp=expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
-  const balance=collected-totalExp;
-  document.getElementById('fundStats').innerHTML=`
-    <div class="stat"><div class="stat-label">Collected</div><div class="stat-val green">£${collected.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">Spent</div><div class="stat-val amber">£${totalExp.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-val ${balance>=0?'green':'red'}">£${balance.toFixed(2)}</div><div class="stat-label">Balance</div></div>
-    <div class="stat"><div class="stat-label">Expected</div><div class="stat-val">£${names.length*perPerson}</div></div>
-  `;
-  document.getElementById('fundList').innerHTML=names.map((name,i)=>{
-    const paid=parseFloat(payments[i]||0);
-    const hasPaid=paid>0;
-    const c=COLORS[i%COLORS.length];
-    return `<div class="fund-row">
-      <div class="avatar" style="width:34px;height:34px;background:${c}22;color:${c};font-size:0.78rem">${name[0]}</div>
-      <div style="flex:1;font-size:0.875rem">${name}</div>
-      ${hasPaid?`<span style="font-size:0.8rem;color:var(--success);font-weight:500">£${paid.toFixed(2)}</span>`:''}
-      <span style="font-size:0.75rem;font-weight:500;color:${hasPaid?'var(--success)':'var(--danger)'}">${hasPaid?'Paid':'Unpaid'}</span>
-      <button class="toggle-btn ${hasPaid?'paid':''}" onclick="toggleFund(${i})">${hasPaid?'<i class="ti ti-check" style="font-size:12px"></i>':''}</button>
-    </div>`;
-  }).join('');
-}
-
-// ── CONTACT ───────────────────────────────────────────────────
-window.sendComplaint = function() {
-  const name=names[document.getElementById('cName').value];
-  const msg=document.getElementById('cMsg').value.trim();
-  if(!msg){alert('Please write a message');return;}
-  window.open(`https://wa.me/?text=${encodeURIComponent(`[57 Hind Grove Web]\n${name} says:\n${msg}`)}`,'_blank');
-  document.getElementById('cMsg').value='';
-};
-
-// ── ADMIN PANEL ───────────────────────────────────────────────
-function renderAdminPanel() {
+function renderAdminPanel(){
   document.getElementById('nameInputs').innerHTML=names.map((n,i)=>`
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
       <span style="font-size:0.72rem;color:var(--muted);width:18px">${i+1}.</span>
@@ -947,56 +655,137 @@ function renderAdminPanel() {
     </div>`).join('');
   document.getElementById('contribAmt').value=fund.perPerson||30;
 }
-
-window.saveNames = async function() {
-  const newNames=names.map((_,i)=>document.getElementById('ni_'+i).value.trim()||names[i]);
-  await setDoc(doc(db,'house','settings'),{names:newNames,fund},{merge:true});
+window.saveNames=async function(){
+  const n=names.map((_,i)=>document.getElementById('ni_'+i).value.trim()||names[i]);
+  await setDoc(doc(db,'house','settings'),{names:n,fund},{merge:true});
   alert('Names saved!');
 };
-
-window.saveContrib = async function() {
+window.saveContrib=async function(){
   const v=parseFloat(document.getElementById('contribAmt').value);
-  if(v>0){
-    await setDoc(doc(db,'house','settings'),{names,fund:{...fund,perPerson:v}},{merge:true});
-    alert('Saved!');
-  }
+  if(v>0){await setDoc(doc(db,'house','settings'),{names,fund:{...fund,perPerson:v}},{merge:true});alert('Saved!');}
 };
-
-window.clearExpenses = async function() {
-  if(!confirm('Clear ALL expenses?')) return;
-  for(const e of expenses) await deleteDoc(doc(db,'expenses',e.id));
+window.clearExpenses=async function(){
+  if(!confirm('Clear ALL expenses?'))return;
+  const snap=await getDocs(collection(db,'expenses'));
+  for(const d of snap.docs)await deleteDoc(doc(db,'expenses',d.id));
 };
-
-window.resetFund = async function() {
-  if(!confirm('Reset fund?')) return;
+window.resetFund=async function(){
+  if(!confirm('Reset fund?'))return;
   await setDoc(doc(db,'house','settings'),{names,fund:{...fund,payments:{}}},{merge:true});
 };
 
+// ── EXPENSES ──────────────────────────────────────────────────
+window.addExp=async function(){
+  const item=document.getElementById('eItem').value.trim();
+  const amount=parseFloat(document.getElementById('eAmt').value);
+  const cat=document.getElementById('eCat').value;
+  const mIdx=parseInt(document.getElementById('ePerson').value);
+  if(!item||isNaN(amount)||amount<=0){alert('Fill in item and amount');return;}
+  let receiptUrl=null;
+  if(receiptData) receiptUrl=await compressImage(receiptData,600,0.6);
+  await addDoc(collection(db,'expenses'),{item,amount,cat,mIdx,date:new Date().toLocaleDateString('en-GB'),createdAt:Date.now(),receiptUrl});
+  document.getElementById('eItem').value='';document.getElementById('eAmt').value='';
+  document.getElementById('rPreview').style.display='none';receiptData=null;
+};
+window.prevReceipt=function(inp){
+  if(!inp.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{receiptData=e.target.result;const img=document.getElementById('rPreview');img.src=receiptData;img.style.display='block';};
+  r.readAsDataURL(inp.files[0]);
+};
+function renderExp(){
+  const total=expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+  const bycat={};expenses.forEach(e=>{bycat[e.cat]=(bycat[e.cat]||0)+parseFloat(e.amount||0);});
+  const top=Object.entries(bycat).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('expStats').innerHTML=`
+    <div class="stat"><div class="stat-label">Total Spent</div><div class="stat-val amber">£${total.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-label">Items Logged</div><div class="stat-val">${expenses.length}</div></div>
+    <div class="stat"><div class="stat-label">Top Category</div><div class="stat-val" style="font-size:1rem">${top?top[0]:'—'}</div></div>`;
+  document.getElementById('expList').innerHTML=expenses.length
+    ?[...expenses].reverse().map(e=>`<div class="exp-item">
+        <span class="exp-date">${e.date}</span>
+        <span class="exp-name">${e.item}</span>
+        <span class="exp-cat">${e.cat}</span>
+        <span style="font-size:0.78rem;color:var(--muted)">${names[e.mIdx]||''}</span>
+        ${e.receiptUrl?`<img src="${e.receiptUrl}" class="receipt-thumb" onclick="openImg('${e.receiptUrl}')" title="View receipt">`:''}
+        <span class="exp-amt">£${parseFloat(e.amount).toFixed(2)}</span>
+        <button style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.85rem" onclick="delExp('${e.id}')"><i class="ti ti-trash"></i></button>
+      </div>`).join('')
+    :'<div class="empty"><i class="ti ti-pencil"></i>Nothing yet</div>';
+}
+window.delExp=async function(id){if(confirm('Remove?'))await deleteDoc(doc(db,'expenses',id));};
+
+// ── FUND ──────────────────────────────────────────────────────
+window.addFund=async function(){
+  const amt=parseFloat(document.getElementById('fAmt').value);
+  const mi=document.getElementById('fPerson').value;
+  if(isNaN(amt)||amt<=0){alert('Enter a valid amount');return;}
+  const py=fund.payments||{};
+  py[mi]=((parseFloat(py[mi]||0))+amt).toString();
+  await setDoc(doc(db,'house','settings'),{names,fund:{...fund,payments:py}},{merge:true});
+  document.getElementById('fAmt').value='';
+};
+window.toggleFund=async function(i){
+  const py=fund.payments||{};
+  py[i]=parseFloat(py[i]||0)>0?'0':(fund.perPerson||0).toString();
+  await setDoc(doc(db,'house','settings'),{names,fund:{...fund,payments:py}},{merge:true});
+};
+function renderFund(){
+  const py=fund.payments||{};
+  const pp=fund.perPerson||0;
+  const col=Object.values(py).reduce((s,v)=>s+parseFloat(v||0),0);
+  const te=expenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+  const bal=col-te;
+  document.getElementById('fundStats').innerHTML=`
+    <div class="stat"><div class="stat-label">Collected</div><div class="stat-val green">£${col.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-label">Spent</div><div class="stat-val amber">£${te.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-val ${bal>=0?'green':'red'}">£${bal.toFixed(2)}</div><div class="stat-label">Balance</div></div>
+    <div class="stat"><div class="stat-label">Expected</div><div class="stat-val">£${names.length*pp}</div></div>`;
+  document.getElementById('fundList').innerHTML=names.map((n,i)=>{
+    const paid=parseFloat(py[i]||0);const hp=paid>0;const c=COLORS[i%COLORS.length];
+    return`<div class="fund-row">
+      <div class="avatar" style="width:34px;height:34px;background:${c}22;color:${c};font-size:0.78rem">${n[0]}</div>
+      <div style="flex:1;font-size:0.875rem">${n}</div>
+      ${hp?`<span style="font-size:0.8rem;color:var(--success);font-weight:500">£${paid.toFixed(2)}</span>`:''}
+      <span style="font-size:0.75rem;font-weight:500;color:${hp?'var(--success)':'var(--danger)'}">${hp?'Paid':'Unpaid'}</span>
+      <button class="toggle-btn ${hp?'paid':''}" onclick="toggleFund(${i})">${hp?'<i class="ti ti-check" style="font-size:12px"></i>':''}</button>
+    </div>`;
+  }).join('');
+}
+
+// ── CONTACT ───────────────────────────────────────────────────
+window.sendComplaint=function(){
+  const name=names[document.getElementById('cName').value];
+  const msg=document.getElementById('cMsg').value.trim();
+  if(!msg){alert('Please write a message');return;}
+  window.open(`https://wa.me/?text=${encodeURIComponent(`[57 Hind Grove Web]\n${name} says:\n${msg}`)}`,'_blank');
+  document.getElementById('cMsg').value='';
+};
+
+// ── IMAGE OVERLAY ─────────────────────────────────────────────
+window.openImg=function(src){document.getElementById('overlayImg').src=src;document.getElementById('imgOverlay').classList.add('open');};
+window.closeImg=function(){document.getElementById('imgOverlay').classList.remove('open');};
+
 // ── SEARCH ────────────────────────────────────────────────────
-window.doSearch = function(q) {
+window.doSearch=function(q){
   const panel=document.getElementById('search-panel');
   const inner=document.getElementById('search-panel-inner');
   if(!q||q.length<2){panel.style.display='none';return;}
-  const ql=q.toLowerCase();
-  const results=[];
+  const ql=q.toLowerCase();const res=[];
   expenses.forEach(e=>{
     if(e.item.toLowerCase().includes(ql)||e.cat.toLowerCase().includes(ql)||(names[e.mIdx]||'').toLowerCase().includes(ql))
-      results.push({type:'receipt',label:`${e.item} — £${parseFloat(e.amount).toFixed(2)}`,sub:`${e.cat} · ${e.date}`,tab:'expenses'});
+      res.push({type:'receipt',label:`${e.item} — £${parseFloat(e.amount).toFixed(2)}`,sub:`${e.cat} · ${e.date}`,tab:'expenses'});
   });
   getRotaEntries(rotaShowCount).forEach(r=>{
     const n=names[r.mIdx]||'';
     if(n.toLowerCase().includes(ql)||r.status.toLowerCase().includes(ql)||r.date.includes(ql))
-      results.push({type:'rota',label:`${n} — ${r.date}`,sub:`Status: ${r.status} · Cycle ${r.cycleNum}`,tab:'rota'});
+      res.push({type:'rota',label:`${n} — ${r.date}`,sub:`Status: ${r.status} · Cycle ${r.cycleNum}`,tab:'rota'});
   });
-  inner.innerHTML=results.length
-    ? results.map(r=>`<div class="sr-item" onclick="goTab('${r.tab}')"><span class="sr-tag">${r.type}</span><strong>${r.label}</strong><br><span style="color:var(--muted);font-size:0.78rem">${r.sub}</span></div>`).join('')
-    : '<div style="padding:12px 16px;font-size:0.85rem;color:var(--muted)">No results found</div>';
+  inner.innerHTML=res.length?res.map(r=>`<div class="sr-item" onclick="goTab('${r.tab}')"><span class="sr-tag">${r.type}</span><strong>${r.label}</strong><br><span style="color:var(--muted);font-size:0.78rem">${r.sub}</span></div>`).join(''):'<div style="padding:12px 16px;font-size:0.85rem;color:var(--muted)">No results found</div>';
   panel.style.display='block';
 };
-
 document.addEventListener('click',e=>{
-  if(!e.target.closest('#search-panel')&&!e.target.closest('#gSearch'))
-    document.getElementById('search-panel').style.display='none';
+  if(!e.target.closest('#search-panel')&&!e.target.closest('#gSearch'))document.getElementById('search-panel').style.display='none';
 });
 </script>
 </body>
