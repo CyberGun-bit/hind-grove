@@ -848,11 +848,25 @@ document.addEventListener('click',e=>{
 // ── INIT ──────────────────────────────────────────────────────
   function openImg(key){
   const s = S.rotaStatus[key];
-  if(s && s.proof){
-    const w = window.open('', '_blank');
-    w.document.write('<!DOCTYPE html><html><body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh"><img src="' + s.proof + '" style="max-width:100%;max-height:100vh;object-fit:contain"></body></html>');
-    w.document.close();
-  }
+  if(!s || !s.proof){ alert('No proof image found'); return; }
+  
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer';
+  
+  const img = document.createElement('img');
+  img.src = s.proof;
+  img.style.cssText = 'max-width:90vw;max-height:90vh;border-radius:12px;object-fit:contain';
+  
+  const close = document.createElement('div');
+  close.innerHTML = '✕';
+  close.style.cssText = 'position:absolute;top:20px;right:28px;color:white;font-size:2rem;cursor:pointer;font-weight:300';
+  
+  overlay.appendChild(img);
+  overlay.appendChild(close);
+  document.body.appendChild(overlay);
+  
+  overlay.onclick = () => document.body.removeChild(overlay);
 }
 ld();
 </script>
