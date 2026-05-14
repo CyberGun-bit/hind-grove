@@ -9,13 +9,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --sage:#4a7c59;--sage-light:#e8f0ea;
-  --cream:#faf8f3;--warm:#f5f0e8;--ink:#1a1a1a;
-  --muted:#6b7280;--border:#e2ddd6;
-  --accent:#c17f3e;--accent-light:#fdf3e7;
-  --danger:#dc2626;--success:#16a34a;
-}
+:root{--sage:#4a7c59;--sage-light:#e8f0ea;--cream:#faf8f3;--warm:#f5f0e8;--ink:#1a1a1a;--muted:#6b7280;--border:#e2ddd6;--accent:#c17f3e;--accent-light:#fdf3e7;--danger:#dc2626;--success:#16a34a;}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
 #pin-screen{position:fixed;inset:0;background:#0f0f0f;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:1.75rem}
 .pin-title{color:white;font-family:'DM Serif Display',serif;font-size:1.5rem;text-align:center}
@@ -119,7 +113,6 @@ textarea.nb-input:focus{border-color:var(--sage)}
 input[type=file]{display:none}
 .wa-banner{background:#0f0f0f;border-radius:14px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:16px;color:white;margin-bottom:1.5rem}
 .wa-icon{font-size:2.2rem;color:#25d366}
-.wa-text{flex:1}
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:500;align-items:center;justify-content:center;padding:1rem}
 .modal-bg.open{display:flex}
 .modal{background:white;border-radius:16px;padding:1.5rem;width:100%;max-width:440px;max-height:85vh;overflow-y:auto}
@@ -156,15 +149,9 @@ input[type=file]{display:none}
     </div>
     <p class="pin-error" id="pinErr">Wrong PIN — try again</p>
     <div class="pin-keypad">
-      <button class="pin-btn" onclick="kp('1')">1</button>
-      <button class="pin-btn" onclick="kp('2')">2</button>
-      <button class="pin-btn" onclick="kp('3')">3</button>
-      <button class="pin-btn" onclick="kp('4')">4</button>
-      <button class="pin-btn" onclick="kp('5')">5</button>
-      <button class="pin-btn" onclick="kp('6')">6</button>
-      <button class="pin-btn" onclick="kp('7')">7</button>
-      <button class="pin-btn" onclick="kp('8')">8</button>
-      <button class="pin-btn" onclick="kp('9')">9</button>
+      <button class="pin-btn" onclick="kp('1')">1</button><button class="pin-btn" onclick="kp('2')">2</button><button class="pin-btn" onclick="kp('3')">3</button>
+      <button class="pin-btn" onclick="kp('4')">4</button><button class="pin-btn" onclick="kp('5')">5</button><button class="pin-btn" onclick="kp('6')">6</button>
+      <button class="pin-btn" onclick="kp('7')">7</button><button class="pin-btn" onclick="kp('8')">8</button><button class="pin-btn" onclick="kp('9')">9</button>
       <button class="pin-btn" onclick="kp('clr')" style="font-size:0.72rem">CLR</button>
       <button class="pin-btn" onclick="kp('0')">0</button>
       <button class="pin-btn" onclick="kp('del')"><i class="ti ti-backspace"></i></button>
@@ -184,10 +171,7 @@ input[type=file]{display:none}
 
 <div id="app">
   <div class="top-bar">
-    <div class="top-bar-logo">
-      57 <em>Hind Grove</em> Web
-      <small>Everything you need for this home is here.</small>
-    </div>
+    <div class="top-bar-logo">57 <em>Hind Grove</em> Web<small>Everything you need for this home is here.</small></div>
     <div class="top-bar-right">
       <div class="search-wrap">
         <i class="ti ti-search"></i>
@@ -199,7 +183,6 @@ input[type=file]{display:none}
       </button>
     </div>
   </div>
-
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="goTab('dash')"><i class="ti ti-home"></i>Home</button>
     <button class="nav-tab" onclick="goTab('rota')"><i class="ti ti-calendar"></i>Cleaning Rota</button>
@@ -208,7 +191,6 @@ input[type=file]{display:none}
     <button class="nav-tab" onclick="goTab('contact')"><i class="ti ti-message-circle"></i>Contact</button>
     <button class="nav-tab" id="adminTab" onclick="goTab('admin')"><i class="ti ti-lock"></i>Admin</button>
   </div>
-
   <div id="search-panel"><div id="search-panel-inner"></div></div>
 
   <div id="page-dash" class="page active">
@@ -265,9 +247,9 @@ input[type=file]{display:none}
 
   <div id="page-fund" class="page">
     <div class="page-title">Reserve <em>Fund</em></div>
-    <p class="page-sub">Track the shared pot — who's paid, who hasn't</p>
+    <p class="page-sub">Track the shared pot — admin manages payments</p>
     <div class="stat-row" id="fundStats"></div>
-    <div class="card">
+    <div class="card" id="fundAddCard">
       <div class="section-head"><span class="section-title">Record a payment</span></div>
       <div class="form-row" style="margin-bottom:10px">
         <div class="form-group"><span class="form-label">Amount (£)</span><input class="nb-input" id="fAmt" type="number" min="0" placeholder="0.00"></div>
@@ -286,7 +268,7 @@ input[type=file]{display:none}
     <p class="page-sub">Reach the group or raise a complaint</p>
     <div class="wa-banner">
       <i class="ti ti-brand-whatsapp wa-icon"></i>
-      <div class="wa-text"><div style="font-weight:500">57 Hind Grove — WhatsApp Group</div><div style="font-size:0.78rem;color:#9ca3af;margin-top:2px">Tap to open the house group chat</div></div>
+      <div style="flex:1"><div style="font-weight:500">57 Hind Grove — WhatsApp Group</div><div style="font-size:0.78rem;color:#9ca3af;margin-top:2px">Tap to open the house group chat</div></div>
       <a class="btn btn-wa" href="https://chat.whatsapp.com/Js4BykzJT7NCDObPCCr827" target="_blank"><i class="ti ti-brand-whatsapp"></i>Open Group</a>
     </div>
     <div class="card">
@@ -299,7 +281,7 @@ input[type=file]{display:none}
 
   <div id="page-admin" class="page">
     <div class="page-title"><em>Admin</em> Panel</div>
-    <p class="page-sub">Fagun only — approve cleaning proof & manage settings</p>
+    <p class="page-sub">Fagun only — approve cleaning proof &amp; manage settings</p>
     <div id="adminGate">
       <div class="admin-gate">
         <i class="ti ti-lock"></i>
@@ -327,7 +309,7 @@ input[type=file]{display:none}
       <div class="card" style="margin-top:1rem;border-color:#fca5a5">
         <div class="section-head"><span class="section-title" style="color:var(--danger)">⚠ Danger zone</span></div>
         <div style="display:flex;flex-wrap:wrap;gap:8px">
-          <button class="btn btn-danger btn-sm" onclick="clearExpenses()">Clear expenses</button>
+          <button class="btn btn-danger btn-sm" onclick="clearExpenses()">Clear all expenses</button>
           <button class="btn btn-danger btn-sm" onclick="resetFund()">Reset fund</button>
         </div>
       </div>
@@ -368,126 +350,146 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
-// ── CONFIG ──────────────────────────────────────────────────
 const HOUSE_PIN  = '5757';
 const ADMIN_PW   = 'F@g771289';
 const START_DATE = '2026-05-11';
 const GAP_DAYS   = 2;
 const TASKS      = ['Kitchen','Bathroom','Hoovering','Bins','Mopping'];
 const COLORS     = ['#4a7c59','#c17f3e','#6366f1','#ec4899','#14b8a6','#f59e0b','#8b5cf6','#0891b2','#10b981'];
-const IMG_MAX_PX = 800; // compress images to max 800px
-const IMG_QUALITY = 0.6;
+
+// Image compression settings — aggressive to stay under Firestore 1MB limit
+const IMG_MAX_PX  = 400;
+const IMG_QUALITY = 0.35;
+const RECEIPT_MAX_PX  = 500;
+const RECEIPT_QUALITY = 0.4;
 
 let names    = ['Apou','Tanvir','Marup','Nahid','Fahad','Shadat','Fagun','Rakib','Sanim'];
 let expenses = [];
 let rotaStat = {};
 let fund     = { perPerson:30, payments:{} };
 let pending  = [];
-let rotaShowCount  = 18;
+let rotaShowCount    = 18;
 let pendingProofInfo = null;
 let pendingProofData = null;
-let receiptData = null;
-let adminUnlocked = false;
+let receiptData      = null;
+let adminUnlocked    = false;
 
-// ── IMAGE COMPRESS ────────────────────────────────────────────
+// ── IMAGE COMPRESSION ─────────────────────────────────────────
 function compressImage(dataUrl, maxPx, quality) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const img = new Image();
+    img.onerror = () => reject(new Error('Image load failed'));
     img.onload = () => {
-      const canvas = document.createElement('canvas');
-      let w=img.width, h=img.height;
-      if(w>maxPx||h>maxPx){
-        if(w>h){h=Math.round(h*maxPx/w);w=maxPx;}
-        else{w=Math.round(w*maxPx/h);h=maxPx;}
-      }
-      canvas.width=w; canvas.height=h;
-      canvas.getContext('2d').drawImage(img,0,0,w,h);
-      resolve(canvas.toDataURL('image/jpeg',quality));
+      try {
+        const canvas = document.createElement('canvas');
+        let w = img.width, h = img.height;
+        if (w > maxPx || h > maxPx) {
+          if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
+          else { w = Math.round(w * maxPx / h); h = maxPx; }
+        }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        const result = canvas.toDataURL('image/jpeg', quality);
+        // Check size — if still too large, compress more
+        const sizeKB = Math.round((result.length * 3) / 4 / 1024);
+        if (sizeKB > 700) {
+          // Compress again more aggressively
+          canvas.getContext('2d').drawImage(img, 0, 0, Math.round(w*0.7), Math.round(h*0.7));
+          resolve(canvas.toDataURL('image/jpeg', 0.25));
+        } else {
+          resolve(result);
+        }
+      } catch(e) { reject(e); }
     };
-    img.src=dataUrl;
+    img.src = dataUrl;
   });
 }
 
 // ── ROTA ENGINE ───────────────────────────────────────────────
 function getRotaEntries(count) {
-  const entries=[];
-  const base=new Date(START_DATE);
-  for(let i=0;i<count;i++){
-    const d=new Date(base);
-    d.setDate(d.getDate()+i*GAP_DAYS);
-    const dateStr=d.toISOString().split('T')[0];
-    const mIdx=i%names.length;
-    const cycleNum=Math.floor(i/names.length)+1;
-    const key=`${mIdx}_${dateStr}`;
-    const saved=rotaStat[key]||{};
-    entries.push({mIdx,date:dateStr,tasks:[...TASKS],status:saved.status||autoStatus(dateStr),proofData:saved.proofData||null,key,cycleNum});
+  const entries = [];
+  const base = new Date(START_DATE);
+  for (let i = 0; i < count; i++) {
+    const d = new Date(base);
+    d.setDate(d.getDate() + i * GAP_DAYS);
+    const dateStr = d.toISOString().split('T')[0];
+    const mIdx = i % names.length;
+    const key = `${mIdx}_${dateStr}`;
+    const saved = rotaStat[key] || {};
+    entries.push({
+      mIdx, date: dateStr, tasks: [...TASKS],
+      status: saved.status || autoStatus(dateStr),
+      proofData: saved.proofData || null,
+      key, cycleNum: Math.floor(i / names.length) + 1
+    });
   }
   return entries;
 }
-function autoStatus(d){
-  const today=new Date();today.setHours(0,0,0,0);
-  const dt=new Date(d);
-  if(dt<today)return'missed';
-  if(dt.toDateString()===today.toDateString())return'today';
-  return'scheduled';
+function autoStatus(d) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dt = new Date(d);
+  if (dt < today) return 'missed';
+  if (dt.toDateString() === today.toDateString()) return 'today';
+  return 'scheduled';
 }
 
 // ── PIN ───────────────────────────────────────────────────────
-let pinEntry='';
-window.kp=function(v){
-  if(v==='clr'){pinEntry='';}
-  else if(v==='del'){pinEntry=pinEntry.slice(0,-1);}
-  else if(pinEntry.length<4){pinEntry+=v;if(pinEntry.length===4)setTimeout(checkPin,180);}
-  for(let i=0;i<4;i++)document.getElementById('pd'+i).classList.toggle('filled',i<pinEntry.length);
+let pinEntry = '';
+window.kp = function(v) {
+  if (v==='clr') pinEntry='';
+  else if (v==='del') pinEntry=pinEntry.slice(0,-1);
+  else if (pinEntry.length<4) { pinEntry+=v; if(pinEntry.length===4) setTimeout(checkPin,180); }
+  for(let i=0;i<4;i++) document.getElementById('pd'+i).classList.toggle('filled',i<pinEntry.length);
 };
-function checkPin(){
-  if(pinEntry===HOUSE_PIN){
+function checkPin() {
+  if (pinEntry===HOUSE_PIN) {
     document.getElementById('pin-screen').style.display='none';
     document.getElementById('loading-screen').style.display='flex';
     initFire();
   } else {
     const e=document.getElementById('pinErr');
-    e.classList.add('show');pinEntry='';
-    for(let i=0;i<4;i++)document.getElementById('pd'+i).classList.remove('filled');
+    e.classList.add('show'); pinEntry='';
+    for(let i=0;i<4;i++) document.getElementById('pd'+i).classList.remove('filled');
     setTimeout(()=>e.classList.remove('show'),2200);
   }
 }
 
 // ── FIREBASE ──────────────────────────────────────────────────
-function initFire(){
-  onSnapshot(doc(db,'house','settings'),snap=>{
-    if(snap.exists()){const d=snap.data();if(d.names)names=d.names;if(d.fund)fund=d.fund;}
+function initFire() {
+  onSnapshot(doc(db,'house','settings'), snap => {
+    if (snap.exists()) { const d=snap.data(); if(d.names) names=d.names; if(d.fund) fund=d.fund; }
     renderAll();
   });
-  onSnapshot(collection(db,'expenses'),snap=>{
+  onSnapshot(collection(db,'expenses'), snap => {
     expenses=[];
     snap.forEach(d=>expenses.push({id:d.id,...d.data()}));
     expenses.sort((a,b)=>a.createdAt-b.createdAt);
-    renderExp();renderDash();
+    renderExp(); renderDash();
   });
-  onSnapshot(collection(db,'rotaStatus'),snap=>{
+  onSnapshot(collection(db,'rotaStatus'), snap => {
     rotaStat={};
     snap.forEach(d=>{rotaStat[d.id]=d.data();});
-    renderRota();renderDash();updateBadge();
+    renderRota(); renderDash(); updateBadge();
   });
-  onSnapshot(collection(db,'pending'),snap=>{
+  onSnapshot(collection(db,'pending'), snap => {
     pending=[];
     snap.forEach(d=>pending.push({id:d.id,...d.data()}));
     updateBadge();
-    if(adminUnlocked)renderPending();
+    if(adminUnlocked) renderPending();
   });
   setTimeout(()=>{
     document.getElementById('loading-screen').style.display='none';
     document.getElementById('app').style.display='block';
+    // Hide fund add card for non-admins initially
+    document.getElementById('fundAddCard').style.display='none';
     populateSelects();
   },1200);
 }
 
-function updateBadge(){
+function updateBadge() {
   const cnt=pending.length;
   const b=document.getElementById('adminBadge');
-  b.style.display=cnt>0?'flex':'none';
-  b.textContent=cnt;
+  b.style.display=cnt>0?'flex':'none'; b.textContent=cnt;
   let tb=document.getElementById('adminTabBadge');
   if(cnt>0){
     if(!tb){tb=document.createElement('span');tb.className='tab-badge';tb.id='adminTabBadge';document.getElementById('adminTab').appendChild(tb);}
@@ -575,6 +577,7 @@ function renderRota(){
 window.openProof=function(key,date,mIdx){
   pendingProofInfo={key,date,mIdx};pendingProofData=null;
   document.getElementById('proofPrev').style.display='none';
+  document.getElementById('proofFile').value='';
   document.getElementById('proofModal').classList.add('open');
 };
 window.closeMod=function(){document.getElementById('proofModal').classList.remove('open');};
@@ -587,21 +590,23 @@ window.prevProof=function(inp){
 window.submitProof=async function(){
   if(!pendingProofData){alert('Please select a photo first');return;}
   const btn=document.getElementById('submitProofBtn');
-  btn.textContent='Uploading...';btn.disabled=true;
+  btn.innerHTML='<i class="ti ti-loader"></i>Compressing...';btn.disabled=true;
   try{
     const compressed=await compressImage(pendingProofData,IMG_MAX_PX,IMG_QUALITY);
-    // Save to pending
+    btn.innerHTML='<i class="ti ti-loader"></i>Uploading...';
     await addDoc(collection(db,'pending'),{
       key:pendingProofInfo.key,date:pendingProofInfo.date,
       mIdx:pendingProofInfo.mIdx,name:names[pendingProofInfo.mIdx],
       proofData:compressed,submittedAt:Date.now()
     });
-    // Update rota status
     await setDoc(doc(db,'rotaStatus',pendingProofInfo.key),{status:'pending',proofData:compressed});
     closeMod();
     alert('✅ Proof submitted! Waiting for Fagun to approve.');
-  }catch(e){alert('Error: '+e.message);}
-  btn.textContent='Submit for approval';btn.disabled=false;
+  }catch(e){
+    console.error(e);
+    alert('Upload failed: '+e.message+'\n\nTry using a smaller photo.');
+  }
+  btn.innerHTML='<i class="ti ti-send"></i>Submit for approval';btn.disabled=false;
 };
 window.markMissed=async function(key){
   if(!confirm('Mark as missed?'))return;
@@ -614,7 +619,11 @@ window.unlockAdmin=function(){
     adminUnlocked=true;
     document.getElementById('adminGate').style.display='none';
     document.getElementById('adminPanel').style.display='block';
+    // Show fund add card for admin
+    document.getElementById('fundAddCard').style.display='block';
     renderAdminPanel();renderPending();
+    // Re-render expenses to show delete buttons
+    renderExp();renderFund();
   } else {
     const e=document.getElementById('aErr');e.style.display='block';
     setTimeout(()=>e.style.display='none',2500);
@@ -630,14 +639,14 @@ function renderPending(){
         <div class="avatar" style="width:32px;height:32px;background:${COLORS[p.mIdx%COLORS.length]}22;color:${COLORS[p.mIdx%COLORS.length]};font-size:0.75rem">${p.name[0]}</div>
         <div><div style="font-size:0.9rem;font-weight:500">${p.name}</div><div style="font-size:0.75rem;color:var(--muted)">${p.date}</div></div>
       </div>
-      ${p.proofData?`<img src="${p.proofData}" class="pending-proof" onclick="openImg('${p.proofData}')" title="Click to enlarge">`:'<p style="font-size:0.8rem;color:var(--muted)">No photo</p>'}
+      ${p.proofData?`<img src="${p.proofData}" class="pending-proof" onclick="openImg('${p.proofData}')">`:'<p style="font-size:0.8rem;color:var(--muted)">No photo</p>'}
       <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="btn btn-success btn-sm" onclick="approveProof('${p.id}','${p.key}','${p.proofData?'yes':''}')"><i class="ti ti-check"></i>Approve ✅</button>
+        <button class="btn btn-success btn-sm" onclick="approveProof('${p.id}','${p.key}')"><i class="ti ti-check"></i>Approve ✅</button>
         <button class="btn btn-danger btn-sm" onclick="rejectProof('${p.id}','${p.key}')"><i class="ti ti-x"></i>Reject ❌</button>
       </div>
     </div>`).join('');
 }
-window.approveProof=async function(pid,key,hasProof){
+window.approveProof=async function(pid,key){
   const p=pending.find(x=>x.id===pid);
   await setDoc(doc(db,'rotaStatus',key),{status:'done',proofData:p?p.proofData:null});
   await deleteDoc(doc(db,'pending',pid));
@@ -682,7 +691,9 @@ window.addExp=async function(){
   const mIdx=parseInt(document.getElementById('ePerson').value);
   if(!item||isNaN(amount)||amount<=0){alert('Fill in item and amount');return;}
   let receiptUrl=null;
-  if(receiptData) receiptUrl=await compressImage(receiptData,600,0.6);
+  if(receiptData){
+    try{receiptUrl=await compressImage(receiptData,RECEIPT_MAX_PX,RECEIPT_QUALITY);}catch(e){}
+  }
   await addDoc(collection(db,'expenses'),{item,amount,cat,mIdx,date:new Date().toLocaleDateString('en-GB'),createdAt:Date.now(),receiptUrl});
   document.getElementById('eItem').value='';document.getElementById('eAmt').value='';
   document.getElementById('rPreview').style.display='none';receiptData=null;
@@ -709,24 +720,25 @@ function renderExp(){
         <span style="font-size:0.78rem;color:var(--muted)">${names[e.mIdx]||''}</span>
         ${e.receiptUrl?`<img src="${e.receiptUrl}" class="receipt-thumb" onclick="openImg('${e.receiptUrl}')" title="View receipt">`:''}
         <span class="exp-amt">£${parseFloat(e.amount).toFixed(2)}</span>
-        <button style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.85rem" onclick="delExp('${e.id}')"><i class="ti ti-trash"></i></button>
+        ${adminUnlocked?`<button style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.85rem" onclick="delExp('${e.id}')"><i class="ti ti-trash"></i></button>`:''}
       </div>`).join('')
     :'<div class="empty"><i class="ti ti-pencil"></i>Nothing yet</div>';
 }
-window.delExp=async function(id){if(confirm('Remove?'))await deleteDoc(doc(db,'expenses',id));};
+window.delExp=async function(id){if(confirm('Remove this expense?'))await deleteDoc(doc(db,'expenses',id));};
 
 // ── FUND ──────────────────────────────────────────────────────
 window.addFund=async function(){
   const amt=parseFloat(document.getElementById('fAmt').value);
   const mi=document.getElementById('fPerson').value;
   if(isNaN(amt)||amt<=0){alert('Enter a valid amount');return;}
-  const py=fund.payments||{};
+  const py={...fund.payments||{}};
   py[mi]=((parseFloat(py[mi]||0))+amt).toString();
   await setDoc(doc(db,'house','settings'),{names,fund:{...fund,payments:py}},{merge:true});
   document.getElementById('fAmt').value='';
 };
 window.toggleFund=async function(i){
-  const py=fund.payments||{};
+  if(!adminUnlocked)return;
+  const py={...fund.payments||{}};
   py[i]=parseFloat(py[i]||0)>0?'0':(fund.perPerson||0).toString();
   await setDoc(doc(db,'house','settings'),{names,fund:{...fund,payments:py}},{merge:true});
 };
@@ -747,8 +759,8 @@ function renderFund(){
       <div class="avatar" style="width:34px;height:34px;background:${c}22;color:${c};font-size:0.78rem">${n[0]}</div>
       <div style="flex:1;font-size:0.875rem">${n}</div>
       ${hp?`<span style="font-size:0.8rem;color:var(--success);font-weight:500">£${paid.toFixed(2)}</span>`:''}
-      <span style="font-size:0.75rem;font-weight:500;color:${hp?'var(--success)':'var(--danger)'}">${hp?'Paid':'Unpaid'}</span>
-      <button class="toggle-btn ${hp?'paid':''}" onclick="toggleFund(${i})">${hp?'<i class="ti ti-check" style="font-size:12px"></i>':''}</button>
+      <span style="font-size:0.75rem;font-weight:500;color:${hp?'var(--success)':'var(--danger)'}">${hp?'✓ Paid':'✗ Unpaid'}</span>
+      ${adminUnlocked?`<button class="toggle-btn ${hp?'paid':''}" onclick="toggleFund(${i})">${hp?'<i class="ti ti-check" style="font-size:12px"></i>':''}</button>`:''}
     </div>`;
   }).join('');
 }
