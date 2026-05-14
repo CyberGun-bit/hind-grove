@@ -132,6 +132,7 @@ input[type=file]{display:none}
 .empty .ti{font-size:1.8rem;display:block;margin-bottom:0.5rem;opacity:0.35}
 .cycle-badge{display:inline-block;font-size:0.68rem;background:#ede9fe;color:#5b21b6;padding:1px 7px;border-radius:4px;margin-left:4px}
 .img-size-note{font-size:0.72rem;color:var(--muted);margin-top:4px;font-style:italic}
+.reset-btn{margin-top:5px;margin-left:3px;background:#ede9fe;color:#5b21b6;border:none;font-size:0.7rem;padding:5px 8px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:3px}
 @media(max-width:600px){.form-row{grid-template-columns:1fr}.stat-row{grid-template-columns:1fr 1fr}.search-bar{width:140px}.exp-cat{display:none}.top-bar-logo small{display:none}}
 </style>
 </head>
@@ -215,7 +216,7 @@ input[type=file]{display:none}
 
   <div id="page-expenses" class="page">
     <div class="page-title">House <em>Expenses</em></div>
-    <p class="page-sub">Our shared spending notebook — everyone can add, only admin can delete</p>
+    <p class="page-sub">Everyone can add — only admin can delete</p>
     <div class="stat-row" id="expStats"></div>
     <div class="card">
       <div class="section-head"><span class="section-title">Add new expense</span><span style="font-size:0.75rem;color:var(--muted);font-style:italic">✏️ jot it down</span></div>
@@ -323,7 +324,7 @@ input[type=file]{display:none}
   <div class="modal">
     <h3>Submit Proof Photo</h3>
     <p style="font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem">Upload a clear photo — Fagun will review and approve it</p>
-    <p style="font-size:0.72rem;color:var(--muted);margin-bottom:1rem;font-style:italic">💡 Tip: Take a new photo rather than picking a large one from gallery for faster upload</p>
+    <p style="font-size:0.72rem;color:var(--muted);margin-bottom:1rem;font-style:italic">💡 Tip: Take a new photo rather than picking from gallery for faster upload</p>
     <label class="upload-area" for="proofFile">
       <i class="ti ti-camera" style="font-size:1.4rem;color:var(--muted);display:block;margin-bottom:4px"></i>
       <span style="font-size:0.78rem;color:var(--muted)">Tap to take / upload photo</span>
@@ -360,7 +361,7 @@ const START_DATE = '2026-05-11';
 const GAP_DAYS   = 2;
 const TASKS      = ['Kitchen','Bathroom','Hoovering','Bins','Mopping'];
 const COLORS     = ['#4a7c59','#c17f3e','#6366f1','#ec4899','#14b8a6','#f59e0b','#8b5cf6','#0891b2','#10b981'];
-const MAX_BYTES  = 900000; // 900KB max to stay safely under Firestore 1MB limit
+const MAX_BYTES  = 900000;
 
 let names    = ['Apou','Tanvir','Marup','Nahid','Fahad','Shadat','Fagun','Rakib','Sanim'];
 let expenses = [];
@@ -374,26 +375,22 @@ let receiptData      = null;
 let adminUnlocked    = false;
 
 // ── SMART IMAGE COMPRESSION ───────────────────────────────────
-// Tries high quality first, steps down only if needed to fit under limit
 async function smartCompress(dataUrl, targetBytes, startPx, startQuality) {
   const steps = [
     { px: startPx,       q: startQuality },
-    { px: startPx,       q: startQuality - 0.15 },
-    { px: startPx - 100, q: startQuality - 0.2 },
-    { px: startPx - 200, q: startQuality - 0.25 },
-    { px: 400,           q: 0.45 },
-    { px: 300,           q: 0.4 },
+    { px: startPx,       q: startQuality - 0.1 },
+    { px: startPx - 100, q: startQuality - 0.15 },
+    { px: startPx - 200, q: startQuality - 0.2 },
+    { px: 500,           q: 0.5 },
+    { px: 400,           q: 0.4 },
+    { px: 300,           q: 0.35 },
   ];
   for (const step of steps) {
     const result = await compressOnce(dataUrl, step.px, step.q);
     const bytes = Math.round((result.length * 3) / 4);
-    if (bytes <= targetBytes) {
-      console.log(`Compressed to ${Math.round(bytes/1024)}KB at ${step.px}px q${step.q}`);
-      return result;
-    }
+    if (bytes <= targetBytes) return result;
   }
-  // Last resort — very small
-  return await compressOnce(dataUrl, 250, 0.35);
+  return await compressOnce(dataUrl, 250, 0.3);
 }
 
 function compressOnce(dataUrl, maxPx, quality) {
@@ -417,9 +414,7 @@ function compressOnce(dataUrl, maxPx, quality) {
   });
 }
 
-function getDataUrlBytes(dataUrl) {
-  return Math.round((dataUrl.length * 3) / 4);
-}
+function getBytes(dataUrl) { return Math.round((dataUrl.length * 3) / 4); }
 
 // ── ROTA ENGINE ───────────────────────────────────────────────
 function getRotaEntries(count) {
@@ -568,6 +563,8 @@ function renderRota(){
       lc=r.cycleNum;
     }
     const c=COLORS[r.mIdx%COLORS.length];
+    // Admin reset button — only visible when admin is unlocked, only on done/missed/pending entries
+    const showReset = adminUnlocked && (r.status==='done'||r.status==='missed'||r.status==='pending');
     html+=`<div class="rota-item ${r.status==='done'?'done':r.status==='missed'?'missed':r.status==='today'?'today':r.status==='pending'?'pending':''}">
       <div class="avatar" style="background:${c}22;color:${c}">${names[r.mIdx][0]}</div>
       <div style="flex:1">
@@ -579,8 +576,10 @@ function renderRota(){
       <div style="text-align:right;flex-shrink:0">
         <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px">${r.date}</div>
         <span class="badge ${bm[r.status]||'b-sched'}">${lm[r.status]||r.status}</span>
-        ${r.status!=='done'&&r.status!=='pending'?`<br><button class="btn btn-sm btn-outline" style="margin-top:5px;font-size:0.7rem" onclick="openProof('${r.key}','${r.date}',${r.mIdx})"><i class="ti ti-camera"></i>Proof</button>`:''}
+        <br>
+        ${r.status!=='done'&&r.status!=='pending'?`<button class="btn btn-sm btn-outline" style="margin-top:5px;font-size:0.7rem" onclick="openProof('${r.key}','${r.date}',${r.mIdx})"><i class="ti ti-camera"></i>Proof</button>`:''}
         ${r.status!=='done'&&r.status!=='missed'&&r.status!=='pending'?`<button class="btn btn-sm" style="margin-top:5px;margin-left:3px;background:#fee2e2;color:#991b1b;border:none;font-size:0.7rem;padding:5px 8px;border-radius:7px;cursor:pointer" onclick="markMissed('${r.key}')">Missed</button>`:''}
+        ${showReset?`<button class="reset-btn" onclick="resetRotaEntry('${r.key}')" title="Reset this entry — brings back the Proof button"><i class="ti ti-refresh" style="font-size:11px"></i>Reset</button>`:''}
       </div>
     </div>`;
   });
@@ -588,6 +587,7 @@ function renderRota(){
   document.getElementById('rotaList').innerHTML=html;
 }
 
+// ── PROOF SUBMIT ──────────────────────────────────────────────
 window.openProof=function(key,date,mIdx){
   pendingProofInfo={key,date,mIdx};pendingProofData=null;
   document.getElementById('proofPrev').style.display='none';
@@ -603,26 +603,21 @@ window.prevProof=function(inp){
     pendingProofData=e.target.result;
     const img=document.getElementById('proofPrev');
     img.src=pendingProofData;img.style.display='block';
-    const kb=Math.round(getDataUrlBytes(pendingProofData)/1024);
+    const kb=Math.round(getBytes(pendingProofData)/1024);
     const note=document.getElementById('proofSizeNote');
-    note.textContent=`Photo size: ${kb}KB — will be compressed for upload`;
+    note.textContent=`Photo: ${kb}KB — will be compressed before upload`;
     note.style.display='block';
   };
   r.readAsDataURL(inp.files[0]);
 };
-
 window.submitProof=async function(){
   if(!pendingProofData){alert('Please select a photo first');return;}
   const btn=document.getElementById('submitProofBtn');
   btn.innerHTML='<i class="ti ti-loader"></i>Compressing...';btn.disabled=true;
   try{
-    // Smart compress: start at 800px quality 0.72, step down only if needed
+    // Proof photos: start 800px quality 0.72
     const compressed=await smartCompress(pendingProofData, MAX_BYTES, 800, 0.72);
-    const kb=Math.round(getDataUrlBytes(compressed)/1024);
-    console.log(`Final proof size: ${kb}KB`);
-
     btn.innerHTML='<i class="ti ti-loader"></i>Uploading...';
-
     await addDoc(collection(db,'pending'),{
       key:pendingProofInfo.key,date:pendingProofInfo.date,
       mIdx:pendingProofInfo.mIdx,name:names[pendingProofInfo.mIdx],
@@ -632,15 +627,26 @@ window.submitProof=async function(){
     closeMod();
     alert('✅ Proof submitted! Waiting for Fagun to approve.');
   }catch(e){
-    console.error(e);
-    alert('Upload failed. Please try taking a new photo instead of picking from gallery, or use a smaller image.');
+    alert('Upload failed. Try taking a new photo instead of picking from gallery.');
   }
   btn.innerHTML='<i class="ti ti-send"></i>Submit for approval';btn.disabled=false;
 };
-
 window.markMissed=async function(key){
   if(!confirm('Mark as missed?'))return;
   await setDoc(doc(db,'rotaStatus',key),{status:'missed',proofData:null});
+};
+
+// ── INDIVIDUAL ROTA RESET (Admin only) ───────────────────────
+window.resetRotaEntry=async function(key){
+  if(!confirm('Reset this entry?\n\nThe proof photo will be removed and the "Submit Proof" button will come back for this person.'))return;
+  // Remove from rotaStatus
+  await deleteDoc(doc(db,'rotaStatus',key));
+  // Remove from pending if it's there
+  const snap=await getDocs(collection(db,'pending'));
+  for(const d of snap.docs){
+    if(d.data().key===key) await deleteDoc(doc(db,'pending',d.id));
+  }
+  alert('✅ Reset done! The Proof button is back for this person.');
 };
 
 // ── ADMIN ─────────────────────────────────────────────────────
@@ -651,7 +657,7 @@ window.unlockAdmin=function(){
     document.getElementById('adminPanel').style.display='block';
     document.getElementById('fundAddCard').style.display='block';
     renderAdminPanel();renderPending();
-    renderExp();renderFund();
+    renderExp();renderFund();renderRota();
   } else {
     const e=document.getElementById('aErr');e.style.display='block';
     setTimeout(()=>e.style.display='none',2500);
@@ -723,8 +729,8 @@ window.addExp=async function(){
   let receiptUrl=null;
   if(receiptData){
     try{
-      // Receipts: start at 900px quality 0.75 — readable text
-      receiptUrl=await smartCompress(receiptData, MAX_BYTES, 900, 0.75);
+      // Receipts: start 900px quality 0.78 — keep text readable
+      receiptUrl=await smartCompress(receiptData, MAX_BYTES, 900, 0.78);
     }catch(e){console.error('Receipt compress failed',e);}
   }
   await addDoc(collection(db,'expenses'),{
@@ -745,9 +751,9 @@ window.prevReceipt=function(inp){
   r.onload=e=>{
     receiptData=e.target.result;
     const img=document.getElementById('rPreview');img.src=receiptData;img.style.display='block';
-    const kb=Math.round(getDataUrlBytes(receiptData)/1024);
+    const kb=Math.round(getBytes(receiptData)/1024);
     const note=document.getElementById('rSizeNote');
-    note.textContent=`Photo: ${kb}KB — will be compressed for upload`;
+    note.textContent=`Photo: ${kb}KB — will be compressed before upload`;
     note.style.display='block';
   };
   r.readAsDataURL(inp.files[0]);
@@ -823,10 +829,7 @@ window.sendComplaint=function(){
 };
 
 // ── IMAGE OVERLAY ─────────────────────────────────────────────
-window.openImg=function(src){
-  document.getElementById('overlayImg').src=src;
-  document.getElementById('imgOverlay').classList.add('open');
-};
+window.openImg=function(src){document.getElementById('overlayImg').src=src;document.getElementById('imgOverlay').classList.add('open');};
 window.closeImg=function(){document.getElementById('imgOverlay').classList.remove('open');};
 
 // ── SEARCH ────────────────────────────────────────────────────
